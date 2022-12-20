@@ -48,6 +48,20 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
+      User.hasMany(models.Booking,{
+        foreignKey:"UserId",
+        hooks:true
+      })
+
+      User.hasMany(models.Review, {
+        foreignKey: "UserId",
+        hooks: true
+      })
+
+      User.hasMany(models.Spot, {
+        foreignKey: "ownerId",
+        hooks: true
+      })
     }
   };
 
@@ -86,6 +100,7 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING
       }
+     
     },
     {
       sequelize,
