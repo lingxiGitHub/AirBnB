@@ -16,6 +16,7 @@ module.exports = {
       },
       ownerId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: "Users",
           key: "id"
@@ -58,7 +59,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
-    },options);
+    }, options);
   },
   down: async (queryInterface, Sequelize) => {
     options.tableName = "Spots";
