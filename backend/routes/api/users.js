@@ -39,17 +39,47 @@ const validateSignup = [
 // backend/routes/api/users.js
 // ...
 
-// Sign up
+// ### Sign Up a User
 router.post(
     '/',
     async (req, res) => {
-        const { email, password, username, firstName,lastName } = req.body;
+        const { email, password, username, firstName, lastName } = req.body;
         const user = await User.signup({ email, username, password, firstName, lastName });
 
-        await setTokenCookie(res, user);
+        //for duplicate user sign up
+        // const findEmail = await User.findAll({
+        //     where: {
+        //         email
+        //     }
+        // })
+        // if (findEmail) {
+        //     err.status = 403;
+        //     err.title = "email";
+        //     err.errors = ["User with that email already exists"];
+        //     return next(err);
+        // }
+
+        //use express validator??
+
+        //add token into response body
+
+
+        // let token = await setTokenCookie(res, user);
+
+        // let userlist = []
+        // user.forEach((item) => {
+        //     userlist.push(item.toJSON())
+        //     userlist.push(token)
+        // }
+
+        // )
+
+
+
 
         return res.json({
-            user: user
+            user
+
         });
     }
 );

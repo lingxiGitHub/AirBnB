@@ -3,16 +3,21 @@ const express = require('express');
 const router = express.Router();
 
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { Spot, Review, ReviewImage, User, SpotImage,sequelize } = require('../../db/models');
+const { Spot, Review, ReviewImage, User, SpotImage, sequelize } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+
+router.get("/spots", async (res, req, next) => {
+    const spots = await Spot.findAll()
+    res.json(spots)
+})
 
 
 router.get("/:spotId", async (req, res, next) => {
 
 
-    let spotsId  = req.params.spotId;
+    let spotsId = req.params.spotId;
     spotsId = parseInt(spotsId)
 
     const spots = await Spot.findAll({
@@ -32,22 +37,22 @@ router.get("/:spotId", async (req, res, next) => {
                 ]
             },
             {
-                model:SpotImage,
-                attributes:["id","url","preview"]
+                model: SpotImage,
+                attributes: ["id", "url", "preview"]
             }
         ]
 
     })
 
-    if (!spots){
+    if (!spots) {
         const err = new Error("Couldn't find a Spot with the specified id");
-        err.status=404;
+        err.status = 404;
         err.title = "Spot couldn't be found";
         err.errors = ["Couldn't find a Spot with the specified id"]
     }
-        res.json(spots)
-   
-   
+    res.json(spots)
+
+
 })
 
 
