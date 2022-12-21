@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-const bcrypt = require("bcryptjs");
+
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -64,6 +64,6 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       ownerId: { [Op.in]: [1,2] }
-    }, {});
+    });
   }
 };
