@@ -49,6 +49,20 @@ module.exports = {
         price: 200,
 
       },
+      {
+        ownerId: 3,
+        address: '3001 Walnut Street',
+        city: "LA",
+        state: "CA",
+        country: "USA",
+        lat: 300.01,
+        lng: 300.1,
+        name: "beachhouse",
+        description: "the beachhouse",
+        price: 300,
+
+      },
+     
      
     ], {});
   },

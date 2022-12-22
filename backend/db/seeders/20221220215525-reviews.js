@@ -38,6 +38,14 @@ module.exports = {
         stars: 5,
 
       },
+      {
+        spotId: 3,
+        userId: 3,
+        review: "good place too",
+        stars: 5,
+
+      },
+     
 
     ], {});
   },

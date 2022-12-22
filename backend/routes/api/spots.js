@@ -2,14 +2,29 @@
 const express = require('express');
 const router = express.Router();
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { Spot, Review, ReviewImage, User, SpotImage, sequelize } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-router.get("/spots", async (res, req, next) => {
-    const spots = await Spot.findAll()
+
+
+router.get("/", async (req, res, next) => {
+    //current user
+    // const { credential, password } = req.body;
+
+    // const user = await User.login({ credential, password });
+
+
+    const spots = await Spot.findAll(
+        // {
+        //     where: {
+        //         id: user.id
+        //     }
+        // }
+    );
+    // const avgRating=await Review.AVG("stars")
     res.json(spots)
 })
 
@@ -80,6 +95,66 @@ router.get("/:spotId/reviews", async (req, res) => {
     //     res.status(404)
     //     error.message = "Spot couldn't be found"
     // }
+
+})
+
+//### Create a Spot
+router.post("/", requireAuth, async (req, res) => {
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+    const newSpot = await Spot.create({
+        ownerId: req.user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+    res.json(newSpot)
+})
+
+
+//### Add an Image to a Spot based on the Spot's id
+router.post("/:spotId/images", requireAuth, async (req, res) => {
+
+
+    let spotId = req.params.spotId
+    spotId = parseInt(spotId)
+
+    const theSpot = await SpotImage.findOne({
+        where: {
+            spotId
+        },
+        attributes: { exclude: ["createdAt", "updatedAt",] }
+    })
+
+
+    //find owner id
+    const spot = await Spot.findOne({
+        where: {
+            id: spotId
+        }
+    })
+
+    const ownerId = spot.ownerId
+
+    // console.log(theSpot)
+    // console.log(req.user.id)//current user id -3
+    // console.log(ownerId)//3
+    // console.log(spotId)//3
+
+    if (ownerId == req.user.id) {
+
+        //update url and preview
+        theSpot.url = req.body.url;
+        theSpot.preview = req.body.preview
+        res.json(theSpot)
+
+    }
 
 })
 

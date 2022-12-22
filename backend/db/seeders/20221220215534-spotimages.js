@@ -35,6 +35,13 @@ module.exports = {
         preview: false,
 
       },
+      {
+        spotId: 3,
+        url: "www.spot3image.com",
+        preview: false,
+
+      },
+     
 
     ], {});
   },
