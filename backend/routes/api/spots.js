@@ -386,6 +386,57 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 
 })
 
+//### Get all Bookings for a Spot based on the Spot's id
+
+router.get("/:spotId/bookings", requireAuth, async (req, res) => {
+    let { spotId } = req.params
+    spotId = parseInt(spotId)
+
+
+    const bookings = await Booking.findOne({
+        where: {
+            spotId
+        },
+        include: [{
+            model: User,
+            attributes: ["id", "firstName", "lastName"]
+        }]
+    })
+
+    const restrictedBooking = await Booking.findOne({
+        where: {
+            spotId
+        },
+        attributes: ["spotId", "startDate", "endDate"]
+    })
+
+    if (!bookings) {
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        err.error = "Spot couldn't be found"
+        res.status(404)
+        res.json(err)
+    }
+
+    const userId = bookings.userId
+    const currentUserId = req.user.id
+
+    // console.log(userId)
+    // console.log(currentUserId)
+
+
+    if (userId == currentUserId) {
+        res.json(bookings)
+    } else if (userId != currentUserId) {
+        res.json(restrictedBooking)
+    }
+
+    res.json(bookings)
+
+
+
+})
+
 
 
 module.exports = router;
