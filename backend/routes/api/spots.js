@@ -9,6 +9,49 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const spot = require('../../db/models/spot');
 
+const validateSpot = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .withMessage('Street address is required.'),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage('City is required.'),
+    check('state')
+        .exists({ checkFalsy: true })
+        .withMessage('State is required.'),
+    check('country')
+        .exists({ checkFalsy: true })
+        .withMessage('Country is required.'),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .withMessage('Latitude is required.'),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .withMessage('Longitude is required.'),
+    check('name')
+        .exists({ checkFalsy: true })
+        .isLength({ max: 50 })
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage('Description is required.'),
+    check('price')
+        .exists({ checkFalsy: true })
+        .withMessage('Price per day is required.'),
+    handleValidationErrors
+];
+
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required.'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5.'),
+    handleValidationErrors
+]
+
 
 //### Get all Spots
 router.get('/', async (req, res, next) => {
@@ -164,7 +207,7 @@ router.get("/:spotId", async (req, res, next) => {
 
 // ### Edit a Spot
 
-router.put("/:spotId", requireAuth, async (req, res) => {
+router.put("/:spotId", requireAuth, validateSpot, async (req, res) => {
 
     let { spotId } = req.params;
     spotId = parseInt(spotId)
@@ -211,13 +254,16 @@ router.get("/:spotId/reviews", async (req, res) => {
         where: {
             spotId
         },
-        include: {
-            model: User,
-            attributes: ["id", "firstName", "lastName"]
-        },
-        include: {
-            model: ReviewImage
-        }
+        include: [
+            {
+                model: User,
+                attributes: ["id", "firstName", "lastName"]
+            },
+            {
+                model: ReviewImage,
+                attributes: ["id", "url"]
+            }
+        ]
     })
 
     if (reviews) {
@@ -265,59 +311,107 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     let spotId = req.params.spotId
     spotId = parseInt(spotId)
 
-    const theSpot = await SpotImage.findOne({
-        where: {
-            spotId
-        },
-        attributes: { exclude: ["createdAt", "updatedAt",] }
-    })
+    const { url, preview } = req.body
 
-
-    //find owner id
     const spot = await Spot.findOne({
         where: {
             id: spotId
         }
     })
 
+    //could not find the spot
+    if (!spot) {
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        err.error = "Spot couldn't be found"
+        res.status(404)
+        res.json(err)
+    }
+
+    //find owner id
     const ownerId = spot.ownerId
 
-    // console.log(theSpot)
-    // console.log(req.user.id)//current user id -3
-    // console.log(ownerId)//3
-    // console.log(spotId)//3
+    if (ownerId !== req.user.id) {
+        const err = new Error("You don't have authorization");
+        err.status = 401;
+        err.error = "You don't have authorization"
+        res.status(401)
+        res.json(err)
+    }
 
-    if (ownerId == req.user.id) {
+    if (ownerId == req.user.id && spot) {//only the owner can create image
 
         //update url and preview
-        theSpot.url = req.body.url;
-        theSpot.preview = req.body.preview
-        res.json(theSpot)
+        const newImage = await SpotImage.create({
+            url,
+            preview,
+            spotId
+
+        })
+
+        //return the result
+
+        const newImageId = newImage.id
+
+        const result = await SpotImage.findOne({
+            where: {
+                id: newImageId,
+            },
+            attributes: ["id", "url", "preview"]
+
+        })
+        res.json(result)
 
     }
 
 })
 
 //### Create a Review for a Spot based on the Spot's id
-router.post("/:spotId/reviews", requireAuth, async (req, res) => {
+router.post("/:spotId/reviews", requireAuth, validateReview, async (req, res) => {
     let { spotId } = req.params;
     spotId = parseInt(spotId)
 
     const { review, stars } = req.body
 
-    const targetSpot = await Review.findOne({
+    const currentUserId = req.user.id
+
+
+
+    const targetSpot = await Spot.findOne({
         where: {
-            spotId
+            id: spotId
         }
 
     })
 
-    if (targetSpot && !targetSpot.review) {
+    const targetReviews = await Review.findAll({
+        where: {
+            spotId
+        }
+    })
+
+    for (let review of targetReviews) {
+        if (review.userId === currentUserId) {
+            const err = new Error("User already has a review for this spot");
+            err.status = 403;
+            err.error = "User already has a review for this spot"
+            res.status(403)
+            res.json(err)
+        }
+    }
+
+
+    if (targetSpot) {
         //this is edit, not add, need to refactor
-        targetSpot.review = review
-        targetSpot.stars = stars
+        const newReview = await Review.create({
+            review,
+            stars,
+            userId: currentUserId,
+            spotId
+        })
         res.status(201)
-        res.json(targetSpot)
+        res.json(newReview)
+
     } else if (!targetSpot) {
         const err = new Error("Couldn't find a Spot with the specified id");
         err.status = 404;
@@ -325,13 +419,8 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
         err.errors = ["Couldn't find a Spot with the specified id"]
         res.status(404)
         res.json(err)
-    } else if (targetSpot.review) {
-        const err = new Error("User already has a review for this spot");
-        err.status = 403;
-        err.error = "User already has a review for this spot"
-        res.status(403)
-        res.json(err)
     }
+
 
 
 })
@@ -349,21 +438,36 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
         }
     })
 
-    // console.log(theSpot)
+    if (!theSpot) {
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+
+        err.error = "Spot couldn't be found"
+        res.status(404)
+        res.json(err)
+    }
+
+    //owner cannot book
+
+    const ownerId = theSpot.ownerId
+    const currentUserId = req.user.id
+
+    if (ownerId === currentUserId) {
+        const err = new Error("Owner is not allowed to book his/her own spots");
+        err.status = 404;
+
+        err.error = "Owner is not allowed to book his/her own spots"
+        res.status(404)
+        res.json(err)
+    }
+
+
+    //end date before start date
 
     const start = new Date(startDate)
     const end = new Date(endDate)
 
-    if (start.getTime() < end.getTime()) {
-
-        const newBooking = await Booking.create({
-            startDate,//do we need to format the response date here??
-            endDate,
-
-        })
-
-        res.json(newBooking) //how do I insert spotId and UserId to it?
-    } else if (start.getTime() > end.getTime()) {
+    if (start.getTime() > end.getTime()) {
         const err = new Error("Validation error");
         err.status = 400;
         err.title = "Validation error"
@@ -373,14 +477,73 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
         res.status(400)
         res.json(err)
 
-    } else if (!theSpot) {//this if statement does not work, question asked
-        const err = new Error("Spot couldn't be found");
-        err.status = 404;
-
-        err.error = "Spot couldn't be found"
-        res.status(404)
-        res.json(err)
     }
+
+    //overlapping
+
+    const exsitBookings = await Booking.findAll(
+        {
+            where: {
+                spotId
+            }
+        }
+    )
+
+    for (let booking of exsitBookings) {
+
+        const existingStart = booking.startDate.getTime()
+        const existingEnd = booking.endDate.getTime()
+
+        if (start.getTime() <= existingEnd && start.getTime() >= existingStart) {
+            res.status(403);
+            return res.json({
+                message: "Sorry, this spot is already booked for the specified dates",
+                statusCode: 403,
+                errors: {
+                    startDate: "Start date conflicts with an existing booking",
+                    endDate: "End date conflicts with an existing booking"
+                }
+            })
+        }
+        if (end.getTime() <= existingEnd && end.getTime() >= existingStart) {
+            res.status(403);
+            return res.json({
+                message: "Sorry, this spot is already booked for the specified dates",
+                statusCode: 403,
+                errors: {
+                    startDate: "Start date conflicts with an existing booking",
+                    endDate: "End date conflicts with an existing booking"
+                }
+            })
+        }
+
+    }
+
+
+    //success booking
+    if (start.getTime() < end.getTime()) {
+
+        const newBooking = await Booking.create({
+            startDate,//the date format does not matter
+            endDate,
+            spotId,
+            userId: currentUserId
+
+        })
+
+        //to show the result
+        const newId = newBooking.id
+
+        const result = await Booking.findOne({
+            where: {
+                id: newId
+            }
+        })
+
+        res.json(result)
+    }
+
+
 
 
 
@@ -437,6 +600,47 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 
 })
 
+//### Delete a Spot
+
+
+router.delete("/:spotId", requireAuth, async (req, res) => {
+    let { spotId } = req.params
+    spotId = parseInt(spotId)
+
+    const theSpot = await Spot.findOne({
+        where: {
+            id: spotId
+        }
+    })
+
+    if (!theSpot) {
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        err.error = "Spot couldn't be found"
+        res.status(404)
+        res.json(err)
+
+    }
+
+    const ownerId = theSpot.ownerId
+    const currentUserId = req.user.id
+
+    if (ownerId !== currentUserId) {
+        const err = new Error("You don't have authorization");
+        err.status = 401;
+
+        err.error = "You don't have authorization"
+        res.status(401)
+        res.json(err)
+
+    } else if (ownerId === currentUserId) {
+        await theSpot.destroy()
+        res.json("Successfully deleted")
+    }
+
+
+
+})
 
 
 module.exports = router;
