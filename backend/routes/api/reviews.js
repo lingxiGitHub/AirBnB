@@ -28,22 +28,25 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
     })
 
     if (!foundReview) {
-        const err = new Error("Review couldn't be found");
-        err.status = 404;
-        err.errors = "Review couldn't be found"
-        res.status(404)
-        res.json(err)
 
+        res.status(404)
+
+        return res.json({
+            message: "Review couldn't be found",
+            statusCode: 404,
+
+
+        })
     }
 
     const ownerId = foundReview.userId;
     // console.log(ownerId)
 
     if (ownerId !== currentUserId) {
-        const err = new Error("You don't have authorization");
-        err.status = 401;
-        err.error = "You don't have authorization"
-        res.status(401)
+        const err = new Error("Forbidden");
+        err.status = 403;
+        err.error = "Forbidden"
+        res.status(403)
         res.json(err)
 
     }
@@ -65,11 +68,16 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
     }
 
     if (count >= 10) {
-        const err = new Error("Maximum number of images for this resource was reached");
-        err.status = 403;
-        err.error = "Maximum number of images for this resource was reached"
+
         res.status(403)
-        res.json(err)
+
+
+        return res.json({
+            message: "Maximum number of images for this resource was reached",
+            statusCode: 403,
+
+
+        })
 
 
     }
@@ -124,10 +132,13 @@ router.get("/current", requireAuth, async (req, res) => {
                 attributes: ["id", "firstName", "lastName"]
             },
             {
-                model: Spot,//how to add previewImage???POJO??
+                model: Spot,
+                attributes: {
+                    exclude: ["createdAt", "updatedAt", "description"]
+                },
                 include: [{
                     model: SpotImage,
-                    // attributes:["id","url"]
+
                 }]
             },
 
@@ -161,6 +172,8 @@ router.get("/current", requireAuth, async (req, res) => {
 
 })
 
+//### Edit a Review
+
 router.put("/:reviewId", requireAuth, async (req, res) => {
     let { reviewId } = req.params
     reviewId = parseInt(reviewId)
@@ -173,40 +186,68 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
         }
     })
 
+    if (!theReview) {
+        // const err = new Error("Review couldn't be found");
+        // err.statusCode = 404;
+        // err.errors = "Review couldn't be found"
+        res.status(404)
+        // res.json(err)
+        // return next(err);
+
+        return res.json({
+            message: "Review couldn't be found",
+            statusCode: 404,
+            // errors: "Review couldn't be found"
+
+        })
+    }
+
     const userId = theReview.userId
+
+    if (userId !== req.user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
+        err.error = "Forbidden"
+        res.status(403)
+        return res.json(err)
+    }
 
     // console.log(userId)
     // console.log(req.user.id)
 
-    if (!theReview) {
-        const err = new Error("Review couldn't be found");
-        err.statusCode = 404;
-        err.errors = "Review couldn't be found"
-        res.status(404)
-        res.json(err)
 
-    }
 
     if (!review || stars < 1 || stars > 5) {
-        const err = new Error("Validation error");
-        err.statusCode = 400;
-        err.errors = {
-            "review": "Review text is required",
-            "stars": "Stars must be an integer from 1 to 5",
-        }
+        // const err = new Error("Validation error");
+        // err.statusCode = 400;
+        // err.errors = {
+        //     "review": "Review text is required",
+        //     "stars": "Stars must be an integer from 1 to 5",
+        // }
         res.status(400)
-        res.json(err)
-    }
+        // res.json(err)
+        // return next(err);
 
-    if (userId == req.user.id && theReview && review && stars >= 1 && stars <= 5) {
-        await theReview.update({
-            review,
-            stars
+        return res.json({
+            message: "Validation error",
+            statusCode: 400,
+            errors: {
+                "review": "Review text is required",
+                "stars": "Stars must be an integer from 1 to 5",
+            }
+
         })
-
-        res.json(theReview)
-
     }
+
+
+    await theReview.update({
+        review,
+        stars
+    })
+
+    res.json(theReview)
+
+
 
 
 
@@ -229,11 +270,20 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
     })
 
     if (!theReview) {
-        const err = new Error("Couldn't find a Review with the specified id");
-        err.statusCode = 404;
-        err.errors = "Couldn't find a Review with the specified id"
+        // const err = new Error("Couldn't find a Review with the specified id");
+        // err.statusCode = 404;
+        // err.errors = "Couldn't find a Review with the specified id"
         res.status(404)
-        res.json(err)
+        // res.json(err)
+        // return next(err);
+
+        return res.json({
+            message: "Couldn't find a Review with the specified id",
+            statusCode: 404,
+            // errors: "Couldn't find a Review with the specified id"
+
+        })
+
     }
 
     const currentUserId = req.user.id
@@ -241,18 +291,22 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 
     if (currentUserId !== userId) {
 
-        const err = new Error("You don't have authorization");
-        err.status = 401;
+        const err = new Error("Forbidden");
+        err.status = 403;
 
-        err.error = "You don't have authorization"
-        res.status(401)
+        err.error = "Forbidden"
+        res.status(403)
         res.json(err)
     }
 
     if (theReview && currentUserId === userId) {
 
         await theReview.destroy()
-        res.json("Successfully deleted")
+        res.status(200)
+        res.json({
+            statusCode: 200,
+            message: "Successfully deleted"
+        })
 
     }
 

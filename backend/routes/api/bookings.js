@@ -64,27 +64,30 @@ router.put("/:bookingId", requireAuth, async (req, res, next) => {
         }
     })
 
-    const spotId=theBooking.spotId
+
 
     if (!theBooking) {
-        const err = new Error("Booking couldn't be found");
-        err.status = 404;
-        err.error = "Booking couldn't be found"
+
+
         res.status(404)
-        res.json(err)
+
+        return res.json({
+            message: "Booking couldn't be found",
+            statusCode: 404,
+        })
 
     }
 
     //current user must be the owner
     const userId = theBooking.userId
     const currentUserId = req.user.id
-
+    const spotId = theBooking.spotId
 
     if (userId !== currentUserId) {
-        const err = new Error("You don't have authorization");
-        err.status = 401;
-        err.error = "You don't have authorization"
-        res.status(401)
+        const err = new Error("Forbidden");
+        err.status = 403;
+        err.error = "Forbidden"
+        res.status(403)
         res.json(err)
     }
 
@@ -94,20 +97,24 @@ router.put("/:bookingId", requireAuth, async (req, res, next) => {
     const end = new Date(endDate)
 
     if (start.getTime() >= end.getTime()) {
-        const err = new Error("Validation error");
-        err.status = 400;
-        err.title = "Validation error"
-        err.error = {
-            "endDate": "endDate cannot be on or before startDate"
-        }
+
         res.status(400)
-        res.json(err)
+
+        return res.json({
+            message: "Validation error",
+            statusCode: 400,
+            errors: {
+                "endDate": "endDate cannot come before startDate"
+            }
+
+
+        })
 
     }
 
     //Can't edit a booking that's past the end date
     const rightnow = Date.now()
-    
+
 
     if (rightnow > end.getTime()) {
         const err = new Error("Can't edit a booking that's past the end date");
@@ -162,12 +169,12 @@ router.put("/:bookingId", requireAuth, async (req, res, next) => {
 
         console.log(start.getTime())//desired start date from 1970
         console.log(end.getTime())//desired end date from 1970
-       
+
         console.log(existingEnd)//existing end
         console.log(existingStart)//existing start
     }
 
-    
+
 
     //success
     if (start.getTime() < end.getTime() && userId === currentUserId && theBooking && rightnow < end.getTime()) {
@@ -180,13 +187,6 @@ router.put("/:bookingId", requireAuth, async (req, res, next) => {
         res.json(theBooking)
     }
 }
-
-
-
-
-
-
-    //this is the space reserved for conflict booking
 
 )
 
@@ -205,12 +205,18 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
     })
 
     if (!theBooking) {
-        const err = new Error("Booking couldn't be found");
-        err.status = 404;
-        // err.title = "Booking couldn't be found"
-        err.error = "Booking couldn't be found"
+        // const err = new Error("Booking couldn't be found");
+        // err.status = 404;
+        // // err.title = "Booking couldn't be found"
+        // err.error = "Booking couldn't be found"
+        // res.status(404)
+        // return res.json(err)
+
         res.status(404)
-        return res.json(err)
+        return res.json({
+            message: "Booking couldn't be found",
+            statusCode: 404
+        })
     }
 
 
@@ -221,11 +227,11 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
     // console.log(currentUserId)
 
     if (userId !== currentUserId) {
-        const err = new Error("You don't have authorization");
-        err.status = 401;
+        const err = new Error("Forbidden");
+        err.status = 403;
 
-        err.error = "You don't have authorization"
-        res.status(401)
+        err.error = "Forbidden"
+        res.status(403)
         return res.json(err)
     };
 
@@ -249,7 +255,11 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
     if (userId === currentUserId && theBooking) {
         // res.json(theBooking)
         await theBooking.destroy()
-        res.json("Successfully deleted")
+        res.status(200)
+        return res.json({
+            message: "Successfully deleted",
+            statusCode: 200
+})
     }
 
 

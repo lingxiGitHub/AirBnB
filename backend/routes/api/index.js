@@ -49,12 +49,18 @@ router.delete("/spot-images/:imageId", requireAuth, async (req, res) => {
     })
 
     if (!theImage) {
-        const err = new Error("Spot Image couldn't be found");
-        err.statusCode = 404;
+        // const err = new Error("Spot Image couldn't be found");
+        // err.statusCode = 404;
 
-        err.error = "Spot Image couldn't be found"
+        // err.error = "Spot Image couldn't be found"
+        // res.status(404)
+        // return res.json(err)
+
         res.status(404)
-        return res.json(err)
+        res.json({
+            message: "Spot Image couldn't be found",
+            statusCode: 404
+        })
     }
 
     //need to figure out how to Only the owner of the spot is authorized to delete
@@ -70,11 +76,11 @@ router.delete("/spot-images/:imageId", requireAuth, async (req, res) => {
     const ownerId = theSpot.id
 
     if (currentUserId !== ownerId) {
-        const err = new Error("You don't have authorization");
-        err.status = 401;
+        const err = new Error("Forbidden");
+        err.status = 403;
 
-        err.error = "You don't have authorization"
-        res.status(401)
+        err.error = "Forbidden"
+        res.status(403)
         return res.json(err)
 
     }
@@ -83,7 +89,11 @@ router.delete("/spot-images/:imageId", requireAuth, async (req, res) => {
         // res.json(theSpot.ownerId)
         await theImage.destroy()
 
-        res.json("Successfully deleted")
+        res.status(200)
+        res.json({
+            statusCode: 200,
+            message: "Successfully deleted"
+        })
 
     }
 
@@ -105,12 +115,18 @@ router.delete("/review-images/:imageId", requireAuth, async (req, res) => {
     })
 
     if (!theImage) {
-        const err = new Error("Review Image couldn't be found");
-        err.statusCode = 404;
+        // const err = new Error("Review Image couldn't be found");
+        // err.statusCode = 404;
 
-        err.error = "Review Image couldn't be found"
+        // err.error = "Review Image couldn't be found"
+        // res.status(404)
+        // res.json(err)
+
         res.status(404)
-        res.json(err)
+        res.json({
+            message: "Review Image couldn't be found",
+            statusCode: 404
+        })
 
     }
 
@@ -122,18 +138,22 @@ router.delete("/review-images/:imageId", requireAuth, async (req, res) => {
     //    console.log(currentUserId)
 
     if (userId !== currentUserId) {
-        const err = new Error("You don't have authorization");
-        err.status = 401;
+        const err = new Error("Forbidden");
+        err.status = 403;
 
-        err.error = "You don't have authorization"
-        res.status(401)
+        err.error = "Forbidden"
+        res.status(403)
         res.json(err)
 
     }
 
     if (userId === currentUserId && theImage) {
         await theImage.destroy()
-
+        res.status(200)
+        res.json({
+            statusCode: 200,
+            message: "Successfully deleted"
+        })
     }
 
 

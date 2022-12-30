@@ -19,11 +19,22 @@ const router = express.Router();
 // backend/routes/api/session.js
 // ...
 
-// Log in
+// ### Log In a User
 router.post(
     '/',
     async (req, res, next) => {
         const { credential, password } = req.body;
+
+        if (!credential || !password) {
+            const err = new Error('Validation error');
+            err.status = 400;
+            err.title = 'Validation error';
+            err.errors = {
+                "credential": "Email or username is required",
+                "password": "Password is required"
+            };
+            return next(err);
+        }
 
         const user = await User.login({ credential, password });
 
@@ -34,6 +45,8 @@ router.post(
             err.errors = ['The provided credentials were invalid.'];
             return next(err);
         }
+
+
 
         await setTokenCookie(res, user);
 
