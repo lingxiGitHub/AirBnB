@@ -319,10 +319,11 @@ router.put("/:spotId", requireAuth, validateSpot, async (req, res) => {
 
 
     if (!targetSpot) {
+        res.status(404)
         return res.json({
             message: "Spot couldn't be found",
             statusCode: 404,
-            errors: "Spot couldn't be found"
+
 
         })
 
@@ -727,9 +728,13 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 
 
     if (userId == currentUserId) {
-        res.json(bookings)
+        res.json({
+            "Bookings": bookings
+        })
     } else if (userId != currentUserId) {
-        res.json(restrictedBooking)
+        res.json({
+            "Bookings": restrictedBooking
+        })
     }
 
     res.json(bookings)
