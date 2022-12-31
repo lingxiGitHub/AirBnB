@@ -82,10 +82,18 @@ router.post(
         }
         const user = await User.signup({ email, username, password, firstName, lastName });
 
+        // const userId=user.dataValues.id
+
+        // const result=await User.findOne({
+        //     where:{
+        //         id:userId
+        //     }
+        // })
+
         await setTokenCookie(res, user);
 
         return res.json({
-            user
+            result
 
         });
 

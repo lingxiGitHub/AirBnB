@@ -23,6 +23,7 @@ router.get("/current", requireAuth, async (req, res) => {
         include: [
             {
                 model: Spot,
+                attributes:{exclude:["updatedAt","createdAt"]},
                 include: [{ model: SpotImage }]
             }//need to add previewImage to spot
         ]
@@ -47,7 +48,9 @@ router.get("/current", requireAuth, async (req, res) => {
         delete booking.Spot.SpotImages
     })
 
-    res.json(bookingList)
+    res.json({
+        "Bookings":bookingList
+    })
 })
 
 

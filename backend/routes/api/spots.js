@@ -711,10 +711,10 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 
     if (!bookings) {
 
-        res.status(403);
+        res.status(404);
         return res.json({
             message: "Spot couldn't be found",
-            statusCode: 403,
+            statusCode: 404,
 
         })
     }
@@ -773,7 +773,11 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 
     } else if (ownerId === currentUserId) {
         await theSpot.destroy()
-        res.json("Successfully deleted")
+        res.status(200)
+        return res.json({
+            message: "Successfully deleted",
+            statusCode: 200
+        })
     }
 
 
