@@ -233,7 +233,9 @@ router.get("/current", requireAuth, async (req, res, next) => {
         delete spot.Reviews;
     });
 
-    res.json(Spots)
+    res.json({
+        "Spots": Spots
+    })
 })
 
 
@@ -654,6 +656,19 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
             })
         }
 
+        if (start.getTime() <= existingStart && end.getTime() >= existingEnd) {
+            res.status(403);
+            return res.json({
+                message: "Sorry, this spot is already booked for the specified dates",
+                statusCode: 403,
+                errors: {
+                    startDate: "Start date conflicts with an existing booking",
+                    endDate: "End date conflicts with an existing booking"
+                }
+            })
+
+        }
+
     }
 
 
@@ -729,11 +744,11 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 
     if (userId == currentUserId) {
         res.json({
-            "Bookings": bookings
+            "Bookings": [bookings]
         })
     } else if (userId != currentUserId) {
         res.json({
-            "Bookings": restrictedBooking
+            "Bookings": [restrictedBooking]
         })
     }
 

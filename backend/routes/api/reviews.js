@@ -168,7 +168,9 @@ router.get("/current", requireAuth, async (req, res) => {
         delete review.Spot.SpotImages
     })
 
-    res.json(reviewsList)
+    res.json({
+        "Reviews": reviewsList
+    })
 
 })
 
@@ -217,7 +219,7 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
 
 
 
-    if (!review || stars < 1 || stars > 5) {
+    if (!review || !stars || stars < 1 || stars > 5) {
         // const err = new Error("Validation error");
         // err.statusCode = 400;
         // err.errors = {
