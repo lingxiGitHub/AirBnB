@@ -59,7 +59,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
         }
     })
 
-    console.log(allReviewImages)
+    // console.log(allReviewImages)
 
     let count = 0
 

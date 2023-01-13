@@ -39,6 +39,10 @@ const validateSignup = [
     handleValidationErrors
 ];
 
+
+
+
+
 // backend/routes/api/users.js
 // ...
 
@@ -100,24 +104,5 @@ router.post(
     }
 );
 
-
-// backend/routes/api/users.js
-// ...
-
-// // Sign up
-// router.post(
-//     '/',
-//     validateSignup,
-//     async (req, res) => {
-//         const { email, password, username } = req.body;
-//         const user = await User.signup({ email, username, password });
-
-//         await setTokenCookie(res, user);
-
-//         return res.json({
-//             user: user
-//         });
-//     }
-// );
 
 module.exports = router;
