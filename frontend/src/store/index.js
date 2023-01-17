@@ -4,9 +4,13 @@ import thunk from "redux-thunk";
 // frontend/src/store/index.js
 // ...
 import sessionReducer from './session';
+import spotsReducer from "./spots"
+import singleSpotReducer from "./singleSpot";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+  spots: spotsReducer,
+  singleSpot: singleSpotReducer
 });
 // ...
 

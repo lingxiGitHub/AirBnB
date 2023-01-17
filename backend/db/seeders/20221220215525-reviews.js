@@ -26,9 +26,16 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        userId: 1,
-        review: "good place",
-        stars: 4,
+        userId: 7,
+        review: "AMAZING!!! cozy and beautiful. The welcome basket was so thoughtful and personal. We had an amazing relaxing weekend in the treehouse! We will be back!!",
+        stars: 5,
+
+      },
+      {
+        spotId: 1,
+        userId: 8,
+        review: "Our experience was terrific!! Amber was very responsive and helpful throughout our entire stay. We had a few hiccups the first night but Amber was willing to come to the treehouse and help us so that we could enjoy our time there. ",
+        stars: 5,
 
       },
       {

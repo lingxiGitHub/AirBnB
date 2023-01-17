@@ -1,0 +1,53 @@
+[
+    {
+        "id": 1,
+        "ownerId": 1,
+        "address": "1001 Walnut Street",
+        "city": "Philadelphia",
+        "state": "PA",
+        "country": "USA",
+        "lat": 100.01,
+        "lng": 100.1,
+        "name": "treehouse",
+        "description": "the treehouse",
+        "price": 100,
+        "createdAt": "2023-01-16T01:00:01.000Z",
+        "updatedAt": "2023-01-16T01:00:01.000Z",
+        "previewImage": "https://media.timeout.com/images/105951671/750/562/image.jpg",
+        "avgRating": 4
+    },
+    {
+        "id": 2,
+        "ownerId": 2,
+        "address": "2001 Walnut Street",
+        "city": "LA",
+        "state": "CA",
+        "country": "USA",
+        "lat": 200.01,
+        "lng": 200.1,
+        "name": "beachhouse",
+        "description": "the beachhouse",
+        "price": 200,
+        "createdAt": "2023-01-16T01:00:01.000Z",
+        "updatedAt": "2023-01-16T01:00:01.000Z",
+        "previewImage": "www.spot2image.com",
+        "avgRating": 5
+    },
+    {
+        "id": 3,
+        "ownerId": 3,
+        "address": "3001 Walnut Street",
+        "city": "LA",
+        "state": "CA",
+        "country": "USA",
+        "lat": 300.01,
+        "lng": 300.1,
+        "name": "beachhouse",
+        "description": "the beachhouse",
+        "price": 300,
+        "createdAt": "2023-01-16T01:00:01.000Z",
+        "updatedAt": "2023-01-16T01:00:01.000Z",
+        "previewImage": "www.spot3image.com",
+        "avgRating": 5
+    }
+]

@@ -1,0 +1,61 @@
+[
+    {
+        "id": 1,
+        "ownerId": 1,
+        "address": "1001 Walnut Street",
+        "city": "Trenton",
+        "state": "Georgia",
+        "country": "United States",
+        "lat": 100.01,
+        "lng": 100.1,
+        "name": "Whippoorwill Retreat Treehouse",
+        "description": "Whippoorwill Retreat is nestled in treetops on Sand Mountain, 20 min. from Chattanooga, Tn. A private, romantic two-story getaway with floor to ceiling views, sun/moon rise perch, large outdoor porch w/fireplace, & fire pit for lazy long nights. Enjoy nature with 2 outdoor soaking tubs that includes the Whippoorwill scent bath",
+        "price": 356,
+        "createdAt": "2023-01-17T04:42:14.000Z",
+        "updatedAt": "2023-01-17T04:42:14.000Z",
+        "Owner": {
+            "id": 1,
+            "firstName": "Ada",
+            "lastName": "Albert"
+        },
+        "SpotImages": [
+            {
+                "id": 4,
+                "url": "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/087f3a0c-12cf-4c16-80f1-c42ee6790557.jpeg?im_w=1200",
+                "preview": false
+            },
+            {
+                "id": 3,
+                "url": "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/45fa0467-4aed-4d19-a988-13c6c284fb0d.jpeg?im_w=1200",
+                "preview": false
+            },
+            {
+                "id": 5,
+                "url": "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/5578d82b-99f1-4f7c-a9e5-676c7a232b89.jpeg?im_w=1200",
+                "preview": false
+            },
+            {
+                "id": 6,
+                "url": "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/628a37a1-2dc3-4379-a755-20a000b0c754.jpeg?im_w=1200",
+                "preview": false
+            },
+            {
+                "id": 7,
+                "url": "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/674b102c-cc2d-4cd3-90f7-6cb0cbc0abea.jpeg?im_w=1200",
+                "preview": false
+            },
+            {
+                "id": 2,
+                "url": "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/7ef593e9-1849-4843-9a0f-41616c5b2d23.jpeg?im_w=1200",
+                "preview": false
+            },
+            {
+                "id": 1,
+                "url": "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/bed11433-68e5-45bb-8ad6-112783ee5297.jpeg?im_w=960",
+                "preview": true
+            }
+        ],
+        "avgStarRating": 5,
+        "numReviews": 2
+    }
+]
