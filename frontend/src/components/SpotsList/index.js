@@ -14,13 +14,14 @@ function SpotsList() {
     })
 
     const allSpots = allSpotsObj ? Object.values(allSpotsObj) : [];
-
+    
+const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAllSpots()).then(() => setIsLoaded(true));
     }, [dispatch])
 
-    const [isLoaded, setIsLoaded] = useState(false);
+    
 
     return (
         isLoaded && (
@@ -29,7 +30,7 @@ function SpotsList() {
                 <h2>this is home</h2>
                 {allSpots.map(spot => {
                     return (
-                        <Link key={spot.id} to={`/rooms/${spot.id}`}>
+                        <Link key={spot.id} to={`/spots/${spot.id}`}>
                             <Spot spot={spot} />
 
                         </Link>)

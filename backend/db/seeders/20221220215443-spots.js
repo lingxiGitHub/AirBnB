@@ -39,29 +39,43 @@ module.exports = {
       {
         ownerId: 2,
         address: '2001 Walnut Street',
-        city: "LA",
-        state: "CA",
+        city: "Packwood",
+        state: "WA",
         country: "USA",
         lat: 200.01,
         lng: 200.1,
-        name: "beachhouse",
-        description: "the beachhouse",
-        price: 200,
+        name: "Cozy River Cabin at Mt. Rainier",
+        description: "Our original 1960's A-frame cabin is nestled (a literal stone's-throw) between the Cowlitz River and Coal Creek...surrounded by unobstructed river and mountain views within beautiful National Forest. The feeling of being here can only be understood by experiencing it!",
+        price: 302,
 
       },
       {
         ownerId: 3,
         address: '3001 Walnut Street',
-        city: "LA",
+        city: "Oxnard",
         state: "CA",
         country: "USA",
         lat: 300.01,
         lng: 300.1,
-        name: "beachhouse",
-        description: "the beachhouse",
-        price: 300,
+        name: "Salt House’s Relaxed Cali Vibe",
+        description: "Everything was intentionally chosen to provide a stylish, fun, and comfortable stay; the rooftop deck offers the perfect spot to enjoy an afternoon cocktail or morning coffee. Both Hollywood beach & the harbor are steps away — for surfing, SUPing, or kayaking - this location is perfect! This small beach town has much to offer, but you’ll be tempted to just stay in and cozy up on the comfy sofas, play ping-pong, or ride our bikes. ",
+        price: 550,
 
       },
+      {
+        ownerId: 4,
+        address: '4001 Walnut Street',
+        city: "Cleveland",
+        state: "WI",
+        country: "USA",
+        lat: 400.01,
+        lng: 400.1,
+        name: "THE CASTLE VINEYARD–Theater, Golf Simulator, Sauna",
+        description: "For travelers who want an exclusive taste of Tuscany without the hassle of jetting across an ocean, The Castle Vineyard is the place to stay. The dramatic, spellbinding stone castle proudly overlooks over twenty acres of idyllic rolling hills and a gorgeous, working vineyard. Once inside, the interior does nothing to dispel the magic.",
+        price: 312,
+
+      },
+
 
 
     ], {});

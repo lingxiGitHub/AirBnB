@@ -2,27 +2,44 @@ import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom"
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadSingleSpot } from "../../store/singleSpot"
+import { loadSingleSpot, getSingleSpot, deleteSpotThunk } from "../../store/spots"
+import { useParams } from 'react-router-dom';
+import { updateSingleSpot } from "../../store/spots"
+import UpdateSpot from "../UpdateSpot";
+import { deleteSpot } from "../../store/spots"
+import DisplayReview from "../Review";
+import CreateReview from "../CreateReview"
 
 function SingleSpotComponent() {
+
+    const { spotId } = useParams()
+    // console.log("Single Spot id", spotId)
 
 
 
     const singleSpot = useSelector((state) => {
-        console.log("singleSpotState", state)
-        return state.singleSpot
+        // console.log("singleSpotState", state)
+        return state.spots.singleSpot
     })
 
-    //console.log(singleSpot)
+    // console.log("singleSpot at component", singleSpot)
+
 
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(loadSingleSpot());
-        setIsLoaded(true)
-    }, [dispatch])
 
+    const handleDelete = () => {
+        dispatch(deleteSpotThunk(+spotId))
+    }
+
+    useEffect(() => {
+        dispatch(getSingleSpot(+spotId)).then(() => setIsLoaded(true));
+
+        // setIsLoaded(true)
+    }, [dispatch, spotId])
 
     const [isLoaded, setIsLoaded] = useState(false);
+
+    const [showEdit, setShowEdit] = useState(false);
 
 
 
@@ -39,13 +56,38 @@ function SingleSpotComponent() {
                         <p>{singleSpot.country}</p>
                     </div>
 
+
+                    <div className="updateSpot">
+                        <button
+                            onClick={() => setShowEdit(!showEdit)}
+                        >Update Spot</button>
+                    </div>
+                    {showEdit && (
+                        <UpdateSpot
+                            showEdit={showEdit}
+                            setShowEdit={setShowEdit}
+                            singleSpot={singleSpot}
+                        />
+                    )}
+
+                    <div>
+                        <button
+                            onClick={handleDelete}
+                        >Delete Spot</button>
+                    </div>
+
                     <div className="photos">
                         <h1>{singleSpot.name}</h1>
-                        <img src={singleSpot.SpotImages[0].url} alt="photo 1" width="200" />
+                        {singleSpot.SpotImages.map(img=>{
+                            return (
+                                <img key={img.id} src={img.url} alt="pic" width="200" />
+                            )
+                        })}
+                        {/* <img src={singleSpot.SpotImages[0].url} alt="photo 1" width="200" />
                         <img src={singleSpot.SpotImages[1].url} alt="photo 2" width="200" />
                         <img src={singleSpot.SpotImages[2].url} alt="photo 3" width="200" />
                         <img src={singleSpot.SpotImages[5].url} alt="photo 4" width="200" />
-                        <img src={singleSpot.SpotImages[6].url} alt="photo 5" width="200" />
+                        <img src={singleSpot.SpotImages[6].url} alt="photo 5" width="200" /> */}
 
 
                     </div>
@@ -72,12 +114,7 @@ function SingleSpotComponent() {
                         <p>{singleSpot.description}</p>
                         <button>Show more</button>
                         <hr></hr>
-                        <h3>Where you'll sleep</h3>
-                        <img src={singleSpot.SpotImages[3].url} width="100" />
-                        <p>Beddroom 1</p>
-                        <img src={singleSpot.SpotImages[4].url} width="100" />
-                        <p>Beddroom 2</p>
-                        <hr></hr>
+                    
 
                         <h3>What this place offers</h3>
                         <p>Mountain view</p>
@@ -88,21 +125,12 @@ function SingleSpotComponent() {
                         <hr></hr>
                     </div>
 
-                    <div className="reviews">
-                        <p>{singleSpot.avgStarRating}</p>
-                        <p>{singleSpot.numReviews}</p>
-                        <div className="review-1">
-                            <h3>data.Reviews[0].User.firstName</h3>
-                            <p>data.Reviews[0].createdAt</p>
-                            <p>data.Reviews[0].review</p>
-                        </div>
-                        <div className="review-2">
-                            <h3>data.Reviews[1].User.firstName</h3>
-                            <p>data.Reviews[1].createdAt</p>
-                            <p>data.Reviews[1].review</p></div>
+                
 
-                        <button>Show all reviews</button>
-                    </div>
+                    <DisplayReview 
+                        singleSpot={singleSpot}
+                        spotId={spotId}
+                        />
 
                     <div className="host-info">
                         <h2>Hosted by Amber</h2>

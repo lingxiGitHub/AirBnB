@@ -40,16 +40,44 @@ module.exports = {
       },
       {
         spotId: 2,
-        userId: 2,
-        review: "good place too",
-        stars: 5,
+        userId: 5,
+        review: "10/10 will recommend to friends!! The location was PERFECT! It was so cozy and cute! A-frame was an A++++++!!!!!",
+        stars: 4.7,
+
+      },
+      {
+        spotId: 2,
+        userId: 6,
+        review: "Beautiful cabin and great views across the river from the campfire. Would stay again in a heartbeat.",
+        stars: 4.5,
 
       },
       {
         spotId: 3,
-        userId: 3,
-        review: "good place too",
-        stars: 5,
+        userId: 9,
+        review: "Lovely house, amazing location, and the host was great - super communicative and helpful. I'd definitely stay again!",
+        stars: 4.9,
+
+      },
+      {
+        spotId: 3,
+        userId: 10,
+        review: "Great location and beautiful home. The space is curated so well and provided a comfortable and pretty backdrop for my son's first birthday.",
+        stars: 4.8,
+
+      },
+      {
+        spotId: 4,
+        userId: 11,
+        review: "Great stay. Responsive and helpful host. Highly recommend!",
+        stars: 4.8,
+
+      },
+      {
+        spotId: 4,
+        userId: 12,
+        review: "If we could give ten stars we would! This will undoubtedly be one of the highlights of our year.",
+        stars: 4.9,
 
       },
      

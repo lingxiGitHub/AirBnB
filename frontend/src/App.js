@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import SpotsList from "./components/SpotsList";
 import SingleSpotComponent from "./components/SingleSpot";
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,9 +27,10 @@ function App() {
           <Route exact path="/">
             <SpotsList />
           </Route>
-          <Route path="/rooms/:roomId">
+          <Route path="/spots/:spotId">
             <SingleSpotComponent />
           </Route>
+         
         </Switch>
       )}
     </>
