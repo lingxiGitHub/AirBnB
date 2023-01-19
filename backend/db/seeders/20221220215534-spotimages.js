@@ -49,16 +49,7 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/5578d82b-99f1-4f7c-a9e5-676c7a232b89.jpeg?im_w=1200",
         preview: false,
       },
-      {
-        spotId: 1,
-        url: "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/628a37a1-2dc3-4379-a755-20a000b0c754.jpeg?im_w=1200",
-        preview: false,
-      },
-      {
-        spotId: 1,
-        url: "https://a0.muscache.com/im/pictures/miso/Hosting-31202365/original/674b102c-cc2d-4cd3-90f7-6cb0cbc0abea.jpeg?im_w=1200",
-        preview: false,
-      },
+     
 
       {
         spotId: 2,

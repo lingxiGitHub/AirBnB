@@ -61,6 +61,7 @@ export const addSpot = (newSpot) => async dispatch => {
         })
         if (responseUrl.ok) {
             const createdSpotUrl = await responseUrl.json()
+            return createdSpotId
         }
     }
 
@@ -108,6 +109,7 @@ export const updateSpotThunk = (spot) => async dispatch => {
     if (res.ok) {
         const updatedSpot = await res.json()
         dispatch(updateSingleSpot(updatedSpot))
+        dispatch(getSingleSpot(updatedSpot.id))
         return updatedSpot
     }
 }
@@ -159,13 +161,13 @@ export default function spotsReducer(state = initialState, action) {
 
         case DELETE_SPOT: {
             const deleteSpotState = { ...state }
-            delete deleteSpotState[action.id]
+            delete deleteSpotState.singleSpot[action.id]
             return deleteSpotState
         }
 
         case UPDATE_SPOT: {
             const updateSpotState = { ...state }
-            updateSpotState[action.spot.id] = action.spot
+            updateSpotState.singleSpot[action.spot.id] = action.spot
             // console.log("look")
             // console.log("updateSpotState",updateSpotState)
             return updateSpotState

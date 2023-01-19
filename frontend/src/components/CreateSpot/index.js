@@ -37,8 +37,9 @@ function CreateSpotModal() {
             price,
             url
         }
-        dispatch(addSpot(newSpot)).then(closeModal).then(() => { history.push('/'); history.go(0); })
-            ;
+        dispatch(addSpot(newSpot)).then(createdSpotId => { history.push(`/spots/${createdSpotId}`); closeModal() })
+        // .then(() => { history.push('/'); history.go(0); })
+
     }
     return (
         <>

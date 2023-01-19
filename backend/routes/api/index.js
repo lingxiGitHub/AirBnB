@@ -123,7 +123,7 @@ router.delete("/review-images/:imageId", requireAuth, async (req, res) => {
         // res.json(err)
 
         res.status(404)
-        res.json({
+        return res.json({
             message: "Review Image couldn't be found",
             statusCode: 404
         })
@@ -143,7 +143,7 @@ router.delete("/review-images/:imageId", requireAuth, async (req, res) => {
 
         err.error = "Forbidden"
         res.status(403)
-        res.json(err)
+        return res.json(err)
 
     }
 

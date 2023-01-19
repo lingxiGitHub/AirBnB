@@ -47,7 +47,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
         err.status = 403;
         err.error = "Forbidden"
         res.status(403)
-        res.json(err)
+        return res.json(err)
 
     }
 
@@ -298,7 +298,7 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 
         err.error = "Forbidden"
         res.status(403)
-        res.json(err)
+        return res.json(err)
     }
 
     if (theReview && currentUserId === userId) {

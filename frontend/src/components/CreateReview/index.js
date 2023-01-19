@@ -3,14 +3,15 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { useState } from "react"
 import { addReview } from "../../store/reviews"
+import { loadReviews, getSpotReviews } from "../../store/reviews"
 
-export default function CreateReview({ spotId }) {
+export default function CreateReview({ spotId,showEdit,setShowEdit }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [errors, setErrors] = useState([]);
     const [review, setReview] = useState("")
     const [stars, setStars] = useState("")
-    const { closeModal } = useModal();
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,7 +20,8 @@ export default function CreateReview({ spotId }) {
             review,
             stars
         }
-        dispatch(addReview(newReview, +spotId)).then(closeModal)
+        dispatch(addReview(newReview, +spotId)).then(() => dispatch(getSpotReviews(+spotId)))
+        setShowEdit(false)
     }
 
 

@@ -161,7 +161,7 @@ router.get('/', validateSpotGetAll, async (req, res, next) => {
     Spots.forEach((spot) => {
         spot.SpotImages.forEach(spotImage => {
             // console.log(spotImage.url);
-            if (spotImage.url) {
+            if (spotImage.preview && spotImage.url) {
                 spot.previewImage = spotImage.url;
             }
         })
@@ -339,7 +339,7 @@ router.put("/:spotId", requireAuth, validateSpot, async (req, res) => {
         err.status = 403;
         err.error = "Forbidden"
         res.status(403)
-        res.json(err)
+        return res.json(err)
     }
 
     if (targetSpot && ownerId === req.user.id) {
@@ -458,7 +458,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
         err.status = 403;
         err.error = "Forbidden"
         res.status(403)
-        res.json(err)
+        return res.json(err)
     }
 
     if (ownerId == req.user.id && spot) {//only the owner can create image
@@ -518,7 +518,7 @@ router.post("/:spotId/reviews", requireAuth, validateReview, async (req, res) =>
             err.status = 403;
             err.error = "User already has a review for this spot"
             res.status(403)
-            res.json(err)
+            return res.json(err)
         }
     }
 
@@ -592,7 +592,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 
         err.error = "Owner is not allowed to book his/her own spots"
         res.status(404)
-        res.json(err)
+        return res.json(err)
     }
 
 
@@ -776,7 +776,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
         err.status = 404;
         err.error = "Spot couldn't be found"
         res.status(404)
-        res.json(err)
+        return res.json(err)
 
     }
 
@@ -789,7 +789,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 
         err.error = "Forbidden"
         res.status(403)
-        res.json(err)
+        return res.json(err)
 
     } else if (ownerId === currentUserId) {
         await theSpot.destroy()

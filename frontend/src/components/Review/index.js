@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { loadReviews, getSpotReviews } from "../../store/reviews"
 import CreateReview from "../CreateReview"
-import DeleteReview from "../DeleteReview";
+import { deleteReview, deleteReviewThunk } from "../../store/reviews";
+
 
 
 export default function DisplayReview({ singleSpot, spotId }) {
@@ -30,6 +31,33 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
     const [showEdit, setShowEdit] = useState(false);
 
+    //find the review Id that the userId created
+
+    const currentUserId = useSelector((state) => {
+        return state.session.user.id
+    })
+
+    console.log("currentUserId", currentUserId)
+
+
+    let theReviewId
+
+    for (let review of allReviewArr) {
+        if (+currentUserId === +review.userId) {
+            console.log("review.userId", review.userId)
+            theReviewId = review.id
+        }
+    }
+
+    console.log(theReviewId)
+
+    const handleDelete = () => {
+        dispatch(deleteReviewThunk(+theReviewId)).then(() => dispatch(getSpotReviews(+spotId)))
+    }
+
+
+
+
 
     return (
         isLoaded && (
@@ -43,7 +71,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
                         return (
                             +spotId === +item.spotId && (
-                                <p>{item.review}</p>
+                                <p key={item.id}>{item.review}</p>
                             )
 
                         )
@@ -63,7 +91,9 @@ export default function DisplayReview({ singleSpot, spotId }) {
                         />
                     )}
 
-                    <DeleteReview spotId={spotId} />
+                    <button
+                        onClick={handleDelete}
+                    >Delete Review</button>
                 </div>
             </>
         )

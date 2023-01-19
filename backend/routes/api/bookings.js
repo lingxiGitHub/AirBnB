@@ -91,7 +91,7 @@ router.put("/:bookingId", requireAuth, async (req, res, next) => {
         err.status = 403;
         err.error = "Forbidden"
         res.status(403)
-        res.json(err)
+       return res.json(err)
     }
 
     //endDate cannot come before startDate

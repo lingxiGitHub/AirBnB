@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadSpots, getAllSpots } from "../../store/spots"
 import { useState } from "react"
 
+import "./SpotList.css"
+
 function SpotsList() {
 
 

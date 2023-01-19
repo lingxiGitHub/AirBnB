@@ -9,8 +9,11 @@ import UpdateSpot from "../UpdateSpot";
 import { deleteSpot } from "../../store/spots"
 import DisplayReview from "../Review";
 import CreateReview from "../CreateReview"
+import { useHistory } from "react-router-dom";
 
 function SingleSpotComponent() {
+
+    const history = useHistory();
 
     const { spotId } = useParams()
     // console.log("Single Spot id", spotId)
@@ -28,7 +31,7 @@ function SingleSpotComponent() {
     const dispatch = useDispatch()
 
     const handleDelete = () => {
-        dispatch(deleteSpotThunk(+spotId))
+        dispatch(deleteSpotThunk(+spotId)).then(()=>history.push("/"))
     }
 
     useEffect(() => {
