@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSpotThunk } from "../../store/spots"
+import { useModal } from "../../context/Modal";
 
 
 export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
@@ -17,6 +18,7 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
     const [name, setName] = useState(singleSpot.name)
     const [description, setDescription] = useState(singleSpot.description)
     const [price, setPrice] = useState(singleSpot.price)
+    const { closeModal } = useModal();
 
     // console.log("singleSpot", singleSpot)
 
@@ -36,7 +38,8 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
         }
 
         dispatch(updateSpotThunk(updatedSpot))
-        setShowEdit(false)
+        .then(()=>closeModal())
+        // setShowEdit(false)
     }
 
     const sessionUser = useSelector(state => state.session.user);

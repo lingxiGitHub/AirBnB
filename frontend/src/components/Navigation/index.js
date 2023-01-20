@@ -15,17 +15,17 @@ function Navigation({ isLoaded }) {
     if (sessionUser) {
         sessionLinks = (
             <>
-            <li>
-                <ProfileButton user={sessionUser} />
-            </li>
+                <li>
+                    <ProfileButton user={sessionUser} />
+                </li>
 
-              <li>
+                <li>
                     <OpenModalButton
                         buttonText="Create Spot"
                         modalComponent={<CreateSpotModal />}
                     />
                 </li>
-                </>
+            </>
         );
     } else {
         sessionLinks = (
@@ -43,7 +43,7 @@ function Navigation({ isLoaded }) {
 
                 </li>
 
-              
+
             </>
         );
     }
@@ -51,7 +51,7 @@ function Navigation({ isLoaded }) {
     return (
         <ul className='nav-bar'>
             <li>
-                <NavLink exact to="/"><img width="60" src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/8d32ea18423501.562c939db98fc.png" /></NavLink>
+                <NavLink exact to="/"><img className="airbnb-icon" width="60" src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/8d32ea18423501.562c939db98fc.png" /></NavLink>
             </li>
             {isLoaded && sessionLinks}
         </ul>

@@ -4,6 +4,7 @@ import { addSpot } from "../../store/spots"
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import { useEffect } from "react";
 
 function CreateSpotModal() {
     const dispatch = useDispatch();
@@ -22,6 +23,14 @@ function CreateSpotModal() {
     const { closeModal } = useModal();
 
 
+    useEffect(() => {
+        const validationErrors = []
+        if (price && price < 0 ) { validationErrors.push("Price must be positive") }
+        setErrors(validationErrors)
+
+    }, [price])
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -36,15 +45,24 @@ function CreateSpotModal() {
             description,
             price,
             url,
-            preview:true
+            preview: true
         }
-        dispatch(addSpot(newSpot)).then(createdSpotId => { history.push(`/spots/${createdSpotId}`); closeModal() })
-        // .then(() => { history.push('/'); history.go(0); })
+        return dispatch(addSpot(newSpot))
+            .then(createdSpotId => { history.push(`/spots/${createdSpotId}`); closeModal() })
+            .catch(
+                async (res) => {
+                    const data = await res.json();
+                    console.log("data", data.errors)
+                    if (data && data.errors) setErrors(data.errors);
+                }
+            )
 
     }
+
+
     return (
         <>
-            <p>this is for create a spot</p>
+
             <form onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, idx) => (

@@ -4,7 +4,9 @@
 
 
 
-
+.airbnb-icon {
+    border-radius: 10px;
+}
 
 
 .address-line {
@@ -21,14 +23,13 @@
     aspect-ratio: 1/1;
     margin: 2px;
     width: 50%;
-
+    object-fit: cover;
     border-radius: 10px;
 }
 
 .other-image {
     display: flex;
     width: 50%;
-
     flex-wrap: wrap;
 }
 
@@ -37,11 +38,11 @@
     width: 48%;
     aspect-ratio: 1 / 1;
     border-radius: 5px;
+    object-fit: cover;
 }
 
 .photos {
     display: flex;
-    width: 98vw;
-    height:50vw
-
+    width: 70vw;
+    height: 35vw
 }

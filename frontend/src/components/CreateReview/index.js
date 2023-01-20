@@ -4,6 +4,8 @@ import { useState } from "react"
 import { addReview } from "../../store/reviews"
 import { getSpotReviews } from "../../store/reviews"
 import { getSingleSpot } from "../../store/spots";
+import { useEffect } from "react";
+import { useModal } from "../../context/Modal";
 
 export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot }) {
     const dispatch = useDispatch();
@@ -11,6 +13,14 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
     const [errors, setErrors] = useState([]);
     const [review, setReview] = useState("")
     const [stars, setStars] = useState("")
+    const { closeModal } = useModal();
+
+    useEffect(() => {
+        const validationErrors = []
+        if (stars && stars < 1 || stars > 5) { validationErrors.push("Star must be between 1 and 5") }
+        setErrors(validationErrors)
+
+    }, [stars])
 
 
     const handleSubmit = (e) => {
@@ -20,8 +30,22 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
             review,
             stars
         }
-        dispatch(addReview(newReview, +spotId)).then(() => dispatch(getSpotReviews(+spotId))).then(() => dispatch(getSingleSpot(+spotId)))
-        setShowEdit(false)
+        setErrors([]);
+
+        return dispatch(addReview(newReview, +spotId))
+            .then(() => dispatch(getSpotReviews(+spotId)))
+            .then(() => dispatch(getSingleSpot(+spotId))) 
+            .then(() => closeModal()) 
+            // .then(() => setShowEdit(false))
+            .catch(
+                async (res) => {
+                    const data = await res.json();
+                    console.log("data", data.errors)
+                    if (data && data.errors) setErrors(data.errors);
+                }
+            )
+          
+
     }
 
     const sessionUser = useSelector(state => state.session.user);
@@ -33,6 +57,7 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
             sessionLinks = (
                 <form onSubmit={handleSubmit}>
                     <ul>
+                        {console.log("star errors", errors)}
                         {errors.map((error, idx) => (
                             <li key={idx}>{error}</li>
                         ))}

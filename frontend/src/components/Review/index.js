@@ -6,6 +6,7 @@ import { getSpotReviews } from "../../store/reviews"
 import CreateReview from "../CreateReview"
 import { deleteReviewThunk } from "../../store/reviews";
 import { getSingleSpot } from "../../store/spots";
+import OpenModalButton from "../OpenModalButton";
 
 
 export default function DisplayReview({ singleSpot, spotId }) {
@@ -36,18 +37,16 @@ export default function DisplayReview({ singleSpot, spotId }) {
     //     return state.session.user.id
     // })
 
-   
+
     const sessionUser = useSelector(state => state.session.user)
+
     let sessionLinks
+
+    let alreadyReviewSessionLinks
 
     if (sessionUser) {
 
-
-
-
-
         const currentUserId = sessionUser.id
-
         // console.log("arr's user id",)
 
         let theReviewId
@@ -71,16 +70,43 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
 
         const handleDelete = () => {
-            dispatch(deleteReviewThunk(+theReviewId)).then(() => dispatch(getSpotReviews(+spotId))).then(() => dispatch(getSingleSpot(+spotId)))
+            dispatch(deleteReviewThunk(+theReviewId))
+                .then(() => dispatch(getSpotReviews(+spotId)))
+                .then(() => dispatch(getSingleSpot(+spotId)))
         }
+
         if (allReviewsUserId.includes(+currentUserId)) {
 
             sessionLinks = (
+                
+                    <li>
+                        <button
+                            onClick={handleDelete}
+                        >Delete Review</button>
+                    </li>
 
-                <button
-                    onClick={handleDelete}
-                >Delete Review</button>
+                 
+                
             )
+
+        }
+
+        if (!allReviewsUserId.includes(+currentUserId)) {
+            sessionLinks = (
+                <li>
+                    <OpenModalButton
+                        buttonText="Create Review"
+                        modalComponent={<CreateReview
+                            spotId={spotId}
+                            showEdit={showEdit}
+                            setShowEdit={setShowEdit}
+                            singleSpot={singleSpot}
+                        />}
+                    />
+
+                </li>
+            )
+
         }
 
 
@@ -106,7 +132,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
                         )
                     }))}
 
-                    <div className="addReview">
+                    {/* <div className="addReview">
                         <button
                             onClick={() => setShowEdit(!showEdit)}
                         >Create Review</button>
@@ -119,7 +145,20 @@ export default function DisplayReview({ singleSpot, spotId }) {
                             setShowEdit={setShowEdit}
                             singleSpot={singleSpot}
                         />
-                    )}
+                    )} */}
+
+                    {/* <li>
+                        <OpenModalButton
+                            buttonText="Create Review"
+                            modalComponent={<CreateReview
+                                spotId={spotId}
+                                showEdit={showEdit}
+                                setShowEdit={setShowEdit}
+                                singleSpot={singleSpot}
+                            />}
+                        />
+
+                    </li> */}
 
                     {sessionUser && (sessionLinks)}
 

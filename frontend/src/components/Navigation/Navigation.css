@@ -6,3 +6,8 @@ li {
     display: flex;
     justify-content: space-between;
 }
+
+
+.airbnb-icon{
+    border-radius: 100px;
+}

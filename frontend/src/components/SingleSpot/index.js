@@ -8,6 +8,7 @@ import DisplayReview from "../Review";
 import { useHistory } from "react-router-dom";
 import DeleteSpot from "../DeleteSpot";
 import "./SingleSpot.css"
+import OpenModalButton from "../OpenModalButton";
 
 function SingleSpotComponent() {
 
@@ -66,19 +67,32 @@ function SingleSpotComponent() {
                     </div>
 
 
-                    <div className="updateSpot">
+                    {/* <div className="updateSpot">
                         <button
                             onClick={() => setShowEdit(!showEdit)}
                         >Update Spot</button>
-                    </div>
-                    {showEdit && (
+                    </div> */}
+                    {/* {showEdit && (
                         <UpdateSpot
                             showEdit={showEdit}
                             setShowEdit={setShowEdit}
                             singleSpot={singleSpot}
                             sessionUser={sessionUser}
                         />
-                    )}
+                    )} */}
+
+                    <li>
+                        <OpenModalButton
+                            buttonText="Update Spot"
+                            modalComponent={<UpdateSpot 
+                                showEdit={showEdit}
+                                setShowEdit={setShowEdit}
+                                singleSpot={singleSpot}
+                                sessionUser={sessionUser}
+        
+                            />} />
+
+                    </li>
 
 
                     <div className="deleteSpot">
@@ -143,10 +157,10 @@ function SingleSpotComponent() {
 
                         <img src="https://a0.muscache.com/im/pictures/f4a1e0fb-bd06-4f11-91e3-8d3979d3431a.jpg" width="50" />
                         <p> Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
-                       
+
                         <hr></hr>
                         <p>{singleSpot.description}</p>
-                        
+
                         <hr></hr>
 
 
