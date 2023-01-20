@@ -1,5 +1,11 @@
-.spots-list{
+.spots-list {
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
+
+    font-weight: 150;
+
+}
+
+.spot-link {
     text-decoration: none;
 }

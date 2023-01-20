@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from 'react-router-dom';
-import { loadReviews, getSpotReviews } from "../../store/reviews"
-import CreateReview from "../CreateReview"
-import { deleteReview, deleteReviewThunk } from "../../store/reviews";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { getSpotReviews } from "../../store/reviews"
+import CreateReview from "../CreateReview"
+import { deleteReviewThunk } from "../../store/reviews";
+import { getSingleSpot } from "../../store/spots";
 
 
 export default function DisplayReview({ singleSpot, spotId }) {
@@ -16,11 +16,11 @@ export default function DisplayReview({ singleSpot, spotId }) {
         return state.reviews.spot
     })
 
-    console.log("allReviewObj", allReviewObj)
+    // console.log("allReviewObj", allReviewObj)
 
     const allReviewArr = allReviewObj ? Object.values(allReviewObj) : []
 
-    console.log("allReviewArr", allReviewArr)
+    // console.log("allReviewArr", allReviewArr)
 
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch()
@@ -32,14 +32,11 @@ export default function DisplayReview({ singleSpot, spotId }) {
     const [showEdit, setShowEdit] = useState(false);
 
     //find the review Id that the userId created
-
-
-
     // const currentUserId = useSelector((state) => {
     //     return state.session.user.id
     // })
 
-    //    && allReviewsUserId.includes(+currentUserId)
+   
     const sessionUser = useSelector(state => state.session.user)
     let sessionLinks
 
@@ -51,7 +48,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
         const currentUserId = sessionUser.id
 
-        console.log("arr's user id",)
+        // console.log("arr's user id",)
 
         let theReviewId
         let allReviewsUserId = []
@@ -59,7 +56,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
         for (let review of allReviewArr) {
             allReviewsUserId.push(+review.userId)
             if (+currentUserId === +review.userId) {
-                console.log("review.userId", review.userId)
+                // console.log("review.userId", review.userId)
                 theReviewId = review.id
 
             }
@@ -74,7 +71,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
 
         const handleDelete = () => {
-            dispatch(deleteReviewThunk(+theReviewId)).then(() => dispatch(getSpotReviews(+spotId)))
+            dispatch(deleteReviewThunk(+theReviewId)).then(() => dispatch(getSpotReviews(+spotId))).then(() => dispatch(getSingleSpot(+spotId)))
         }
         if (allReviewsUserId.includes(+currentUserId)) {
 
@@ -120,6 +117,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
                             spotId={spotId}
                             showEdit={showEdit}
                             setShowEdit={setShowEdit}
+                            singleSpot={singleSpot}
                         />
                     )}
 

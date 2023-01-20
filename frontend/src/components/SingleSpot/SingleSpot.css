@@ -1,25 +1,47 @@
-.photos{
+.photos {
     display: flex;
 }
 
-#indi-img{
-    margin:2px;
-    width:100px;
-    height: 100px;
-    border-radius: 10px;
-}
 
-body {
-    font-family: sans-serif;
-}
 
-.address-line{
+
+
+
+.address-line {
     flex-wrap: wrap;
     flex-direction: row;
 }
 
-.address-line span{
+.address-line span {
     font-size: 14px;
-    margin:5px
+    margin: 5px
 }
 
+.preview-image {
+    aspect-ratio: 1/1;
+    margin: 2px;
+    width: 50%;
+
+    border-radius: 10px;
+}
+
+.other-image {
+    display: flex;
+    width: 50%;
+
+    flex-wrap: wrap;
+}
+
+.indi-img {
+    margin: 2px;
+    width: 48%;
+    aspect-ratio: 1 / 1;
+    border-radius: 5px;
+}
+
+.photos {
+    display: flex;
+    width: 98vw;
+    height:50vw
+
+}

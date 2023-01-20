@@ -172,7 +172,7 @@ router.get('/', validateSpotGetAll, async (req, res, next) => {
             // console.log(review);
             count = count + review.stars;
         })
-        spot.avgRating = count / i;
+        spot.avgRating = (count / i).toFixed(2);
         delete spot.SpotImages;
         delete spot.Reviews;
     });
@@ -228,7 +228,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
             // console.log(review);
             count = count + review.stars;
         })
-        spot.avgRating = count / i;
+        spot.avgRating = (count / i).toFixed(2);
         delete spot.SpotImages;
         delete spot.Reviews;
     });
@@ -287,7 +287,7 @@ router.get("/:spotId", async (req, res, next) => {
             i++;
             count = count + review.stars;
         })
-        spot.avgStarRating = count / i;
+        spot.avgStarRating = (count / i).toFixed(2);
         spot.numReviews = i;
         delete spot.Reviews;
     });

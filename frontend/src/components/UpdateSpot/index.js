@@ -1,10 +1,6 @@
-import { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom"
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadSingleSpot, getSingleSpot } from "../../store/spots"
-import { useParams } from 'react-router-dom';
-import { updateSingleSpot, updateSpotThunk } from "../../store/spots"
+import { updateSpotThunk } from "../../store/spots"
 
 
 export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
@@ -12,7 +8,7 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
 
     const dispatch = useDispatch()
     const [city, setCity] = useState(singleSpot.city)
-    console.log(city)
+    // console.log(city)
     const [state, setState] = useState(singleSpot.state)
     const [address, setAddress] = useState(singleSpot.address)
     const [country, setCountry] = useState(singleSpot.country)
@@ -22,7 +18,7 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
     const [description, setDescription] = useState(singleSpot.description)
     const [price, setPrice] = useState(singleSpot.price)
 
-    console.log("singleSpot", singleSpot)
+    // console.log("singleSpot", singleSpot)
 
     const handleUpdate = (e) => {
         e.preventDefault();

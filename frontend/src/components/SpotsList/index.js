@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Spot from "../Spot"
 import { useDispatch, useSelector } from "react-redux";
-import { loadSpots, getAllSpots } from "../../store/spots"
+import { getAllSpots } from "../../store/spots"
 import { useState } from "react"
 import "./SpotList.css"
 
@@ -12,7 +12,7 @@ function SpotsList() {
 
 
     const allSpotsObj = useSelector((state) => {
-        console.log("allSpotState", state)
+        // console.log("allSpotState", state)
         return state.spots.allSpots
     })
 
@@ -33,7 +33,7 @@ function SpotsList() {
 
                 {allSpots.map(spot => {
                     return (
-                        <Link key={spot.id} to={`/spots/${spot.id}`}>
+                        <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
                             <Spot spot={spot} />
 
                         </Link>)

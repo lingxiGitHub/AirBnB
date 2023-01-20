@@ -1,14 +1,10 @@
 import { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom"
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadSingleSpot, getSingleSpot, deleteSpotThunk } from "../../store/spots"
+import { getSingleSpot } from "../../store/spots"
 import { useParams } from 'react-router-dom';
-import { updateSingleSpot } from "../../store/spots"
 import UpdateSpot from "../UpdateSpot";
-import { deleteSpot } from "../../store/spots"
 import DisplayReview from "../Review";
-import CreateReview from "../CreateReview"
 import { useHistory } from "react-router-dom";
 import DeleteSpot from "../DeleteSpot";
 import "./SingleSpot.css"
@@ -27,7 +23,7 @@ function SingleSpotComponent() {
         return state.spots.singleSpot
     })
 
-    console.log("singleSpot at component", singleSpot)
+    // console.log("singleSpot at component", singleSpot)
 
 
     const dispatch = useDispatch()
@@ -46,13 +42,13 @@ function SingleSpotComponent() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const [showEdit, setShowEdit] = useState(false);
-    const [showDeleteEdit,setShowDeleteEdit]=useState(false)
+    const [showDeleteEdit, setShowDeleteEdit] = useState(false)
     const [showCreateReviewEdit, setShowCreateReviewEdit] = useState(false)
 
     const sessionUser = useSelector(state => state.session.user);
 
 
-    
+
 
 
     return (
@@ -102,17 +98,30 @@ function SingleSpotComponent() {
                         />
                     )}
 
-                   
+
 
 
                     <div className="photos">
-                        
-                        {singleSpot.SpotImages.map(img => {
-                            return (
-                                <img id="indi-img" key={img.id} src={img.url} alt="pic" width="200" />
-                            )
-                        })}
 
+
+
+
+
+                        <img className="preview-image" src={singleSpot.SpotImages.find(item => item.preview === true).url} width="300" />
+
+
+                        <div className="other-image">
+
+                            {singleSpot.SpotImages.map(img => {
+                                if (img.preview === false) {
+                                    return (
+                                        <img className="indi-img" key={img.id} src={img.url} alt="pic" width="200" />
+                                    )
+
+                                }
+
+                            })}
+                        </div>
 
 
                     </div>
@@ -152,7 +161,7 @@ function SingleSpotComponent() {
 
 
 
-                 
+
 
 
 

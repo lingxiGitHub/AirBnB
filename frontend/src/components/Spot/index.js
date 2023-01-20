@@ -1,5 +1,3 @@
-import { Link, NavLink } from "react-router-dom"
-
 import "./SpotCard.css"
 
 function Spot({ spot }) {
@@ -12,9 +10,13 @@ function Spot({ spot }) {
             <img className="square" src={spot.previewImage} />
 
             <div className="spot-summary">
-                <p className="summary-item">{spot.name}</p>
-                <p id="star-sign">★{spot.avgRating}</p>
-                <p className="summary-item">${spot.price} night</p>
+                <div className="top-line">
+
+                    <div className="summary-item">{spot.name}</div>
+                    <div id="right-rating">★ {spot.avgRating}</div>
+                </div>
+
+                <div className="summary-item"><strong>${spot.price}</strong> night</div>
             </div>
 
         </div>

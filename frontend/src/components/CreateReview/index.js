@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useModal } from "../../context/Modal";
 import { useState } from "react"
 import { addReview } from "../../store/reviews"
-import { loadReviews, getSpotReviews } from "../../store/reviews"
+import { getSpotReviews } from "../../store/reviews"
+import { getSingleSpot } from "../../store/spots";
 
-
-export default function CreateReview({ spotId,showEdit,setShowEdit }) {
+export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [errors, setErrors] = useState([]);
@@ -21,7 +20,7 @@ export default function CreateReview({ spotId,showEdit,setShowEdit }) {
             review,
             stars
         }
-        dispatch(addReview(newReview, +spotId)).then(() => dispatch(getSpotReviews(+spotId)))
+        dispatch(addReview(newReview, +spotId)).then(() => dispatch(getSpotReviews(+spotId))).then(() => dispatch(getSingleSpot(+spotId)))
         setShowEdit(false)
     }
 
@@ -29,38 +28,46 @@ export default function CreateReview({ spotId,showEdit,setShowEdit }) {
 
     let sessionLinks;
 
-    if (sessionUser){
-        sessionLinks=(
-            <form onSubmit={handleSubmit}>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
+    if (sessionUser) {
+        if (sessionUser.id !== singleSpot.ownerId) {
+            sessionLinks = (
+                <form onSubmit={handleSubmit}>
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
 
-                <label>review
-                    <input
-                        type="text"
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        required
+                    <label>review
+                        <input
+                            type="text"
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                            required
 
-                    />
-                </label>
+                        />
+                    </label>
 
-                <label>stars
-                    <input
-                        type="number"
-                        value={stars}
-                        onChange={(e) => setStars(e.target.value)}
-                        required
+                    <label>stars
+                        <input
+                            type="number"
+                            value={stars}
+                            onChange={(e) => setStars(e.target.value)}
+                            required
 
-                    />
-                </label>
-                <button type="submit">Submit</button>
-            </form>
-        )
-    }else{
+                        />
+                    </label>
+                    <button type="submit">Submit</button>
+                </form>
+            )
+        } else if (sessionUser.id === singleSpot.ownerId) {
+            sessionLinks = (
+                <div>You are the owner. You are not authorized to leave reviews.</div>
+            )
+
+        }
+
+    } else {
         sessionLinks = (
             <div>
                 Please log in to create a review
@@ -73,7 +80,7 @@ export default function CreateReview({ spotId,showEdit,setShowEdit }) {
     return (
         <>
             {sessionLinks}
-            
+
         </>
     )
 }

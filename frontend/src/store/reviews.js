@@ -13,7 +13,7 @@ export const getSpotReviews = (spotId) => async dispatch => {
 
     // console.log("spotId at getSpotReviews",spotId)
     const response = await fetch(`/api/spots/${spotId}/reviews`)
-    console.log("review response",response)
+    // console.log("review response",response)
     if (response.ok) {
         const reviewList = await response.json()
         // const reviewList = reviewListObj.reviewList
@@ -101,7 +101,7 @@ export default function reviewReducer(state = initialState, action) {
             }
         case DELETE_REVIEW:
             const deleteReviewState = { ...state }
-            console.log("look if undefined", deleteReviewState)
+            // console.log("look if undefined", deleteReviewState)
             delete deleteReviewState.spot[action.id]
             return deleteReviewState;
         case ADD_REVIEW:

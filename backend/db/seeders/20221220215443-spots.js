@@ -45,8 +45,8 @@ module.exports = {
         lat: 200.01,
         lng: 200.1,
         name: "Cozy River Cabin at Mt. Rainier",
-        description: "Our original 1960's A-frame cabin is nestled (a literal stone's-throw) between the Cowlitz River and Coal Creek..."
-
+        description: "Our original 1960's A-frame cabin is nestled (a literal stone's-throw) between the Cowlitz River and Coal Creek...",
+        price: 249,
       },
       {
         ownerId: 3,

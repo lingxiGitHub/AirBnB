@@ -48,7 +48,7 @@ export const addSpot = (newSpot) => async dispatch => {
     });
     if (response.ok) {
         const createdSpot = await response.json()
-        console.log("createdSpot", createdSpot)
+        // console.log("createdSpot", createdSpot)
         createdSpotId = createdSpot.id
         // console.log("createdSpotId", createdSpotId)
     }
@@ -143,7 +143,7 @@ export default function spotsReducer(state = initialState, action) {
                 ...state,
 
                 allSpots: {
-                    ...state.allSpots,
+                    // ...state.allSpots,
                     ...newAllSpots
                 }
             };

@@ -1,4 +1,5 @@
 import { deleteSpotThunk } from "../../store/spots"
+import { getAllSpots } from "../../store/spots";
 
 export default function DeleteSpot({ singleSpot, sessionUser, dispatch, spotId, history, setShowDeleteEdit }) {
 
@@ -9,6 +10,7 @@ export default function DeleteSpot({ singleSpot, sessionUser, dispatch, spotId, 
     const handleDelete = (e) => {
         e.preventDefault();
         dispatch(deleteSpotThunk(+spotId))
+            .then(() => dispatch(getAllSpots()))
             .then(() => history.push("/"))
         setShowDeleteEdit(false)
     }
