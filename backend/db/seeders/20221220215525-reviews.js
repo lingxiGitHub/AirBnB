@@ -34,7 +34,7 @@ module.exports = {
       {
         spotId: 1,
         userId: 8,
-        review: "Our experience was terrific!! Amber was very responsive and helpful throughout our entire stay. We had a few hiccups the first night but Amber was willing to come to the treehouse and help us so that we could enjoy our time there. ",
+        review: "Our experience was terrific!! Amber was very responsive and helpful throughout our entire stay.",
         stars: 5,
 
       },
