@@ -1,0 +1,35 @@
+.spot-card {
+    width: 200px;
+    margin: 15px;
+}
+
+.square {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.spot-summary {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  
+}
+
+#star-sign {
+    list-style-type: none;
+}
+
+.summary-item {
+    align-self: left;
+}
+
+p {
+    font-family: sans-serif;
+    color:black;
+    font-size: 16px;
+   
+
+   
+}

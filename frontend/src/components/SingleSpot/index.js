@@ -10,6 +10,8 @@ import { deleteSpot } from "../../store/spots"
 import DisplayReview from "../Review";
 import CreateReview from "../CreateReview"
 import { useHistory } from "react-router-dom";
+import DeleteSpot from "../DeleteSpot";
+import "./SingleSpot.css"
 
 function SingleSpotComponent() {
 
@@ -25,14 +27,15 @@ function SingleSpotComponent() {
         return state.spots.singleSpot
     })
 
-    // console.log("singleSpot at component", singleSpot)
+    console.log("singleSpot at component", singleSpot)
 
 
     const dispatch = useDispatch()
 
-    const handleDelete = () => {
-        dispatch(deleteSpotThunk(+spotId)).then(()=>history.push("/"))
-    }
+    // const handleDelete = () => {
+    //     dispatch(deleteSpotThunk(+spotId))
+    //     .then(()=>history.push("/"))
+    // }
 
     useEffect(() => {
         dispatch(getSingleSpot(+spotId)).then(() => setIsLoaded(true));
@@ -43,8 +46,13 @@ function SingleSpotComponent() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const [showEdit, setShowEdit] = useState(false);
+    const [showDeleteEdit,setShowDeleteEdit]=useState(false)
+    const [showCreateReviewEdit, setShowCreateReviewEdit] = useState(false)
+
+    const sessionUser = useSelector(state => state.session.user);
 
 
+    
 
 
     return (
@@ -54,6 +62,7 @@ function SingleSpotComponent() {
                     <div className="title">
                         <p> ★{singleSpot.avgStarRating}</p>
                         <p>{singleSpot.numReviews} reviews</p>
+                        <p>{singleSpot.address}</p>
                         <p>{singleSpot.city}</p>
                         <p>{singleSpot.state}</p>
                         <p>{singleSpot.country}</p>
@@ -70,27 +79,39 @@ function SingleSpotComponent() {
                             showEdit={showEdit}
                             setShowEdit={setShowEdit}
                             singleSpot={singleSpot}
+                            sessionUser={sessionUser}
                         />
                     )}
 
-                    <div>
+
+                    <div className="deleteSpot">
                         <button
-                            onClick={handleDelete}
+                            onClick={() => setShowDeleteEdit(!showDeleteEdit)}
                         >Delete Spot</button>
                     </div>
+                    {showDeleteEdit && (
+                        <DeleteSpot
+                            singleSpot={singleSpot}
+                            sessionUser={sessionUser}
+                            dispatch={dispatch}
+                            history={history}
+                            spotId={spotId}
+                            setShowDeleteEdit={setShowDeleteEdit}
 
+                        />
+                    )}
+
+                   
+
+<h1>{singleSpot.name}</h1>
                     <div className="photos">
-                        <h1>{singleSpot.name}</h1>
-                        {singleSpot.SpotImages.map(img=>{
+                        
+                        {singleSpot.SpotImages.map(img => {
                             return (
-                                <img key={img.id} src={img.url} alt="pic" width="200" />
+                                <img id="indi-img" key={img.id} src={img.url} alt="pic" width="200" />
                             )
                         })}
-                        {/* <img src={singleSpot.SpotImages[0].url} alt="photo 1" width="200" />
-                        <img src={singleSpot.SpotImages[1].url} alt="photo 2" width="200" />
-                        <img src={singleSpot.SpotImages[2].url} alt="photo 3" width="200" />
-                        <img src={singleSpot.SpotImages[5].url} alt="photo 4" width="200" />
-                        <img src={singleSpot.SpotImages[6].url} alt="photo 5" width="200" /> */}
+
 
 
                     </div>
@@ -117,7 +138,7 @@ function SingleSpotComponent() {
                         <p>{singleSpot.description}</p>
                         <button>Show more</button>
                         <hr></hr>
-                    
+
 
                         <h3>What this place offers</h3>
                         <p>Mountain view</p>
@@ -128,12 +149,16 @@ function SingleSpotComponent() {
                         <hr></hr>
                     </div>
 
-                
 
-                    <DisplayReview 
+
+                 
+
+
+
+                    <DisplayReview
                         singleSpot={singleSpot}
                         spotId={spotId}
-                        />
+                    />
 
                     <div className="host-info">
                         <h2>Hosted by Amber</h2>

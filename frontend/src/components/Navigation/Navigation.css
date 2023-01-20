@@ -1,0 +1,8 @@
+li {
+    list-style-type: none;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+}

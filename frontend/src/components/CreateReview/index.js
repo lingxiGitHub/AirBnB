@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { useState } from "react"
 import { addReview } from "../../store/reviews"
 import { loadReviews, getSpotReviews } from "../../store/reviews"
+
 
 export default function CreateReview({ spotId,showEdit,setShowEdit }) {
     const dispatch = useDispatch();
@@ -24,10 +25,12 @@ export default function CreateReview({ spotId,showEdit,setShowEdit }) {
         setShowEdit(false)
     }
 
+    const sessionUser = useSelector(state => state.session.user);
 
-    return (
-        <>
+    let sessionLinks;
 
+    if (sessionUser){
+        sessionLinks=(
             <form onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, idx) => (
@@ -56,6 +59,21 @@ export default function CreateReview({ spotId,showEdit,setShowEdit }) {
                 </label>
                 <button type="submit">Submit</button>
             </form>
+        )
+    }else{
+        sessionLinks = (
+            <div>
+                Please log in to create a review
+            </div>
+        )
+
+    }
+
+
+    return (
+        <>
+            {sessionLinks}
+            
         </>
     )
 }

@@ -33,29 +33,61 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
     //find the review Id that the userId created
 
-    const currentUserId = useSelector((state) => {
-        return state.session.user.id
-    })
-
-    console.log("currentUserId", currentUserId)
 
 
-    let theReviewId
+    // const currentUserId = useSelector((state) => {
+    //     return state.session.user.id
+    // })
 
-    for (let review of allReviewArr) {
-        if (+currentUserId === +review.userId) {
-            console.log("review.userId", review.userId)
-            theReviewId = review.id
+    //    && allReviewsUserId.includes(+currentUserId)
+    const sessionUser = useSelector(state => state.session.user)
+    let sessionLinks
+
+    if (sessionUser) {
+
+
+
+
+
+        const currentUserId = sessionUser.id
+
+        console.log("arr's user id",)
+
+        let theReviewId
+        let allReviewsUserId = []
+
+        for (let review of allReviewArr) {
+            allReviewsUserId.push(+review.userId)
+            if (+currentUserId === +review.userId) {
+                console.log("review.userId", review.userId)
+                theReviewId = review.id
+
+            }
+
         }
+
+
+        // console.log("arr's user id", allReviewsUserId)
+        // console.log("theReviewId", theReviewId)
+        // console.log("allReviewsUserId", allReviewsUserId)
+        // console.log("currentUserId", currentUserId)
+
+
+        const handleDelete = () => {
+            dispatch(deleteReviewThunk(+theReviewId)).then(() => dispatch(getSpotReviews(+spotId)))
+        }
+        if (allReviewsUserId.includes(+currentUserId)) {
+
+            sessionLinks = (
+
+                <button
+                    onClick={handleDelete}
+                >Delete Review</button>
+            )
+        }
+
+
     }
-
-    console.log(theReviewId)
-
-    const handleDelete = () => {
-        dispatch(deleteReviewThunk(+theReviewId)).then(() => dispatch(getSpotReviews(+spotId)))
-    }
-
-
 
 
 
@@ -67,7 +99,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
                 <div className="reviews">
                     <p>{singleSpot.avgStarRating}</p>
                     <p>{singleSpot.numReviews}</p>
-                    {allReviewArr.map(item => {
+                    {allReviewArr && (allReviewArr.map(item => {
 
                         return (
                             +spotId === +item.spotId && (
@@ -75,7 +107,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
                             )
 
                         )
-                    })}
+                    }))}
 
                     <div className="addReview">
                         <button
@@ -91,9 +123,9 @@ export default function DisplayReview({ singleSpot, spotId }) {
                         />
                     )}
 
-                    <button
-                        onClick={handleDelete}
-                    >Delete Review</button>
+                    {sessionUser && (sessionLinks)}
+
+
                 </div>
             </>
         )

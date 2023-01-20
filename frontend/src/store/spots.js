@@ -1,6 +1,9 @@
 import allSpots from "../data/all-spots.json"
 import singleSpotData from "../data/single-spot.json"
 import { csrfFetch } from './csrf';
+import { useHistory } from "react-router-dom";
+
+
 
 //homepage load all spots
 const LOAD = "spots/loadSpots"
@@ -45,7 +48,7 @@ export const addSpot = (newSpot) => async dispatch => {
     });
     if (response.ok) {
         const createdSpot = await response.json()
-        // console.log("createdSpot", createdSpot)
+        console.log("createdSpot", createdSpot)
         createdSpotId = createdSpot.id
         // console.log("createdSpotId", createdSpotId)
     }
@@ -61,6 +64,7 @@ export const addSpot = (newSpot) => async dispatch => {
         })
         if (responseUrl.ok) {
             const createdSpotUrl = await responseUrl.json()
+
             return createdSpotId
         }
     }
@@ -77,12 +81,16 @@ export const deleteSpot = (id) => ({
 })
 
 export const deleteSpotThunk = (id) => async dispatch => {
+    
     const res = await csrfFetch(`/api/spots/${id}`, {
         method: "DELETE"
     })
     if (res.ok) {
         dispatch(deleteSpot(id))
+        dispatch(getAllSpots())
     }
+
+    
 }
 
 

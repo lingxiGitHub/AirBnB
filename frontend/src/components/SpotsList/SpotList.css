@@ -1,3 +1,5 @@
 .spots-list{
-    background: yellow;
+    display: flex;
+    flex-wrap:wrap;
+    text-decoration: none;
 }

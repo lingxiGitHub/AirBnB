@@ -13,8 +13,8 @@ function CreateSpotModal() {
     const [city, setCity] = useState("")
     const [state, setState] = useState("")
     const [country, setCountry] = useState("")
-    const [lat, setLat] = useState("")
-    const [lng, setlng] = useState("")
+    const [lat, setLat] = useState("37.77")
+    const [lng, setlng] = useState("122.41")
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
@@ -35,7 +35,8 @@ function CreateSpotModal() {
             name,
             description,
             price,
-            url
+            url,
+            preview:true
         }
         dispatch(addSpot(newSpot)).then(createdSpotId => { history.push(`/spots/${createdSpotId}`); closeModal() })
         // .then(() => { history.push('/'); history.go(0); })
@@ -87,7 +88,7 @@ function CreateSpotModal() {
 
                     />
                 </label>
-                <label>lat
+                {/* <label>lat
                     <input
                         type="number"
                         value={lat}
@@ -104,7 +105,7 @@ function CreateSpotModal() {
                         required
 
                     />
-                </label>
+                </label> */}
                 <label>name
                     <input
                         type="text"
