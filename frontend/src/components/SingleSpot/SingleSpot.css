@@ -9,3 +9,17 @@
     border-radius: 10px;
 }
 
+body {
+    font-family: sans-serif;
+}
+
+.address-line{
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.address-line span{
+    font-size: 14px;
+    margin:5px
+}
+

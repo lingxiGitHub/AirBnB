@@ -59,13 +59,14 @@ function SingleSpotComponent() {
         <>
             {isLoaded && (
                 <div>
-                    <div className="title">
-                        <p> ★{singleSpot.avgStarRating}</p>
-                        <p>{singleSpot.numReviews} reviews</p>
-                        <p>{singleSpot.address}</p>
-                        <p>{singleSpot.city}</p>
-                        <p>{singleSpot.state}</p>
-                        <p>{singleSpot.country}</p>
+                    <h1>{singleSpot.name}</h1>
+                    <div className="address-line">
+                        <span> ★{singleSpot.avgStarRating}</span>
+                        <span>{singleSpot.numReviews} reviews</span>
+                        <span>{singleSpot.address}</span>
+                        <span>{singleSpot.city}</span>
+                        <span>{singleSpot.state}</span>
+                        <span>{singleSpot.country}</span>
                     </div>
 
 
@@ -103,7 +104,7 @@ function SingleSpotComponent() {
 
                    
 
-<h1>{singleSpot.name}</h1>
+
                     <div className="photos">
                         
                         {singleSpot.SpotImages.map(img => {
