@@ -143,10 +143,10 @@ function SingleSpotComponent() {
 
                         <img src="https://a0.muscache.com/im/pictures/f4a1e0fb-bd06-4f11-91e3-8d3979d3431a.jpg" width="50" />
                         <p> Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
-                        <button>Learn more</button>
+                       
                         <hr></hr>
                         <p>{singleSpot.description}</p>
-                        <button>Show more</button>
+                        
                         <hr></hr>
 
 
