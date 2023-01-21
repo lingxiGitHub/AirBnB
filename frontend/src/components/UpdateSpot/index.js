@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSpotThunk } from "../../store/spots"
 import { useModal } from "../../context/Modal";
+import "./UpdateSpot.css"
 
 
 export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
@@ -38,7 +39,7 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
         }
 
         dispatch(updateSpotThunk(updatedSpot))
-        .then(()=>closeModal())
+            .then(() => closeModal())
         // setShowEdit(false)
     }
 
@@ -56,30 +57,35 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
             sessionLinks = (
                 <>
                     <form
+                        className="update-spot-form"
                         onSubmit={handleUpdate}
                     >
-                        <label>address
+                        <label>
+                            <span>Address</span>
                             <input
                                 type="text"
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                             />
                         </label>
-                        <label>city
+                        <label>
+                            <span>City</span>
                             <input
                                 type="text"
                                 value={city}
                                 onChange={(e) => setCity(e.target.value)}
                             />
                         </label>
-                        <label>state
+                        <label>
+                            <span>State</span>
                             <input
                                 type="text"
                                 value={state}
                                 onChange={(e) => setState(e.target.value)}
                             />
                         </label>
-                        <label>country
+                        <label>
+                            <span>Country</span>
                             <input
                                 type="text"
                                 value={country}
@@ -100,21 +106,24 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
                         onChange={(e) => setLng(e.target.value)}
                     /> */}
                         {/* </label> */}
-                        <label>name
+                        <label>
+                            <span>Name</span>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </label>
-                        <label>description
+                        <label>
+                            <span>Description</span>
                             <input
                                 type="text"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                         </label>
-                        <label>price
+                        <label>
+                            <span>Price</span>
                             <input
                                 type="text"
                                 value={price}

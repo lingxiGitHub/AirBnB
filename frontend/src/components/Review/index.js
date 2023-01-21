@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { getSpotReviews } from "../../store/reviews"
 import CreateReview from "../CreateReview"
 import { deleteReviewThunk } from "../../store/reviews";
 import { getSingleSpot } from "../../store/spots";
 import OpenModalButton from "../OpenModalButton";
-
+import "./Review.css"
 
 export default function DisplayReview({ singleSpot, spotId }) {
 
@@ -21,7 +19,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
     const allReviewArr = allReviewObj ? Object.values(allReviewObj) : []
 
-    // console.log("allReviewArr", allReviewArr)
+    console.log("allReviewArr", allReviewArr)
 
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch()
@@ -42,7 +40,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
     let sessionLinks
 
-    let alreadyReviewSessionLinks
+
 
     if (sessionUser) {
 
@@ -78,15 +76,15 @@ export default function DisplayReview({ singleSpot, spotId }) {
         if (allReviewsUserId.includes(+currentUserId)) {
 
             sessionLinks = (
-                
-                    <li>
-                        <button
-                            onClick={handleDelete}
-                        >Delete Review</button>
-                    </li>
 
-                 
-                
+                <li>
+                    <button
+                        onClick={handleDelete}
+                    >Delete Review</button>
+                </li>
+
+
+
             )
 
         }
@@ -112,25 +110,43 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
     }
 
-
+    const options = { year: 'numeric', month: 'long' };
 
     return (
         isLoaded && (
             <>
-                <h2>to display reviews here</h2>
+
 
                 <div className="reviews">
-                    <p>{singleSpot.avgStarRating}</p>
-                    <p>{singleSpot.numReviews}</p>
-                    {allReviewArr && (allReviewArr.map(item => {
 
-                        return (
-                            +spotId === +item.spotId && (
-                                <p key={item.id}>{item.review}</p>
+                    <p>★ {singleSpot.avgStarRating}</p>
+                    <p>{singleSpot.numReviews} reviews</p>
+
+                    <div className="reviews-container">
+                        {allReviewArr && (allReviewArr.map(item => {
+
+                            return (
+                                +spotId === +item.spotId && (
+                                    <div className="review-card">
+                                        <div className="review-header">
+                                            <img className="review-img" src="https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-700-202768327.jpg" />
+                                            <div className="review-header-text">
+                                                <div><b>{item.User.firstName}</b></div>
+                                                <div className="grey-word">{new Date(item.createdAt).toLocaleDateString("en-US", options)}</div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <p key={item.id}>{item.review}</p>
+
+                                    </div>
+                                )
+
                             )
+                        }))}
 
-                        )
-                    }))}
+                    </div>
 
                     {/* <div className="addReview">
                         <button

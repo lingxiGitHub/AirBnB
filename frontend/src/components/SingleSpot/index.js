@@ -84,12 +84,12 @@ function SingleSpotComponent() {
                     <li>
                         <OpenModalButton
                             buttonText="Update Spot"
-                            modalComponent={<UpdateSpot 
+                            modalComponent={<UpdateSpot
                                 showEdit={showEdit}
                                 setShowEdit={setShowEdit}
                                 singleSpot={singleSpot}
                                 sessionUser={sessionUser}
-        
+
                             />} />
 
                     </li>
@@ -123,19 +123,23 @@ function SingleSpotComponent() {
 
                         <img className="preview-image" src={singleSpot.SpotImages.find(item => item.preview === true).url} width="300" />
 
+                        {singleSpot.SpotImages.length > 1 && (
 
-                        <div className="other-image">
+                            <div className="other-image">
 
-                            {singleSpot.SpotImages.map(img => {
-                                if (img.preview === false) {
-                                    return (
-                                        <img className="indi-img" key={img.id} src={img.url} alt="pic" width="200" />
-                                    )
+                                {singleSpot.SpotImages.map(img => {
+                                    if (img.preview === false) {
+                                        return (
+                                            <img className="indi-img" key={img.id} src={img.url} alt="pic" width="200" />
+                                        )
 
-                                }
+                                    }
 
-                            })}
-                        </div>
+                                })}
+                            </div>
+
+                        )}
+
 
 
                     </div>

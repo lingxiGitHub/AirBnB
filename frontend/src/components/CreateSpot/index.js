@@ -63,14 +63,14 @@ function CreateSpotModal() {
     return (
         <>
 
-            <form onSubmit={handleSubmit}>
+            <form className="create-spot-form" onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
                 </ul>
 
-                <label>address
+                <label><span>address</span>
                     <input
                         type="text"
                         value={address}
@@ -79,7 +79,8 @@ function CreateSpotModal() {
 
                     />
                 </label>
-                <label>city
+                <label>
+                    <span>city</span>
                     <input
                         type="text"
                         value={city}
@@ -88,7 +89,8 @@ function CreateSpotModal() {
 
                     />
                 </label>
-                <label>state
+                <label>
+                    <span>state</span>
                     <input
                         type="text"
                         value={state}
@@ -97,7 +99,8 @@ function CreateSpotModal() {
 
                     />
                 </label>
-                <label>country
+                <label>
+                    <span>country</span>
                     <input
                         type="text"
                         value={country}
@@ -124,7 +127,8 @@ function CreateSpotModal() {
 
                     />
                 </label> */}
-                <label>name
+                <label>
+                    <span>name</span>
                     <input
                         type="text"
                         value={name}
@@ -133,7 +137,8 @@ function CreateSpotModal() {
 
                     />
                 </label>
-                <label>description
+                <label>
+                    <span>description</span>
                     <input
                         type="text"
                         value={description}
@@ -142,7 +147,8 @@ function CreateSpotModal() {
 
                     />
                 </label>
-                <label>price
+                <label>
+                    <span>price</span>
                     <input
                         type="number"
                         value={price}
@@ -151,7 +157,8 @@ function CreateSpotModal() {
 
                     />
                 </label>
-                <label>url
+                <label>
+                    <span>url</span>
                     <input
                         type="text"
                         value={url}

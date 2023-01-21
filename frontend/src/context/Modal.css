@@ -7,6 +7,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    /* transform: translate(-50%, -50%); */
+
 }
 
 #modal-background {
@@ -21,4 +23,12 @@
 #modal-content {
     position: absolute;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 400px;
+    max-width: 80vw;
+    min-height: 500px;
+    border-radius: 10px;
 }

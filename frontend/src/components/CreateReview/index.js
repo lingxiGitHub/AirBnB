@@ -6,6 +6,7 @@ import { getSpotReviews } from "../../store/reviews"
 import { getSingleSpot } from "../../store/spots";
 import { useEffect } from "react";
 import { useModal } from "../../context/Modal";
+import "./CreateReview.css"
 
 export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot }) {
     const dispatch = useDispatch();
@@ -34,17 +35,16 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
 
         return dispatch(addReview(newReview, +spotId))
             .then(() => dispatch(getSpotReviews(+spotId)))
-            .then(() => dispatch(getSingleSpot(+spotId))) 
-            .then(() => closeModal()) 
-            // .then(() => setShowEdit(false))
+            .then(() => dispatch(getSingleSpot(+spotId)))
+            .then(() => closeModal())
             .catch(
                 async (res) => {
-                    const data = await res.json();
+                    const data = res ? await res.json() : {};
                     console.log("data", data.errors)
                     if (data && data.errors) setErrors(data.errors);
                 }
             )
-          
+
 
     }
 
@@ -55,15 +55,19 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
     if (sessionUser) {
         if (sessionUser.id !== singleSpot.ownerId) {
             sessionLinks = (
-                <form onSubmit={handleSubmit}>
-                    <ul>
+                <form 
+                className="create-review-form"
+                onSubmit={handleSubmit}
+                >
+                    <ul className="error-display">
                         {console.log("star errors", errors)}
                         {errors.map((error, idx) => (
                             <li key={idx}>{error}</li>
                         ))}
                     </ul>
 
-                    <label>review
+                    <label>
+                        <span>Review</span>
                         <input
                             type="text"
                             value={review}
@@ -73,7 +77,8 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
                         />
                     </label>
 
-                    <label>stars
+                    <label>
+                        <span>Stars</span>
                         <input
                             type="number"
                             value={stars}

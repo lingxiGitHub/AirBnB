@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf"
+import { getSingleSpot } from "./spots"
 
 const LOADREVIEW = "reviews/loadReviews"
 
@@ -52,7 +53,7 @@ export const addReview = (newReview, spotId) => async dispatch => {
     if (response.ok) {
         const createdReview = await response.json()
         dispatch(createReview(createdReview))
-
+    
     }
 }
 

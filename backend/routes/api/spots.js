@@ -175,6 +175,9 @@ router.get('/', validateSpotGetAll, async (req, res, next) => {
             count = count + review.stars;
         })
         spot.avgRating = (count / i).toFixed(2);
+        if (spot.avgRating === "NaN") {
+            spot.avgRating = "New"
+        }
         delete spot.SpotImages;
         delete spot.Reviews;
     });
@@ -231,6 +234,9 @@ router.get("/current", requireAuth, async (req, res, next) => {
             count = count + review.stars;
         })
         spot.avgRating = (count / i).toFixed(2);
+        if (spot.avgRating === "NaN") {
+            spot.avgRating = "New"
+        }
         delete spot.SpotImages;
         delete spot.Reviews;
     });
@@ -290,6 +296,9 @@ router.get("/:spotId", async (req, res, next) => {
             count = count + review.stars;
         })
         spot.avgStarRating = (count / i).toFixed(2);
+        if (spot.avgStarRating === "NaN") {
+            spot.avgStarRating = "New"
+        }
         spot.numReviews = i;
         delete spot.Reviews;
     });

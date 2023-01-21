@@ -43,6 +43,7 @@
 
 .photos {
     display: flex;
+    justify-content: center;
     width: 70vw;
     height: 35vw
 }

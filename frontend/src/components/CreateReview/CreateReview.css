@@ -1,21 +1,26 @@
-.create-spot-form label {
+.create-review-form label {
     display: block;
     margin: 20px;
 }
 
 label span {
     display: inline-block;
-    width: 100px;
+    width: 50px;
 }
 
-.create-spot-form button {
+.create-review-form button {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-.create-spot-form input {
+.create-review-form input {
+    width: 250px;
     border-radius: 5px;
-    width: 200px;
+
     text-overflow: ellipsis;
+}
+
+.error-display {
+    color: red;
 }

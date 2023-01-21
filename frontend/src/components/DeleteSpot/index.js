@@ -1,6 +1,7 @@
 import { deleteSpotThunk } from "../../store/spots"
 import { getAllSpots } from "../../store/spots";
 
+
 export default function DeleteSpot({ singleSpot, sessionUser, dispatch, spotId, history, setShowDeleteEdit }) {
 
     let sessionLinks;
@@ -11,6 +12,7 @@ export default function DeleteSpot({ singleSpot, sessionUser, dispatch, spotId, 
         e.preventDefault();
         dispatch(deleteSpotThunk(+spotId))
             .then(() => dispatch(getAllSpots()))
+            // .then(() => closeModal())
             .then(() => history.push("/"))
         setShowDeleteEdit(false)
     }
