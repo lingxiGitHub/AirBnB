@@ -1,0 +1,27 @@
+.hidden {
+    display: none
+}
+
+i {
+    padding: 3px
+}
+
+.profile-dropdown {
+    border: 1px solid black;
+    border-radius: 5px;
+  padding: 0;
+    position: absolute;
+    right: 0;
+    background-color: white;
+}
+
+.profile-dropdown li {
+    list-style: none;
+    padding: 5px 10px;
+}
+
+.profile-dropdown li:hover{
+    background-color: lightgray;
+
+
+}

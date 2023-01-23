@@ -24,7 +24,7 @@ function SingleSpotComponent() {
         return state.spots.singleSpot
     })
 
-    // console.log("singleSpot at component", singleSpot)
+    console.log("singleSpot at component", singleSpot)
 
 
     const dispatch = useDispatch()
@@ -64,6 +64,7 @@ function SingleSpotComponent() {
                         <span>{singleSpot.city}</span>
                         <span>{singleSpot.state}</span>
                         <span>{singleSpot.country}</span>
+
                     </div>
 
 
@@ -81,36 +82,7 @@ function SingleSpotComponent() {
                         />
                     )} */}
 
-                    <li>
-                        <OpenModalButton
-                            buttonText="Update Spot"
-                            modalComponent={<UpdateSpot
-                                showEdit={showEdit}
-                                setShowEdit={setShowEdit}
-                                singleSpot={singleSpot}
-                                sessionUser={sessionUser}
 
-                            />} />
-
-                    </li>
-
-
-                    <div className="deleteSpot">
-                        <button
-                            onClick={() => setShowDeleteEdit(!showDeleteEdit)}
-                        >Delete Spot</button>
-                    </div>
-                    {showDeleteEdit && (
-                        <DeleteSpot
-                            singleSpot={singleSpot}
-                            sessionUser={sessionUser}
-                            dispatch={dispatch}
-                            history={history}
-                            spotId={spotId}
-                            setShowDeleteEdit={setShowDeleteEdit}
-
-                        />
-                    )}
 
 
 
@@ -147,24 +119,65 @@ function SingleSpotComponent() {
 
 
                     <div className="hardcode">
-                        <h2>Treehouse hosted by Amber</h2>
-                        <p>4 guests •2 bedrooms •2 beds •1 bath</p>
-                        <hr></hr>
-                        <p>Featured in</p>
-                        <p> Treehouse Trippers - Best Treehouses in US, July 2022</p>
+                        <div className="left-right-container">
+                            <div className="left-part">
+                                <h2>Entire home hosted by {singleSpot.Owner.firstName}</h2>
+                                <p>4 guests •2 bedrooms •2 beds •1 bath</p>
+                                <hr></hr>
+                                <p>Self check-in</p>
+                                <p>Great Location</p>
+                                <p>Highly rated Host</p>
 
-                        <p>Designed by</p>
-                        <p>Billy Millican</p>
+                                <hr></hr>
 
-                        <p> Free cancellation before Jan 24.</p>
-                        <hr></hr>
+                                <img src="https://a0.muscache.com/im/pictures/f4a1e0fb-bd06-4f11-91e3-8d3979d3431a.jpg" width="50" />
+                                <p> Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
 
-                        <img src="https://a0.muscache.com/im/pictures/f4a1e0fb-bd06-4f11-91e3-8d3979d3431a.jpg" width="50" />
-                        <p> Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
+                                <hr></hr>
+                                <p>{singleSpot.description}</p>
 
-                        <hr></hr>
-                        <p>{singleSpot.description}</p>
+                            </div>
 
+                            <div className="right-part">
+                                <div className="three-items">
+                                    <span>${singleSpot.price} night</span>
+                                    <span> ★{singleSpot.avgStarRating} • {singleSpot.numReviews} reviews</span>
+                                  
+                                </div>
+
+                                <OpenModalButton
+                                    buttonText="Update Spot"
+                                    modalComponent={<UpdateSpot
+                                        showEdit={showEdit}
+                                        setShowEdit={setShowEdit}
+                                        singleSpot={singleSpot}
+                                        sessionUser={sessionUser}
+
+                                    />} />
+
+
+
+
+
+                                <button
+                                    onClick={() => setShowDeleteEdit(!showDeleteEdit)}
+                                >Delete Spot</button>
+
+                                {showDeleteEdit && (
+                                    <DeleteSpot
+                                        singleSpot={singleSpot}
+                                        sessionUser={sessionUser}
+                                        dispatch={dispatch}
+                                        history={history}
+                                        spotId={spotId}
+                                        setShowDeleteEdit={setShowDeleteEdit}
+
+                                    />
+                                )}
+
+                            </div>
+
+                        </div>
                         <hr></hr>
 
 
@@ -177,20 +190,14 @@ function SingleSpotComponent() {
                         <hr></hr>
                     </div>
 
-
-
-
-
-
-
                     <DisplayReview
                         singleSpot={singleSpot}
                         spotId={spotId}
                     />
 
                     <div className="host-info">
-                        <h2>Hosted by Amber</h2>
-                        <span>Joined in June 2020</span>
+                        <h2>Hosted by {singleSpot.Owner.firstName}</h2>
+
                         <h3>During your stay</h3>
                         <span>We want to honor your privacy and the solitude the treehouse provides. However, we are always available by text, email, or phone and can be there quickly. ( Number provided before check-in)
                         </span>

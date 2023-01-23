@@ -32,13 +32,16 @@ function SignupFormModal() {
     return (
         <>
             <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit}>
+            <form
+                className="sign-up-form"
+                onSubmit={handleSubmit}
+            >
                 <ul>
-                    {console.log("sign up error",errors)}
+                    {/* {console.log("sign up error",errors)} */}
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <label>
-                    Email
+                    <span>Email</span>
                     <input
                         type="text"
                         value={email}
@@ -47,7 +50,7 @@ function SignupFormModal() {
                     />
                 </label>
                 <label>
-                    Username
+                    <span>Username</span>
                     <input
                         type="text"
                         value={username}
@@ -56,7 +59,7 @@ function SignupFormModal() {
                     />
                 </label>
                 <label>
-                    First Name
+                   <span> First Name</span>
                     <input
                         type="text"
                         value={firstName}
@@ -65,7 +68,7 @@ function SignupFormModal() {
                     />
                 </label>
                 <label>
-                    Last Name
+                    <span>Last Name</span>
                     <input
                         type="text"
                         value={lastName}
@@ -74,7 +77,7 @@ function SignupFormModal() {
                     />
                 </label>
                 <label>
-                    Password
+                    <span>Password</span>
                     <input
                         type="password"
                         value={password}
@@ -83,7 +86,7 @@ function SignupFormModal() {
                     />
                 </label>
                 <label>
-                    Confirm Password
+                    <span>Confirm Password</span>
                     <input
                         type="password"
                         value={confirmPassword}

@@ -44,6 +44,40 @@
 .photos {
     display: flex;
     justify-content: center;
-    width: 70vw;
-    height: 35vw
+    width: 100%;
+    
+}
+
+.left-right-container {
+    display: flex;
+    /* position: relative; */
+}
+
+.left-part {
+    flex-basis: 70%;
+}
+
+.right-part {
+    flex-basis: 30%;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+    border: 1px solid rgb(221, 221, 221);
+    padding: 24px;
+    position: sticky;
+    top: 20px;
+    margin: 40px 0px 40px 40px;
+    justify-content: space-around;
+}
+
+
+.three-items {
+    display: flex;
+    justify-content: space-between;
+}
+
+.three-items span {
+    white-space: nowrap;
+    
 }
