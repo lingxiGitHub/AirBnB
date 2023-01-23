@@ -121,12 +121,33 @@ function SingleSpotComponent() {
                     <div className="hardcode">
                         <div className="left-right-container">
                             <div className="left-part">
-                                <h2>Entire home hosted by {singleSpot.Owner.firstName}</h2>
-                                <p>4 guests •2 bedrooms •2 beds •1 bath</p>
+                                <div className="section-below-photo">
+                                    <div>
+                                        <h2>Entire home hosted by {singleSpot.Owner.firstName}</h2>
+                                        <p>4 guests •2 bedrooms •2 beds •1 bath</p>
+                                    </div>
+                                    <img className="host-photo" src="https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-700-202768327.jpg" />
+                                </div>
                                 <hr></hr>
-                                <p>Self check-in</p>
-                                <p>Great Location</p>
-                                <p>Highly rated Host</p>
+                                <div className="flex-box-style-1">
+                                    <i class="fas fa-medal"></i>
+                                    <div>
+                                        <b>{singleSpot.Owner.firstName} is Superhost</b>
+                                        <p>Superhosts are experienced, highly rated hosts who are commited to providing great stays for guests.</p>
+                                    </div>
+                                </div>
+
+                                <div className="flex-box-style-1">
+
+
+                                    <i class="fas fa-location-arrow"></i>
+                                    <div>
+                                        <b>Great Location</b>
+                                        <p>95% of recent guests gave the location a 5-star rating.</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-calendar-minus"></i>
+                                <b>Free cancellation.</b>
 
                                 <hr></hr>
 
@@ -140,9 +161,12 @@ function SingleSpotComponent() {
 
                             <div className="right-part">
                                 <div className="three-items">
-                                    <span>${singleSpot.price} night</span>
+                                    <span>
+                                        <span className="price-bold">${singleSpot.price} </span>
+                                        <span> night</span>
+                                    </span>
                                     <span> ★{singleSpot.avgStarRating} • {singleSpot.numReviews} reviews</span>
-                                  
+
                                 </div>
 
                                 <OpenModalButton

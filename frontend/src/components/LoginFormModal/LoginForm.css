@@ -12,9 +12,22 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 300px;
 }
 
-.log-in-form input{
+.demo-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+   
+}
+
+.log-in-form input {
     border-radius: 5px;
+}
+
+.red-errors {
+    color: red;
 }
 

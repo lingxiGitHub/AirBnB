@@ -19,7 +19,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
     const allReviewArr = allReviewObj ? Object.values(allReviewObj) : []
 
-    console.log("allReviewArr", allReviewArr)
+    // console.log("allReviewArr", allReviewArr)
 
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch()

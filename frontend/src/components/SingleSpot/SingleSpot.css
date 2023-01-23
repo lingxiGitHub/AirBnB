@@ -45,7 +45,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    
+
 }
 
 .left-right-container {
@@ -69,15 +69,42 @@
     top: 20px;
     margin: 40px 0px 40px 40px;
     justify-content: space-around;
+    width: 372px;
 }
 
 
 .three-items {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
+    font-size: 14px;
 }
 
 .three-items span {
     white-space: nowrap;
-    
+
 }
+
+.price-bold {
+    color: rgb(34, 34, 34) !important;
+    font-size: 22px;
+}
+
+.host-photo {
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.section-below-photo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-box-style-1{
+    display: flex;
+}
+

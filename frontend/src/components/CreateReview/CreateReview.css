@@ -3,7 +3,7 @@
     margin: 20px;
 }
 
-label span {
+.create-review-form label span {
     display: inline-block;
     width: 50px;
 }
@@ -17,10 +17,15 @@ label span {
 .create-review-form input {
     width: 250px;
     border-radius: 5px;
-
     text-overflow: ellipsis;
 }
 
 .error-display {
     color: red;
+}
+
+.thetitle {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

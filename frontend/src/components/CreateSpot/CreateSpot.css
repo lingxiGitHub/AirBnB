@@ -3,9 +3,11 @@
     margin: 20px;
 }
 
-label span {
-    display: inline-block;
+.create-spot-form label span { 
     width: 100px;
+    display: inline-block;
+   
+
 }
 
 .create-spot-form button {
@@ -16,6 +18,10 @@ label span {
 
 .create-spot-form input {
     border-radius: 5px;
-    width: 200px;
+    width: 150px;
     text-overflow: ellipsis;
+}
+
+.red-errors {
+    color: red
 }

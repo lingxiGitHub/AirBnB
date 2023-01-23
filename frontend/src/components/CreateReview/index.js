@@ -55,10 +55,13 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
     if (sessionUser) {
         if (sessionUser.id !== singleSpot.ownerId) {
             sessionLinks = (
+                <>
+                <h1 className="thetitle">Create Review</h1>
                 <form 
                 className="create-review-form"
                 onSubmit={handleSubmit}
                 >
+                    
                     <ul className="error-display">
                         {console.log("star errors", errors)}
                         {errors.map((error, idx) => (
@@ -89,6 +92,7 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
                     </label>
                     <button type="submit">Submit</button>
                 </form>
+                </>
             )
         } else if (sessionUser.id === singleSpot.ownerId) {
             sessionLinks = (

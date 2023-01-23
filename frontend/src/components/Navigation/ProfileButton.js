@@ -50,7 +50,9 @@ function ProfileButton({ user }) {
 
     return (
         <>
-            <button onClick={openMenu}>
+            <button
+                className="log-in-right-corner-button"
+                onClick={openMenu}>
                 <i class="fas fa-bars"></i>
                 <i className="fas fa-user-circle" />
 
@@ -78,6 +80,7 @@ function ProfileButton({ user }) {
                 ) : (
                     <>
                         <OpenModalMenuItem
+                            
                             itemText="Log In"
                             onItemClick={closeMenu}
                             modalComponent={<LoginFormModal />}

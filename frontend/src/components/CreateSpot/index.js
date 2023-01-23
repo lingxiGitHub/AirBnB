@@ -62,9 +62,9 @@ function CreateSpotModal() {
 
     return (
         <>
-
+            <h1>Create Spot</h1>
             <form className="create-spot-form" onSubmit={handleSubmit}>
-                <ul>
+                <ul className="red-errors">
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>
                     ))}
