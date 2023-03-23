@@ -28,13 +28,13 @@ const ADD_BOOKING = "bookings/addBooking"
 
 export const createBooking = (createdBooking) => ({
     type: ADD_BOOKING,
-    booking:createdBooking,
-    id:createdBooking.id
+    booking: createdBooking,
+    id: createdBooking.id
 })
 
 export const addBookingThunk = (newBooking, spotId) => async dispatch => {
-console.log("am i adding?")
-console.log(newBooking)
+    console.log("am i adding?")
+    console.log(newBooking)
     const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
         method: "POST",
         headers: {
@@ -45,10 +45,10 @@ console.log(newBooking)
     )
 
     if (response.ok) {
-        console.log("yes booking success",response)
+        console.log("yes booking success", response)
         const createdBooking = await response.json()
         dispatch(createBooking(createdBooking))
-    }else{
+    } else {
         console.log("adding fail at store")
     }
 
@@ -64,28 +64,29 @@ export default function bookingReducer(state = initialState, action) {
     switch (action.type) {
 
         case LOADBOOKING:
-            const allBookings = []
+            const allBookings = {}
 
-
-            action.booking.Bookings.forEach(booking => {
-                // console.log("!!!",booking)
+            // console.log("????", action.booking.Bookings[0])
+            const bookingsArray = action.booking.Bookings[0]
+            bookingsArray.forEach(booking => {
+                // console.log("!!!", booking)
                 allBookings[booking.id] = booking
             })
 
             // console.log("loooooook", allBookings)
 
             return {
-                ...state,
-                spot: {
-                    ...state.booking,
-                    ...allBookings
-                }
+                // ...state,
+                // spot: {
+                //     // ...state.booking,
+                ...allBookings
+                // }
             }
 
         case ADD_BOOKING:
-            const newBookingState={...state}
+            const newBookingState = { ...state }
             console.log("AAAAAA",newBookingState)
-            newBookingState.spot[action.id]=action.booking
+            newBookingState[action.id] = action.booking
         default:
             return state
 

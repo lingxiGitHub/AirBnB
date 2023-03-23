@@ -14,6 +14,7 @@ export default function Booking({ spotId }) {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
+    const minDate=new Date()
 
     useEffect(async () => {
         await dispatch(getAllBookings(+spotId));
@@ -59,6 +60,7 @@ export default function Booking({ spotId }) {
                         type="date"
                         placeholder="Add date"
                         value={startDate}
+                        minDate={minDate}
                         onChange={(e) => setStartDate(e.target.value)}
                         required
                     >
@@ -73,6 +75,7 @@ export default function Booking({ spotId }) {
                     type="date"
                     placeholder="Add date"
                     value={endDate}
+                    minDate={minDate}
                     onChange={(e) => setEndDate(e.target.value)}
                     required
                 >

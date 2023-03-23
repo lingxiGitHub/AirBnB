@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   spots: spotsReducer,
   reviews: reviewReducer,
-  booking: bookingReducer
+  bookings: bookingReducer
 
 });
 // ...
