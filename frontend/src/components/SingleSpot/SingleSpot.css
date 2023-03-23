@@ -75,6 +75,7 @@
 
 .three-items {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: baseline;
     font-size: 14px;
@@ -106,5 +107,18 @@
 
 .flex-box-style-1{
     display: flex;
+}
+
+
+.under-name{
+    display:  flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.update-delete-buttons{
+
 }
 

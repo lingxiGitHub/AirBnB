@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import DeleteSpot from "../DeleteSpot";
 import "./SingleSpot.css"
 import OpenModalButton from "../OpenModalButton";
+import Booking from "../Booking";
 
 function SingleSpotComponent() {
 
@@ -24,7 +25,7 @@ function SingleSpotComponent() {
         return state.spots.singleSpot
     })
 
-    console.log("singleSpot at component", singleSpot)
+    // console.log("singleSpot at component", singleSpot)
 
 
     const dispatch = useDispatch()
@@ -57,34 +58,52 @@ function SingleSpotComponent() {
             {isLoaded && (
                 <div>
                     <h1>{singleSpot.name}</h1>
-                    <div className="address-line">
-                        <span> ★{singleSpot.avgStarRating}</span>
-                        <span>{singleSpot.numReviews} reviews</span>
-                        <span>{singleSpot.address}</span>
-                        <span>{singleSpot.city}</span>
-                        <span>{singleSpot.state}</span>
-                        <span>{singleSpot.country}</span>
+                    <div className="under-name">
+
+                        <div className="address-line">
+                            <span> ★{singleSpot.avgStarRating}</span>
+                            <span>{singleSpot.numReviews} reviews</span>
+                            <span>{singleSpot.address}</span>
+                            <span>{singleSpot.city}</span>
+                            <span>{singleSpot.state}</span>
+                            <span>{singleSpot.country}</span>
+
+                        </div>
+                        <div className="update-delete-buttons">
+
+                            <OpenModalButton
+                                buttonText="Update Spot"
+                                modalComponent={<UpdateSpot
+                                    showEdit={showEdit}
+                                    setShowEdit={setShowEdit}
+                                    singleSpot={singleSpot}
+                                    sessionUser={sessionUser}
+
+                                />} />
+
+
+
+
+
+                            <button
+                                onClick={() => setShowDeleteEdit(!showDeleteEdit)}
+                            >Delete Spot</button>
+
+                            {showDeleteEdit && (
+                                <DeleteSpot
+                                    singleSpot={singleSpot}
+                                    sessionUser={sessionUser}
+                                    dispatch={dispatch}
+                                    history={history}
+                                    spotId={spotId}
+                                    setShowDeleteEdit={setShowDeleteEdit}
+
+                                />
+                            )}
+
+                        </div>
 
                     </div>
-
-
-                    {/* <div className="updateSpot">
-                        <button
-                            onClick={() => setShowEdit(!showEdit)}
-                        >Update Spot</button>
-                    </div> */}
-                    {/* {showEdit && (
-                        <UpdateSpot
-                            showEdit={showEdit}
-                            setShowEdit={setShowEdit}
-                            singleSpot={singleSpot}
-                            sessionUser={sessionUser}
-                        />
-                    )} */}
-
-
-
-
 
 
                     <div className="photos">
@@ -161,43 +180,28 @@ function SingleSpotComponent() {
 
                             <div className="right-part">
                                 <div className="three-items">
-                                    <span>
-                                        <span className="price-bold">${singleSpot.price} </span>
-                                        <span> night</span>
-                                    </span>
-                                    <span> ★{singleSpot.avgStarRating} • {singleSpot.numReviews} reviews</span>
+                                    <div className="booking-top-section">
+                                        <span>
+                                            <span className="price-bold">${singleSpot.price} </span>
+                                            <span> night</span>
+                                        </span>
+                                        <span> ★{singleSpot.avgStarRating} • {singleSpot.numReviews} reviews</span>
+
+                                    </div>
+
+
+                                    <div className="booking-area">
+
+                                        <Booking
+                                            spotId={spotId}
+                                        />
+
+
+                                    </div>
 
                                 </div>
 
-                                <OpenModalButton
-                                    buttonText="Update Spot"
-                                    modalComponent={<UpdateSpot
-                                        showEdit={showEdit}
-                                        setShowEdit={setShowEdit}
-                                        singleSpot={singleSpot}
-                                        sessionUser={sessionUser}
 
-                                    />} />
-
-
-
-
-
-                                <button
-                                    onClick={() => setShowDeleteEdit(!showDeleteEdit)}
-                                >Delete Spot</button>
-
-                                {showDeleteEdit && (
-                                    <DeleteSpot
-                                        singleSpot={singleSpot}
-                                        sessionUser={sessionUser}
-                                        dispatch={dispatch}
-                                        history={history}
-                                        spotId={spotId}
-                                        setShowDeleteEdit={setShowDeleteEdit}
-
-                                    />
-                                )}
 
                             </div>
 
