@@ -729,7 +729,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
         }]
     })
 
-    const restrictedBooking = await Booking.findOne({
+    const restrictedBooking = await Booking.findAll({
         where: {
             spotId
         },
