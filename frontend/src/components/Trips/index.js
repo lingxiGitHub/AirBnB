@@ -1,7 +1,9 @@
 import "./Trips.css";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getUserBookings } from "../../store/booking"
+import { getUserBookings } from "../../store/booking";
+import EditBooking from "../EditBooking"
+import OpenModalButton from "../OpenModalButton";
 
 function changeDateFormat(dateStr) {
     const date = new Date(dateStr)
@@ -13,8 +15,8 @@ export default function Trips() {
     const dispatch = useDispatch()
     const [isLoaded, setIsLoaded] = useState(false);
 
-    useEffect(async () => {
-        await dispatch(getUserBookings());
+    useEffect(() => {
+        dispatch(getUserBookings());
         setIsLoaded(true)
     }, [dispatch])
 
@@ -27,16 +29,17 @@ export default function Trips() {
     const today = new Date()
 
 
-    return (
+    return (isLoaded && (
+
         <>
             <div className="user-bookings">
 
                 <div className="past-trip-section">
                     <h2>Where you've been</h2>
                     {allUserBooking.map(booking => {
-                        console.log("determine", new Date(booking.endDate) > today)
-                        console.log("today", today)
-                        console.log("end date", new Date(booking.endDate))
+                        // console.log("determine", new Date(booking.endDate) > today)
+                        // console.log("today", today)
+                        // console.log("end date", new Date(booking.endDate))
                         return (
 
                             <div>
@@ -89,6 +92,11 @@ export default function Trips() {
                                         <button>Edit</button>
                                         <button>Delete</button>
 
+                                        <OpenModalButton
+                                            buttonText="Edit Booking"
+                                            modalComponent={<EditBooking bookingId={booking.id} />}
+                                        />
+
                                     </div>
                                 )}
 
@@ -113,6 +121,9 @@ export default function Trips() {
 
             </div>
         </>
+
+    )
+
 
 
     )

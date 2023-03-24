@@ -1,8 +1,6 @@
 import "./Booking.css"
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { DatePicker } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { getAllBookings, addBookingThunk } from "../../store/booking";
 import { useHistory } from "react-router-dom";
 
@@ -14,10 +12,10 @@ export default function Booking({ spotId }) {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
-    const minDate=new Date()
+    const minDate = new Date()
 
-    useEffect(async () => {
-        await dispatch(getAllBookings(+spotId));
+    useEffect( () => {
+         dispatch(getAllBookings(+spotId));
         setIsLoaded(true)
     }, [dispatch])
 
@@ -35,7 +33,7 @@ export default function Booking({ spotId }) {
 
 
         if (data && data.errors) setErrors(data.errors);
-        
+
 
         history.push(`/spots/${spotId}`)
 
@@ -43,11 +41,12 @@ export default function Booking({ spotId }) {
 
     }
 
-    return (
+    return (isLoaded && (
+
         <>
-            <form 
-            className="booking-form"
-              onSubmit={handleSubmit}
+            <form
+                className="booking-form"
+                onSubmit={handleSubmit}
             >
                 <ul className="red-errors">
                     {errors.map((error, idx) => (
@@ -87,5 +86,7 @@ export default function Booking({ spotId }) {
 
             </form>
         </>
+    )
+
     )
 }

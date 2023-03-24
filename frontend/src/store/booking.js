@@ -75,6 +75,35 @@ export const addBookingThunk = (newBooking, spotId) => async dispatch => {
 }
 
 
+//edit a booking
+const UPDATE_BOOKING = "bookings/updateBooking"
+
+export const updateBooking = (updatedBooking) => ({
+    type: UPDATE_BOOKING,
+    updatedBooking
+})
+
+export const updateBookingThunk = (booking, bookingId) => async dispatch => {
+    const { startDate, endDate } = booking
+    const res = await csrfFetch(`/api/booking/${+bookingId}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            startDate, endDate
+        })
+    })
+
+    if (res.ok) {
+        const updatedBooking = await res.json()
+        await dispatch(updateBooking(updatedBooking))
+        dispatch(getUserBookings())
+    }
+
+}
+
+
 //reducer
 const initialState = {}
 export default function bookingReducer(state = initialState, action) {
@@ -128,6 +157,13 @@ export default function bookingReducer(state = initialState, action) {
             const newBookingState = { ...state }
             // console.log("AAAAAA",newBookingState)
             newBookingState[action.id] = action.booking
+
+
+        case UPDATE_BOOKING: {
+            const updatedBookingState = { ...state }
+            updatedBookingState.user[action.updatedBooking.id] = action.updatedBooking
+            return updatedBookingState
+        }
         default:
             return state
 

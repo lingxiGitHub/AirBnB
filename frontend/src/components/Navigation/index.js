@@ -11,53 +11,16 @@ import CreateSpotModal from '../CreateSpot';
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
 
-    // let sessionLinks;
-    // if (sessionUser) {
-    //     sessionLinks = (
-    //         <>
-    //             {/* <li>
-    //                 <ProfileButton user={sessionUser} />
-    //             </li> */}
-
-    //             <li>
-    //                 <OpenModalButton
-    //                     buttonText="Create Spot"
-    //                     modalComponent={<CreateSpotModal />}
-    //                 />
-    //             </li>
-    //         </>
-    //     );
-    // } else {
-    //     sessionLinks = (
-    //         <>
-    //             <li>
-    //                 <OpenModalButton
-    //                     buttonText="Log In"
-    //                     modalComponent={<LoginFormModal />}
-    //                 />
-    //                 <OpenModalButton
-    //                     buttonText="Sign Up"
-    //                     modalComponent={<SignupFormModal />}
-    //                 />
-
-
-    //             </li>
-
-
-    //         </>
-    //     );
-    // }
+    
 
     return (
 
 
-        // <ul className='nav-bar'>
-
-        //     {isLoaded && sessionLinks}
-        // </ul>
+   
 
         <ul className='nav-bar'>
             <li>
+            <a href="/">test</a>
                 <NavLink exact to="/"><img className="airbnb-icon" width="60" src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/8d32ea18423501.562c939db98fc.png" /></NavLink>
             </li>
             {isLoaded && (
@@ -66,15 +29,7 @@ function Navigation({ isLoaded }) {
                         <ProfileButton user={sessionUser} />
                     </li>
 
-                    {/* {sessionUser && (
-
-                        <li>
-                        <OpenModalButton
-                            buttonText="Create Spot"
-                            modalComponent={<CreateSpotModal />}
-                        />
-                    </li> 
-                    )} */}
+                 
                    
                 </>
             )}
