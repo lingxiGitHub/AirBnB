@@ -23,9 +23,16 @@ router.get("/current", requireAuth, async (req, res) => {
         include: [
             {
                 model: Spot,
-                attributes:{exclude:["updatedAt","createdAt"]},
-                include: [{ model: SpotImage }]
-            }//need to add previewImage to spot
+                attributes: { exclude: ["updatedAt", "createdAt"] },
+                include: [
+                    { model: SpotImage },
+                    {
+                        model: User,
+                        as: "Owner",
+                        attributes: ["id", "firstName", "lastName"]
+                    }
+                ]
+            }
         ]
     })
 
@@ -49,7 +56,7 @@ router.get("/current", requireAuth, async (req, res) => {
     })
 
     res.json({
-        "Bookings":bookingList
+        "Bookings": bookingList
     })
 })
 
@@ -91,7 +98,7 @@ router.put("/:bookingId", requireAuth, async (req, res, next) => {
         err.status = 403;
         err.error = "Forbidden"
         res.status(403)
-       return res.json(err)
+        return res.json(err)
     }
 
     //endDate cannot come before startDate
@@ -274,7 +281,7 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
         return res.json({
             message: "Successfully deleted",
             statusCode: 200
-})
+        })
     }
 
 

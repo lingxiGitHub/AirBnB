@@ -6,6 +6,8 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import CreateSpotModal from "../CreateSpot";
 import OpenModalButton from "../OpenModalButton";
+import Trips from "../Trips";
+import { useHistory } from "react-router-dom";
 import "./ProfileButton.css"
 
 
@@ -14,7 +16,7 @@ function ProfileButton({ user }) {
 
 
 
-
+    const history = useHistory();
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -60,10 +62,18 @@ function ProfileButton({ user }) {
             <ul className={ulClassName} ref={ulRef}>
                 {user ? (
                     <>
-                        <li>{user.username}</li>
+                        {/* <li>{user.username}</li> */}
                         <li>{user.firstName} {user.lastName}</li>
-                        <li>{user.email}</li>
+                        {/* <li>{user.email}</li> */}
 
+                        <OpenModalMenuItem
+                            itemText="Profile"
+                            // modalComponent={<Trips />}
+                            onItemClick={async () => {
+                                await closeMenu();
+                                history.push("/profile")
+                            }}
+                        />
 
                         <OpenModalMenuItem
                             itemText="Create Spot"
@@ -80,7 +90,7 @@ function ProfileButton({ user }) {
                 ) : (
                     <>
                         <OpenModalMenuItem
-                            
+
                             itemText="Log In"
                             onItemClick={closeMenu}
                             modalComponent={<LoginFormModal />}

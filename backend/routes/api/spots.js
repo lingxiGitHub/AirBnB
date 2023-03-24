@@ -759,7 +759,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
         })
     } else if (userId != currentUserId) {
         res.json({
-            "Bookings": [restrictedBooking]
+            "Bookings": restrictedBooking
         })
     }
 

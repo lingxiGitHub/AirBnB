@@ -9,6 +9,13 @@ export const loadBookings = (bookingList) => ({
     booking: bookingList
 })
 
+const LOADUSERBOOKING = "bookings/loadUserBookings"
+
+export const loadUserBookings = (userBooking) => ({
+    type: LOADUSERBOOKING,
+    userBooking: userBooking
+})
+
 export const getAllBookings = (spotId) => async dispatch => {
 
     const response = await fetch(`/api/spots/${spotId}/bookings`)
@@ -20,6 +27,18 @@ export const getAllBookings = (spotId) => async dispatch => {
         console.log("get all booking store wrong")
     }
 }
+
+export const getUserBookings = () => async dispatch => {
+
+    const userResponse = await fetch(`/api/bookings/current`)
+
+    if (userResponse.ok) {
+        const userBooking = await userResponse.json()
+        dispatch(loadUserBookings(userBooking))
+    }
+
+}
+
 
 
 
@@ -67,7 +86,9 @@ export default function bookingReducer(state = initialState, action) {
             const allBookings = {}
 
             // console.log("????", action.booking.Bookings[0])
-            const bookingsArray = action.booking.Bookings[0]
+            const bookingsArray = action.booking.Bookings
+            // console.log("----->", bookingsArray)
+            // console.log("@@@@@@@@", action.booking.Bookings)
             bookingsArray.forEach(booking => {
                 // console.log("!!!", booking)
                 allBookings[booking.id] = booking
@@ -76,16 +97,36 @@ export default function bookingReducer(state = initialState, action) {
             // console.log("loooooook", allBookings)
 
             return {
-                // ...state,
-                // spot: {
-                //     // ...state.booking,
-                ...allBookings
-                // }
+                ...state,
+                spot: {
+                    ...state.booking,
+                    ...allBookings
+                }
             }
+
+
+
+        case LOADUSERBOOKING:
+            const allUserBooking = {}
+
+            const userBookingArray = action.userBooking.Bookings
+
+            userBookingArray.forEach(booking => {
+                allUserBooking[booking.id] = booking
+            })
+
+            return {
+                ...state,
+                user: {
+                    ...state.booking,
+                    ...allUserBooking
+                }
+            }
+
 
         case ADD_BOOKING:
             const newBookingState = { ...state }
-            console.log("AAAAAA",newBookingState)
+            // console.log("AAAAAA",newBookingState)
             newBookingState[action.id] = action.booking
         default:
             return state

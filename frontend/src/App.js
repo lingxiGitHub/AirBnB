@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotsList from "./components/SpotsList";
 import SingleSpotComponent from "./components/SingleSpot";
+import Trips from "./components/Trips";
 
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path="/spots/:spotId">
             <SingleSpotComponent />
+          </Route>
+          <Route path="/profile">
+            <Trips />
           </Route>
          
         </Switch>

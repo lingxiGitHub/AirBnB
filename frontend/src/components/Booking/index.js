@@ -60,7 +60,7 @@ export default function Booking({ spotId }) {
                         type="date"
                         placeholder="Add date"
                         value={startDate}
-                        minDate={minDate}
+                        min={new Date().toISOString().split("T")[0]}
                         onChange={(e) => setStartDate(e.target.value)}
                         required
                     >
@@ -75,7 +75,7 @@ export default function Booking({ spotId }) {
                     type="date"
                     placeholder="Add date"
                     value={endDate}
-                    minDate={minDate}
+                    min={new Date().toISOString().split("T")[0]}
                     onChange={(e) => setEndDate(e.target.value)}
                     required
                 >
