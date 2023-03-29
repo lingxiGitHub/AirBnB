@@ -67,7 +67,7 @@ function ProfileButton({ user }) {
                         {/* <li>{user.email}</li> */}
 
                         <OpenModalMenuItem
-                            itemText="Profile"
+                            itemText="Trips"
                             // modalComponent={<Trips />}
                             onItemClick={async () => {
                                 await closeMenu();

@@ -1,14 +1,21 @@
 import "./Trips.css";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getUserBookings } from "../../store/booking";
+import { deleteBookingThunk, getUserBookings } from "../../store/booking";
 import EditBooking from "../EditBooking"
 import OpenModalButton from "../OpenModalButton";
 
-function changeDateFormat(dateStr) {
-    const date = new Date(dateStr)
-    const options = { month: 'short', day: 'numeric', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+function changeDateFormat(inputDate) {
+    const date = new Date(inputDate);
+    const formattedDate = date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        timeZoneName: 'short'
+    });
+
+    return formattedDate
+
 }
 
 export default function Trips() {
@@ -37,9 +44,7 @@ export default function Trips() {
                 <div className="past-trip-section">
                     <h2>Where you've been</h2>
                     {allUserBooking.map(booking => {
-                        // console.log("determine", new Date(booking.endDate) > today)
-                        // console.log("today", today)
-                        // console.log("end date", new Date(booking.endDate))
+
                         return (
 
                             <div>
@@ -75,13 +80,12 @@ export default function Trips() {
                     <h2>Upcoming trips</h2>
 
                     {allUserBooking.map(booking => {
-                        // console.log("upcomming",changeDateFormat(booking.endDate)>today)
-                        // console.log("today",today)
-                        // console.log("end date", changeDateFormat( booking.endDate))
+
+                        // console.log("^^^^", booking)
                         return (
                             <div>
 
-                                {new Date(booking.endDate) > today && (
+                                {new Date(booking.endDate) >= today && (
                                     <div className="upcoming single-booking">
 
                                         <img className="indi-booking-img" src={booking.Spot.previewImage} alt=""></img>
@@ -89,14 +93,19 @@ export default function Trips() {
                                         <div>Hosted by {booking.Spot.Owner.firstName} {booking.Spot.Owner.lastName}</div>
 
                                         <div>{changeDateFormat(booking.startDate)} - {changeDateFormat(booking.endDate)}</div>
-                                        <button>Edit</button>
-                                        <button>Delete</button>
+                             
 
                                         <OpenModalButton
-                                            buttonText="Edit Booking"
-                                            modalComponent={<EditBooking bookingId={booking.id} />}
+                                            buttonText="Edit"
+                                            modalComponent={<EditBooking booking={booking} />}
                                         />
 
+                                        <button
+                                            onClick={async() => {
+                                                await dispatch(deleteBookingThunk(booking.id))
+                                                dispatch(getUserBookings())
+                                            }}
+                                        >Delete</button>
                                     </div>
                                 )}
 
@@ -113,10 +122,7 @@ export default function Trips() {
 
                 </div>
 
-                <div className="canceled-trips-section">
-                    <h2>Canceled trips</h2>
-
-                </div>
+ 
 
 
             </div>

@@ -20,7 +20,7 @@ function Navigation({ isLoaded }) {
 
         <ul className='nav-bar'>
             <li>
-            <a href="/">test</a>
+       
                 <NavLink exact to="/"><img className="airbnb-icon" width="60" src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/8d32ea18423501.562c939db98fc.png" /></NavLink>
             </li>
             {isLoaded && (

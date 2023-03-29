@@ -1,5 +1,6 @@
 
 import { csrfFetch } from "./csrf"
+// import { useHistory } from "react-router-dom"
 
 //load bookings
 const LOADBOOKING = "bookings/loadBookings"
@@ -40,8 +41,6 @@ export const getUserBookings = () => async dispatch => {
 }
 
 
-
-
 //add a booking
 const ADD_BOOKING = "bookings/addBooking"
 
@@ -52,8 +51,7 @@ export const createBooking = (createdBooking) => ({
 })
 
 export const addBookingThunk = (newBooking, spotId) => async dispatch => {
-    console.log("am i adding?")
-    console.log(newBooking)
+    // const history = useHistory()
     const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
         method: "POST",
         headers: {
@@ -64,14 +62,16 @@ export const addBookingThunk = (newBooking, spotId) => async dispatch => {
     )
 
     if (response.ok) {
-        console.log("yes booking success", response)
+        // console.log("yes booking success", response)
         const createdBooking = await response.json()
-        dispatch(createBooking(createdBooking))
+        await dispatch(createBooking(createdBooking))
+        // history.push(`/success`)
+       
     } else {
         console.log("adding fail at store")
     }
 
-
+//  return response
 }
 
 
@@ -85,7 +85,8 @@ export const updateBooking = (updatedBooking) => ({
 
 export const updateBookingThunk = (booking, bookingId) => async dispatch => {
     const { startDate, endDate } = booking
-    const res = await csrfFetch(`/api/booking/${+bookingId}`, {
+    console.log("here????")
+    const res = await csrfFetch(`/api/bookings/${+bookingId}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json'
@@ -99,9 +100,30 @@ export const updateBookingThunk = (booking, bookingId) => async dispatch => {
         const updatedBooking = await res.json()
         await dispatch(updateBooking(updatedBooking))
         dispatch(getUserBookings())
+    } else {
+        console.log("update thunk failed")
     }
 
 }
+
+// delete a booking
+
+const DELETE_BOOKING = "bookings/deleteBooking"
+
+export const deleteBooking = (id) => ({
+    type: DELETE_BOOKING,
+    id
+})
+
+export const deleteBookingThunk = (id) => async dispatch => {
+    const res = await csrfFetch(`/api/bookings/${id}`, {
+        method: "DELETE"
+    })
+    if (res.ok) {
+        dispatch(deleteBooking(id))
+    }
+}
+
 
 
 //reducer
@@ -113,17 +135,13 @@ export default function bookingReducer(state = initialState, action) {
 
         case LOADBOOKING:
             const allBookings = {}
-
-            // console.log("????", action.booking.Bookings[0])
             const bookingsArray = action.booking.Bookings
-            // console.log("----->", bookingsArray)
-            // console.log("@@@@@@@@", action.booking.Bookings)
+
             bookingsArray.forEach(booking => {
-                // console.log("!!!", booking)
                 allBookings[booking.id] = booking
             })
 
-            // console.log("loooooook", allBookings)
+
 
             return {
                 ...state,
@@ -164,6 +182,15 @@ export default function bookingReducer(state = initialState, action) {
             updatedBookingState.user[action.updatedBooking.id] = action.updatedBooking
             return updatedBookingState
         }
+
+        case DELETE_BOOKING: {
+            const deleteBookingState = { ...state }
+            console.log("heyyy", deleteBookingState)
+            delete deleteBookingState.user[action.id]
+            return deleteBookingState;
+        }
+
+
         default:
             return state
 

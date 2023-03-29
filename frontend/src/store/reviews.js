@@ -57,6 +57,39 @@ export const addReview = (newReview, spotId) => async dispatch => {
     }
 }
 
+
+//update review
+
+const UPDATE_REVIEW = "reviews/updateReview"
+
+export const updateReview = (updatedReview)=>({
+    type: UPDATE_REVIEW,
+    updatedReview
+})
+
+export const updateReviewThunk = (updatedReview,reviewId) =>async dispatch =>{
+    console.log("here???")
+    console.log("inside update review thunk", updatedReview)
+    const { review, stars } = updatedReview
+    const res = await csrfFetch(`/api/reviews/${+reviewId}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            review, stars
+        })
+    })
+
+    if (res.ok){
+        const updatedReview = await res.json()
+         dispatch(updateReview(updatedReview))
+   
+    }else{
+        console.log("update review thunk failed")
+    }
+}
+
 //delete review
 
 const DELETE_REVIEW = "reviews/deleteReview"
@@ -75,11 +108,7 @@ export const deleteReviewThunk = (id) => async dispatch => {
     }
 }
 
-//reset ?
-// const RESET="Reviews/ResetState"
-// export const actionResetState=()=>({
-//     type:RESET
-// })
+
 
 
 
@@ -109,6 +138,10 @@ export default function reviewReducer(state = initialState, action) {
             const newReviewState = { ...state }
             newReviewState.spot[action.id] = action.createdReview
             return newReviewState
+        case UPDATE_REVIEW:
+            const updateReviewState = {...state}
+            console.log("@@@@",updateReviewState)
+            updateReviewState.spot[action.updatedReview.id] = action.updatedReview
 
         default:
             return state

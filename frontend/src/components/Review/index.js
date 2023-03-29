@@ -6,20 +6,20 @@ import { deleteReviewThunk } from "../../store/reviews";
 import { getSingleSpot } from "../../store/spots";
 import OpenModalButton from "../OpenModalButton";
 import "./Review.css"
+import UpdateReviewComp from "../UpdateReview";
 
 export default function DisplayReview({ singleSpot, spotId }) {
 
-    // console.log("Single Spot id for reviews", spotId)
 
     const allReviewObj = useSelector((state) => {
         return state.reviews.spot
     })
 
-    // console.log("allReviewObj", allReviewObj)
+
 
     const allReviewArr = allReviewObj ? Object.values(allReviewObj) : []
 
-    // console.log("allReviewArr", allReviewArr)
+
 
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch()
@@ -30,10 +30,6 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
     const [showEdit, setShowEdit] = useState(false);
 
-    //find the review Id that the userId created
-    // const currentUserId = useSelector((state) => {
-    //     return state.session.user.id
-    // })
 
 
     const sessionUser = useSelector(state => state.session.user)
@@ -49,22 +45,21 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
         let theReviewId
         let allReviewsUserId = []
-
+        let grabReview
         for (let review of allReviewArr) {
             allReviewsUserId.push(+review.userId)
             if (+currentUserId === +review.userId) {
-                // console.log("review.userId", review.userId)
+                // console.log(review)
                 theReviewId = review.id
+                grabReview = review
+                // console.log("grab", grabReview)
 
             }
 
         }
 
 
-        // console.log("arr's user id", allReviewsUserId)
-        // console.log("theReviewId", theReviewId)
-        // console.log("allReviewsUserId", allReviewsUserId)
-        // console.log("currentUserId", currentUserId)
+
 
 
         const handleDelete = () => {
@@ -73,17 +68,27 @@ export default function DisplayReview({ singleSpot, spotId }) {
                 .then(() => dispatch(getSingleSpot(+spotId)))
         }
 
+
+        // console.log("grab", grabReview)
         if (allReviewsUserId.includes(+currentUserId)) {
 
             sessionLinks = (
+                <div className="review-buttons">
+                    <OpenModalButton
+                        buttonText="Update"
+                        modalComponent={<UpdateReviewComp
+                            spotId={spotId}
+                            grabReview={grabReview}
 
-                <li>
-                    <button
-                        onClick={handleDelete}
-                    >Delete Review</button>
-                </li>
+                        />} />
 
+                    <li>
+                        <button
+                            onClick={handleDelete}
+                        >Delete</button>
+                    </li>
 
+                </div>
 
             )
 
@@ -148,33 +153,8 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
                     </div>
 
-                    {/* <div className="addReview">
-                        <button
-                            onClick={() => setShowEdit(!showEdit)}
-                        >Create Review</button>
-                    </div>
-                    {showEdit && (
 
-                        <CreateReview
-                            spotId={spotId}
-                            showEdit={showEdit}
-                            setShowEdit={setShowEdit}
-                            singleSpot={singleSpot}
-                        />
-                    )} */}
 
-                    {/* <li>
-                        <OpenModalButton
-                            buttonText="Create Review"
-                            modalComponent={<CreateReview
-                                spotId={spotId}
-                                showEdit={showEdit}
-                                setShowEdit={setShowEdit}
-                                singleSpot={singleSpot}
-                            />}
-                        />
-
-                    </li> */}
 
                     {sessionUser && (sessionLinks)}
 

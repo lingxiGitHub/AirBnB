@@ -9,17 +9,19 @@ export default function Booking({ spotId }) {
     const history = useHistory();
     const dispatch = useDispatch()
     const [errors, setErrors] = useState([]);
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     const [isLoaded, setIsLoaded] = useState(false);
-    const minDate = new Date()
+    // const minDate = new Date()
 
-    useEffect( () => {
-         dispatch(getAllBookings(+spotId));
+    useEffect(() => {
+        dispatch(getAllBookings(+spotId));
         setIsLoaded(true)
     }, [dispatch])
 
-    const handleSubmit = async (e) => {
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         const newBooking = {
@@ -29,13 +31,17 @@ export default function Booking({ spotId }) {
 
 
 
-        const data = await dispatch(addBookingThunk(newBooking, spotId))
+        dispatch(addBookingThunk(newBooking, spotId))
+            // .catch(
+            //     async (res) => {
+            //         // console.log(res)
+            //         const data = await res.json();
+            //         if (data && data.errors) setErrors(data.errors);
+            //     }
+            // )
+  
 
 
-        if (data && data.errors) setErrors(data.errors);
-
-
-        history.push(`/spots/${spotId}`)
 
 
 
@@ -49,9 +55,12 @@ export default function Booking({ spotId }) {
                 onSubmit={handleSubmit}
             >
                 <ul className="red-errors">
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
+                    {
+                        
+                        Object.values(errors).map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))
+                    }
                 </ul>
                 <label>
                     <span>CHECK-IN</span>
@@ -82,7 +91,7 @@ export default function Booking({ spotId }) {
                 </input>
 
 
-                <button type="submit">Check availability</button>
+                <button type="submit">Reserve</button>
 
             </form>
         </>

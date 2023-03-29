@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import SpotsList from "./components/SpotsList";
 import SingleSpotComponent from "./components/SingleSpot";
 import Trips from "./components/Trips";
+import SpotSuccess from "./components/SpotSuccess";
 
 
 function App() {
@@ -33,6 +34,9 @@ function App() {
           </Route>
           <Route path="/profile">
             <Trips />
+          </Route>
+          <Route path="/success">
+            <SpotSuccess />
           </Route>
          
         </Switch>

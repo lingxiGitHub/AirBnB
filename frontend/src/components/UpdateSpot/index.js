@@ -92,20 +92,7 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
                                 onChange={(e) => setCountry(e.target.value)}
                             />
                         </label>
-                        {/* <label>lat
-                    <input
-                        type="text"
-                        value={lat}
-                        onChange={(e) => setLat(e.target.value)}
-                    />
-                </label>
-                <label>lng
-                    <input
-                        type="text"
-                        value={lng}
-                        onChange={(e) => setLng(e.target.value)}
-                    /> */}
-                        {/* </label> */}
+                 
                         <label>
                             <span>Name</span>
                             <input

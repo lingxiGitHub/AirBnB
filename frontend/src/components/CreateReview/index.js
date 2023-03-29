@@ -56,42 +56,44 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
         if (sessionUser.id !== singleSpot.ownerId) {
             sessionLinks = (
                 <>
-                <h1 className="thetitle">Create Review</h1>
-                <form 
-                className="create-review-form"
-                onSubmit={handleSubmit}
-                >
-                    
-                    <ul className="error-display">
-                        {console.log("star errors", errors)}
-                        {errors.map((error, idx) => (
-                            <li key={idx}>{error}</li>
-                        ))}
-                    </ul>
+                    <h1 className="thetitle">Create Review</h1>
+                    <form
+                        className="create-review-form"
+                        onSubmit={handleSubmit}
+                    >
 
-                    <label>
-                        <span>Review</span>
-                        <input
-                            type="text"
-                            value={review}
-                            onChange={(e) => setReview(e.target.value)}
-                            required
+                        <ul className="error-display">
+                            {console.log("star errors", errors)}
+                            {errors.map((error, idx) => (
+                                <li key={idx}>{error}</li>
+                            ))}
+                        </ul>
 
-                        />
-                    </label>
+                        <label>
+                            <span>Review</span>
+                            <input
+                                type="text"
+                                value={review}
+                                onChange={(e) => setReview(e.target.value)}
+                                required
 
-                    <label>
-                        <span>Stars</span>
-                        <input
-                            type="number"
-                            value={stars}
-                            onChange={(e) => setStars(e.target.value)}
-                            required
+                            />
+                        </label>
 
-                        />
-                    </label>
-                    <button type="submit">Submit</button>
-                </form>
+                        <label>
+                            <span>Stars</span>
+                            <input
+                                type="number"
+                                value={stars}
+                                min={1}
+                                max={5}
+                                onChange={(e) => setStars(e.target.value)}
+                                required
+
+                            />
+                        </label>
+                        <button type="submit">Submit</button>
+                    </form>
                 </>
             )
         } else if (sessionUser.id === singleSpot.ownerId) {
