@@ -4,19 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteBookingThunk, getUserBookings } from "../../store/booking";
 import EditBooking from "../EditBooking"
 import OpenModalButton from "../OpenModalButton";
+import TripCard from "./TripCard";
 
-function changeDateFormat(inputDate) {
-    const date = new Date(inputDate);
-    const formattedDate = date.toLocaleString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        timeZoneName: 'short'
-    });
 
-    return formattedDate
-
-}
 
 export default function Trips() {
     const dispatch = useDispatch()
@@ -50,27 +40,45 @@ export default function Trips() {
                             <div>
 
                                 {new Date(booking.endDate) < today && (
-                                    <div className="single-booking past-trips">
 
-                                        <img className="indi-booking-img" src={booking.Spot.previewImage} alt=""></img>
-                                        <div>{booking.Spot.name}</div>
-                                        <div>Hosted by {booking.Spot.Owner.firstName} {booking.Spot.Owner.lastName}</div>
 
-                                        <div>{changeDateFormat(booking.startDate)} - {changeDateFormat(booking.endDate)}</div>
+                                    <TripCard
+                                        booking={booking}
+                                    />
+                                )}
 
-                                    </div>
+
+                            </div>
+                        )
+                    }
+
+                    )}
+
+                </div>
+
+                <div>
+
+                    <h2>Current trips</h2>
+                    {allUserBooking.map(booking => {
+
+                        // console.log("^^^^", booking)
+                        return (
+                            <div>
+
+                                {new Date(booking.endDate) >= today && new Date(booking.startDate) <= today && (
+                                    <TripCard
+                                        booking={booking}
+                                    />
                                 )}
 
 
                             </div>
 
-
-
-
                         )
                     }
 
                     )}
+
 
                 </div>
 
@@ -85,23 +93,19 @@ export default function Trips() {
                         return (
                             <div>
 
-                                {new Date(booking.endDate) >= today && (
+                                {new Date(booking.startDate) > today && (
                                     <div className="upcoming single-booking">
 
-                                        <img className="indi-booking-img" src={booking.Spot.previewImage} alt=""></img>
-                                        <div>{booking.Spot.name}</div>
-                                        <div>Hosted by {booking.Spot.Owner.firstName} {booking.Spot.Owner.lastName}</div>
-
-                                        <div>{changeDateFormat(booking.startDate)} - {changeDateFormat(booking.endDate)}</div>
-                             
-
+                                        <TripCard
+                                            booking={booking}
+                                        />
                                         <OpenModalButton
                                             buttonText="Edit"
                                             modalComponent={<EditBooking booking={booking} />}
                                         />
 
                                         <button
-                                            onClick={async() => {
+                                            onClick={async () => {
                                                 await dispatch(deleteBookingThunk(booking.id))
                                                 dispatch(getUserBookings())
                                             }}
@@ -112,9 +116,6 @@ export default function Trips() {
 
                             </div>
 
-
-
-
                         )
                     }
 
@@ -122,15 +123,10 @@ export default function Trips() {
 
                 </div>
 
- 
-
-
             </div>
         </>
 
     )
-
-
 
     )
 }

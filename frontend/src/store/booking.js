@@ -66,12 +66,12 @@ export const addBookingThunk = (newBooking, spotId) => async dispatch => {
         const createdBooking = await response.json()
         await dispatch(createBooking(createdBooking))
         // history.push(`/success`)
-       
+
     } else {
         console.log("adding fail at store")
     }
 
-//  return response
+    //  return response
 }
 
 
@@ -175,10 +175,11 @@ export default function bookingReducer(state = initialState, action) {
             const newBookingState = { ...state }
             // console.log("AAAAAA",newBookingState)
             newBookingState[action.id] = action.booking
-
+            return newBookingState
 
         case UPDATE_BOOKING: {
             const updatedBookingState = { ...state }
+            console.log("looook", updatedBookingState)
             updatedBookingState.user[action.updatedBooking.id] = action.updatedBooking
             return updatedBookingState
         }

@@ -30,10 +30,8 @@ function SingleSpotComponent() {
 
     const dispatch = useDispatch()
 
-    // const handleDelete = () => {
-    //     dispatch(deleteSpotThunk(+spotId))
-    //     .then(()=>history.push("/"))
-    // }
+    // const currentUserId = useSelector(state => state.session.user.id);
+    // const ownerId = useSelector(state => state.spots.singleSpot.ownerId)
 
     useEffect(() => {
         dispatch(getSingleSpot(+spotId)).then(() => setIsLoaded(true));
@@ -178,6 +176,7 @@ function SingleSpotComponent() {
 
                             </div>
 
+
                             <div className="right-part">
                                 <div className="three-items">
                                     <div className="booking-top-section">
@@ -189,21 +188,26 @@ function SingleSpotComponent() {
 
                                     </div>
 
+                                    {sessionUser && (
+                                        <div className="booking-area">
 
-                                    <div className="booking-area">
-
-                                        <Booking
-                                            spotId={spotId}
-                                        />
+                                            <Booking
+                                                spotId={spotId}
+                                            />
 
 
-                                    </div>
+                                        </div>
+                                    )}
+
 
                                 </div>
-
-
-
                             </div>
+
+
+
+
+
+
 
                         </div>
                         <hr></hr>

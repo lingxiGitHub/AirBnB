@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllBookings, addBookingThunk } from "../../store/booking";
 import { useHistory } from "react-router-dom";
 
+// GMT+800 or GMT-600
+const gmtStr = ` GMT${new Date("2030-01-02").toString().split("GMT")[1]}`;
 
 export default function Booking({ spotId }) {
     const history = useHistory();
@@ -12,36 +14,39 @@ export default function Booking({ spotId }) {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [isLoaded, setIsLoaded] = useState(false);
-    // const minDate = new Date()
+
 
     useEffect(() => {
         dispatch(getAllBookings(+spotId));
         setIsLoaded(true)
     }, [dispatch])
 
+    const currentUserId = useSelector(state => state.session.user.id);
+    const ownerId = useSelector(state => state.spots.singleSpot.ownerId)
 
+    // console.log(currentUserId ===ownerId)
+    // console.log(currentUserId)
+    // console.log(ownerId)
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const newBooking = {
-            startDate,
-            endDate
+            startDate: startDate + gmtStr,
+            endDate: endDate + gmtStr
         }
 
 
 
         dispatch(addBookingThunk(newBooking, spotId))
-            // .catch(
-            //     async (res) => {
-            //         // console.log(res)
-            //         const data = await res.json();
-            //         if (data && data.errors) setErrors(data.errors);
-            //     }
-            // )
-  
+            .then(() => history.push("/success"))
+            .catch(
+                async (res) => {
 
-
+                    const data = res ? await res.json() : {};
+                    if (data && data.errors) setErrors(data.errors);
+                }
+            )
 
 
 
@@ -50,50 +55,62 @@ export default function Booking({ spotId }) {
     return (isLoaded && (
 
         <>
-            <form
-                className="booking-form"
-                onSubmit={handleSubmit}
-            >
-                <ul className="red-errors">
-                    {
-                        
-                        Object.values(errors).map((error, idx) => (
-                            <li key={idx}>{error}</li>
-                        ))
-                    }
-                </ul>
-                <label>
-                    <span>CHECK-IN</span>
-                    <input
-                        type="date"
-                        placeholder="Add date"
-                        value={startDate}
-                        min={new Date().toISOString().split("T")[0]}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        required
+
+            {
+                currentUserId != ownerId && (
+
+                    <form
+                        className="booking-form"
+                        onSubmit={handleSubmit}
                     >
+                        <ul className="red-errors">
+                            {
 
-                    </input>
-                </label>
+                                Object.values(errors).map((error, idx) => (
+                                    <li key={idx}>{error}</li>
+                                ))
+                            }
+                        </ul>
+                        <label>
+                            <span>CHECK-IN</span>
+                            <input
+                                type="date"
+                                placeholder="Add date"
+                                value={startDate}
+                                min={new Date().toISOString().split("T")[0]}
+                                onChange={(e) => {
+                                    console.log("on change start date", e.target.value)
+                                    setStartDate(e.target.value)
+                                }}
+                                required
+                            >
 
-                <label>
-                    CHECKOUT </label>
+                            </input>
+                        </label>
 
-                <input
-                    type="date"
-                    placeholder="Add date"
-                    value={endDate}
-                    min={new Date().toISOString().split("T")[0]}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    required
-                >
+                        <label>
+                            CHECKOUT </label>
 
-                </input>
+                        <input
+                            type="date"
+                            placeholder="Add date"
+                            value={endDate}
+                            min={new Date().toISOString().split("T")[0]}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            required
+                        >
+
+                        </input>
 
 
-                <button type="submit">Reserve</button>
+                        <button type="submit">Reserve</button>
 
-            </form>
+                    </form>
+
+                )
+
+            }
+
         </>
     )
 
