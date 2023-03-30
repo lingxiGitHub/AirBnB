@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateSpotThunk } from "../../store/spots"
 import { useModal } from "../../context/Modal";
 import { getSpotReviews, updateReviewThunk } from "../../store/reviews";
+import { getSingleSpot } from "../../store/spots";
 
 export default function UpdateReviewComp({ spotId, grabReview }) {
 
@@ -37,6 +38,7 @@ export default function UpdateReviewComp({ spotId, grabReview }) {
         dispatch(updateReviewThunk(updatedReview, grabReview.id))
             .then(closeModal)
             .then(()=>dispatch(getSpotReviews(spotId)))
+            .then(() => dispatch(getSingleSpot(spotId)))
             .catch(
                 async (res) => {
                     const data = await res.json();
