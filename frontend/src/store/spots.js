@@ -81,7 +81,7 @@ export const deleteSpot = (id) => ({
 })
 
 export const deleteSpotThunk = (id) => async dispatch => {
-    
+
     const res = await csrfFetch(`/api/spots/${id}`, {
         method: "DELETE"
     })
@@ -90,7 +90,7 @@ export const deleteSpotThunk = (id) => async dispatch => {
         dispatch(getAllSpots())
     }
 
-    
+
 }
 
 
@@ -159,13 +159,7 @@ export default function spotsReducer(state = initialState, action) {
             };
         };
 
-        // case ADD_SPOT: {
-        //     const newSpotState = { ...state }
-        //     newSpotState[action.spot.id] = action.spot
 
-        //     return newSpotState
-
-        // }
 
         case DELETE_SPOT: {
             const deleteSpotState = { ...state }

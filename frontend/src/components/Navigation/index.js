@@ -7,6 +7,7 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
 import CreateSpotModal from '../CreateSpot';
+import SearchBar from './SearchBar';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -23,6 +24,8 @@ function Navigation({ isLoaded }) {
        
                 <NavLink exact to="/"><img className="airbnb-icon" width="60" src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/8d32ea18423501.562c939db98fc.png" /></NavLink>
             </li>
+
+            <SearchBar />
             {isLoaded && (
                 <>
                     <li>
