@@ -14,8 +14,6 @@ import "./ProfileButton.css"
 
 function ProfileButton({ user }) {
 
-
-
     const history = useHistory();
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);

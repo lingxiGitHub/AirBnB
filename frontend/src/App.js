@@ -8,7 +8,7 @@ import SpotsList from "./components/SpotsList";
 import SingleSpotComponent from "./components/SingleSpot";
 import Trips from "./components/Trips";
 import SpotSuccess from "./components/SpotSuccess";
-import Search from "./components/Search";
+import Search from "./components/SearchDropDown";
 
 
 function App() {

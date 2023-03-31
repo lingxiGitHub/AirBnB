@@ -21,16 +21,21 @@ export const search_spots_thunk = (keyword) => async (dispatch) => {
 }
 
 const initialState = {};
-export default function searchReducer(state = initialState, action){
+export default function searchReducer(state = initialState, action) {
 
-    switch(action.type){
+    switch (action.type) {
         case SEARCH_SPOTS:
-            const newState = { ...state }
+            const newState = {}
             action.spots.forEach(spot => {
+                console.log("lalala", newState)
                 newState[spot.id] = spot
             })
 
-            return newState
+            return  newState
+
+            
+
+
 
         default:
             return state;
