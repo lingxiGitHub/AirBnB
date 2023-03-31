@@ -8,7 +8,7 @@ import SpotsList from "./components/SpotsList";
 import SingleSpotComponent from "./components/SingleSpot";
 import Trips from "./components/Trips";
 import SpotSuccess from "./components/SpotSuccess";
-import Search from "./components/SearchDropDown";
+import SearchResult from "./components/SearchResult";
 
 
 function App() {
@@ -39,8 +39,8 @@ function App() {
           <Route exact path="/success">
             <SpotSuccess />
           </Route>
-          <Route exact path="/search">
-            <Search />
+          <Route path="/search/:keyword">
+            <SearchResult />
           </Route>
         </Switch>
       )}

@@ -9,6 +9,11 @@ const search = (spots) => ({
     spots
 })
 
+const RESET = "spots/reset"
+export const reset = () => ({
+    type: RESET
+})
+
 export const search_spots_thunk = (keyword) => async (dispatch) => {
 
     console.log("at the search thunk???", keyword)
@@ -17,6 +22,7 @@ export const search_spots_thunk = (keyword) => async (dispatch) => {
     if (response.ok) {
         const searchResult = await response.json()
         dispatch(search(searchResult))
+        return
     }
 }
 
@@ -31,10 +37,12 @@ export default function searchReducer(state = initialState, action) {
                 newState[spot.id] = spot
             })
 
-            return  newState
+            return newState
 
-            
-
+  
+            case RESET:
+                // console.log("reset??????")
+                return {}
 
 
         default:
