@@ -7,8 +7,8 @@ const { Spot, Review, ReviewImage, User, SpotImage, Booking, sequelize } = requi
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-router.get("/", async (req, res, next) => {
-    const { keyword } = req.body;
+router.get("/:keyword", async (req, res, next) => {
+    const { keyword } = req.params;
     console.log("keyword?",keyword)
 
     if (!keyword){
