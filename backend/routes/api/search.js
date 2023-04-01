@@ -9,21 +9,22 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 router.get("/:keyword", async (req, res, next) => {
     const { keyword } = req.params;
-    console.log("keyword?",keyword)
+    console.log("keyword?", keyword)
 
-    if (!keyword){
-        return res.status(400).send('Please provide a search keyword'); 
+    if (!keyword) {
+        return res.status(400).send('Please provide a search keyword');
     }
 
     const searchedSpot = await Spot.findAll({
-        where:{
-            name: {
-                [Op.like]: `%${keyword}%`
-            }
+        where: {
+            [Op.or]: [
+                { name: { [Op.like]: `%${keyword}%` } },
+                { city: { [Op.like]: `%${keyword}%` } }
+            ]
         }
     })
 
-    if (searchedSpot.length === 0){
+    if (searchedSpot.length === 0) {
         res.status(404)
         return res.json({
             message: "Spot couldn't be found",

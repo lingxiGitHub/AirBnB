@@ -80,6 +80,64 @@ module.exports = {
         stars: 4.9,
 
       },
+      {
+        spotId: 5,
+        userId: 11,
+        review: "Cannot thank Danny enough for accommodating my family last minute.We had a really rough day 1 upon landing in NYC but this listing saved us! ",
+        stars: 4.8,
+
+      },
+      {
+        spotId: 5,
+        userId: 12,
+        review: "We loved the location and the apartment was as expected.",
+        stars: 4.6,
+
+      },
+      {
+        spotId: 6,
+        userId: 11,
+        review: "Great hosts, and overall great experience! ",
+        stars: 4.7,
+
+      },
+      {
+        spotId: 6,
+        userId: 12,
+        review: "Great location, and easy communication with hosts. Cute home, was the perfect North End getaway for our family.",
+        stars: 4.7,
+
+      },
+
+      {
+        spotId: 7,
+        userId: 11,
+        review: "A lovely place, the view, the accommodations and the area are worth every penny!  ",
+        stars: 4.8,
+
+      },
+      {
+        spotId: 7,
+        userId: 12,
+        review: "Nice location with great view.",
+        stars: 4.8,
+
+      },
+
+      {
+        spotId: 8,
+        userId: 11,
+        review: "Mirela's place is gorgeous and the location, right on the beach, is incredible.  ",
+        stars: 4.9,
+
+      },
+      {
+        spotId: 8,
+        userId: 12,
+        review: "Beautiful location!!! The house is super welcoming and comfortable and is the perfect getaway with fantastic views! ",
+        stars: 4.9,
+
+      },
      
 
     ], {});

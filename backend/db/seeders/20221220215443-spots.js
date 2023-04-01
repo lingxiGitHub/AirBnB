@@ -74,7 +74,60 @@ module.exports = {
         price: 312,
 
       },
+      {
+        ownerId: 5,
+        address: '123 Main St',
+        city: "New York",
+        state: "NY",
+        country: "USA",
+        lat: 500.01,
+        lng: 500.1,
+        name: "Luxury Flatiron Condo in New York",
+        description: "Magnificent Manhattan skyline views from the Condo from all directions 24 hours of the day.  ",
+        price: 5135,
 
+      },
+      {
+        ownerId: 6,
+        address: '456 Elm St',
+        city: "Boston",
+        state: "MA",
+        country: "USA",
+        lat: 600.01,
+        lng: 600.1,
+        name: "North End Family Villa",
+        description: "Unique single family 3 bedroom home in the heart of Boston's North End.   ",
+        price: 5033,
+
+      },
+
+      {
+        ownerId: 7,
+        address: '789 Sunset Blvd',
+        city: "Los Angeles",
+        state: "CA",
+        country: "USA",
+        lat: 700.01,
+        lng: 700.1,
+        name: "Gorgeous Oceanfront Condo",
+        description: "Located along the picturesque cliffs of Solana Beach is this modern, sun-filled condo with endless ocean views from its floor to ceiling windows.  ",
+        price: 3476,
+
+      },
+
+      {
+        ownerId: 8,
+        address: '321 Ocean View Dr',
+        city: "Half Moon Bay",
+        state: "CA",
+        country: "USA",
+        lat: 800.01,
+        lng: 800.1,
+        name: "A little piece of heaven",
+        description: "Water front house in Half Moon Bay. The house was completely rebuild and decorated by a famous San Francisco architect.",
+        price: 2033,
+
+      },
 
 
     ], {});
