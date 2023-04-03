@@ -1,0 +1,34 @@
+.not-found-container {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.not-found-left {
+    width: 50%;
+    
+}
+
+.not-found-left h1{
+    font-size:26px;
+    font-weight: 600;
+}
+.not-found-right {
+    width: 240px;
+
+}
+
+.not-found-line {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-color: lightgray;
+    margin-bottom: 50px;
+}
+
+
+.not-found-nav{
+   font-size: 16px;
+   /* font-weight: 600; */
+   margin-top: 30px;
+}

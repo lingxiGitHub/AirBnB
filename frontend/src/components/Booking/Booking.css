@@ -7,7 +7,7 @@
 .check-in-div {
     border-right: 1px solid lightgray;
     height: 50px;
-    padding: 26px 12px 10px 12px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -23,7 +23,7 @@
 
 .check-out-div {
     height: 50px;
-    padding: 26px 12px 10px 12px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -52,6 +52,14 @@
     height: 48px;
     font-size: 16px;
     /* font-weight: 600; */
-    margin-top: 16px;
+    margin: 16px 0px 0px 0px;
 
+}
+
+
+.booking-top-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
 }

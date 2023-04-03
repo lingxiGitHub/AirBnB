@@ -69,7 +69,7 @@ function ProfileButton({ user }) {
                             // modalComponent={<Trips />}
                             onItemClick={async () => {
                                 await closeMenu();
-                                history.push("/profile")
+                                history.push("/trips")
                             }}
                         />
 
