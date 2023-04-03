@@ -179,20 +179,13 @@ function SingleSpotComponent() {
 
                             <div className="right-part">
                                 <div className="three-items">
-                                    <div className="booking-top-section">
-                                        <span>
-                                            <span className="price-bold">${singleSpot.price} </span>
-                                            <span> night</span>
-                                        </span>
-                                        <span> ★{singleSpot.avgStarRating} • {singleSpot.numReviews} reviews</span>
-
-                                    </div>
-
+                                 
                                     {sessionUser && (
                                         <div className="booking-area">
 
                                             <Booking
                                                 spotId={spotId}
+                                                singleSpot={singleSpot}
                                             />
 
 

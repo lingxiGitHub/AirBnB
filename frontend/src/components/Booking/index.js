@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 // GMT+800 or GMT-600
 const gmtStr = ` GMT${new Date("2030-01-02").toString().split("GMT")[1]}`;
 
-export default function Booking({ spotId }) {
+export default function Booking({ spotId, singleSpot }) {
     const history = useHistory();
     const dispatch = useDispatch()
     const [errors, setErrors] = useState([]);
@@ -54,7 +54,17 @@ export default function Booking({ spotId }) {
 
     return (isLoaded && (
 
-        <>
+        <div>
+            <div className="three-items">
+                <div className="booking-top-section">
+                    <div>
+                        <span className="price-bold">${singleSpot.price} </span>
+                        <span> night</span>
+                    </div>
+                    <div> ★{singleSpot.avgStarRating} • {singleSpot.numReviews} reviews</div>
+
+                </div>
+                </div>
 
             {
                 currentUserId != ownerId && (
@@ -71,39 +81,53 @@ export default function Booking({ spotId }) {
                                 ))
                             }
                         </ul>
-                        <label>
-                            <span>CHECK-IN</span>
-                            <input
-                                type="date"
-                                placeholder="Add date"
-                                value={startDate}
-                                min={new Date().toISOString().split("T")[0]}
-                                onChange={(e) => {
-                                    console.log("on change start date", e.target.value)
-                                    setStartDate(e.target.value)
-                                }}
-                                required
-                            >
 
-                            </input>
-                        </label>
+                        <div className="check-in-out">
 
-                        <label>
-                            CHECKOUT </label>
+                            
+                            <div className="check-in-div">
+                                <label >
+                                    CHECK-IN</label>
+                                <input
+                                    type="date"
+                                    placeholder="Add date"
+                                    value={startDate}
+                                    min={new Date().toISOString().split("T")[0]}
+                                    onChange={(e) => {
+                                        console.log("on change start date", e.target.value)
+                                        setStartDate(e.target.value)
+                                    }}
+                                    required
+                                >
 
-                        <input
-                            type="date"
-                            placeholder="Add date"
-                            value={endDate}
-                            min={new Date().toISOString().split("T")[0]}
-                            onChange={(e) => setEndDate(e.target.value)}
-                            required
-                        >
+                                </input>
 
-                        </input>
+                            </div>
 
 
-                        <button type="submit">Reserve</button>
+                            <div className="check-out-div">
+
+                                <label>
+                                    CHECKOUT </label>
+
+                                <input
+                                    type="date"
+                                    placeholder="Add date"
+                                    value={endDate}
+                                    min={new Date().toISOString().split("T")[0]}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                    required
+                                >
+
+                                </input>
+
+                            </div>
+
+                        </div>
+                        <button 
+                        className="reserve-button"
+                        type="submit"
+                        >Reserve</button>
 
                     </form>
 
@@ -111,7 +135,7 @@ export default function Booking({ spotId }) {
 
             }
 
-        </>
+        </div>
     )
 
     )

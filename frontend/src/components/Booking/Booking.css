@@ -1,0 +1,57 @@
+.check-in-out {
+    display: flex;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+}
+
+.check-in-div {
+    border-right: 1px solid lightgray;
+    height: 50px;
+    padding: 26px 12px 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* font-size: 14px;
+    font-weight: 400; */
+
+}
+
+.check-in-div input {
+    border: none;
+    outline: none;
+}
+
+.check-out-div {
+    height: 50px;
+    padding: 26px 12px 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.check-out-div input {
+    border: none;
+    outline: none;
+}
+
+
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.reserve-button {
+
+    color: white;
+    background-color: rgb(228, 29, 85);
+    border-color: white;
+    height: 48px;
+    font-size: 16px;
+    /* font-weight: 600; */
+    margin-top: 16px;
+
+}

@@ -98,27 +98,31 @@
     border-radius: 50%;
 }
 
-.section-below-photo{
+.section-below-photo {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.flex-box-style-1{
+.flex-box-style-1 {
     display: flex;
 }
 
 
-.under-name{
-    display:  flex;
+.under-name {
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
 
-.update-delete-buttons{
-
+.booking-top-section {
+    margin-bottom: 24px;
 }
 
+
+.right-part{
+    margin: 24px;
+}
