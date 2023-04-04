@@ -138,6 +138,21 @@ module.exports = {
         stars: 4.9,
 
       },
+
+      {
+        spotId: 9,
+        userId: 1,
+        review: "Amazing stay!!!",
+        stars: 5.0,
+
+      },
+      {
+        spotId: 9,
+        userId: 2,
+        review: "Wonderful stay and lovely home!",
+        stars: 4.9,
+
+      },
      
 
     ], {});

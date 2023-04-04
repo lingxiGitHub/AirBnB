@@ -4,3 +4,20 @@
     object-fit: cover;
     border-radius: 8px;
 }
+
+.trips-title {
+    color: rgb(34, 34, 34);
+    font-size: 32px;
+    font-weight: 600;
+    margin: 50px 50px 50px 0px;
+
+}
+
+
+
+.user-bookings h2 {
+    color: rgb(34, 34, 34);
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 50px;
+}

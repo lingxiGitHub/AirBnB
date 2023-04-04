@@ -6,7 +6,7 @@ function changeDateFormat(inputDate) {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
-        timeZoneName: 'short'
+        // timeZoneName: 'short'
     });
 
     // console.log("input date from server", inputDate)
@@ -25,11 +25,11 @@ export default function TripCard({ booking }) {
             <div className="one-card">
 
                 <img className="indi-booking-img" src={booking.Spot.previewImage} alt=""></img>
-                <div>
-                    <div className="trip-spot-name">{booking.Spot.name}</div>
-                    <div>Hosted by {booking.Spot.Owner.firstName} {booking.Spot.Owner.lastName}</div>
+                <div className="indi-booking-right">
+                    <div className="trip-spot-city">{booking.Spot.city}</div>
+                    <div className="indi-grey-word">Hosted by {booking.Spot.Owner.firstName} {booking.Spot.Owner.lastName}</div>
 
-                    <div>{changeDateFormat(booking.startDate)} - {changeDateFormat(booking.endDate)}</div>
+                    <div className="indi-grey-word">{changeDateFormat(booking.startDate)} - {changeDateFormat(booking.endDate)}</div>
 
 
                 </div>

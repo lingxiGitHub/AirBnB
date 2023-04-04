@@ -1,11 +1,26 @@
 .one-card {
     display: flex;
     column-gap: 15px;
-    margin: 20px;
+    margin: 20px 20px 20px 0px;
+    
 }
 
 
-.trip-spot-name{
+.trip-spot-city{
     font-size: 16px;
     font-weight: 600;
+}
+
+
+.indi-booking-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+
+.indi-grey-word {
+    color: rgb(113, 113, 113);
+    font-size: 14px;
+    font-weight: 400;
 }

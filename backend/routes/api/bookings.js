@@ -106,6 +106,9 @@ router.put("/:bookingId", requireAuth, async (req, res, next) => {
     const start = new Date(startDate)
     const end = new Date(endDate)
 
+    // console.log("!!!!start",start)
+    // console.log("!!!!start get time",start.getTime())
+
     if (start.getTime() >= end.getTime()) {
 
         res.status(400)

@@ -612,7 +612,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
     const start = new Date(startDate)
     const end = new Date(endDate)
 
-    if (start.getTime() > end.getTime()) {
+    if (start.getTime() >= end.getTime()) {
 
 
         res.status(400)

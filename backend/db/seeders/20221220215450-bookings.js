@@ -23,22 +23,78 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        userId: 1,
-        startDate: new Date("2022-01-01"),
+        userId: 9,
+        startDate: new Date("2022-01-02"),
         endDate: new Date("2022-01-03"),
        
       },
+
+      {
+        spotId: 3,
+        userId: 1,
+        startDate: new Date("2030-01-02"),
+        endDate: new Date("2030-01-03"),
+
+      },
       {
         spotId: 2,
-        userId: 2,
-        startDate: new Date("2022-02-01"),
+        userId: 8,
+        startDate: new Date("2022-02-02"),
         endDate: new Date("2022-02-03"),
 
       },
       {
         spotId: 3,
+        userId: 7,
+        startDate: new Date("2022-03-02"),
+        endDate: new Date("2022-03-03"),
+
+      },
+
+      {
+        spotId: 4,
+        userId: 6,
+        startDate: new Date("2022-03-02"),
+        endDate: new Date("2022-03-03"),
+
+      },
+
+      {
+        spotId: 5,
+        userId: 1,
+        startDate: new Date("2020-03-02"),
+        endDate: new Date("2020-03-03"),
+
+      },
+
+      {
+        spotId: 6,
+        userId: 4,
+        startDate: new Date("2022-03-02"),
+        endDate: new Date("2022-03-03"),
+
+      },
+
+      {
+        spotId: 7,
         userId: 3,
-        startDate: new Date("2022-03-01"),
+        startDate: new Date("2022-03-02"),
+        endDate: new Date("2022-03-03"),
+
+      },
+
+      {
+        spotId: 8,
+        userId: 2,
+        startDate: new Date("2022-03-02"),
+        endDate: new Date("2022-03-03"),
+
+      },
+
+      {
+        spotId: 9,
+        userId: 1,
+        startDate: new Date("2022-03-02"),
         endDate: new Date("2022-03-03"),
 
       },

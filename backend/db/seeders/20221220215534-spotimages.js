@@ -268,6 +268,38 @@ module.exports = {
       },
 
 
+      {
+        spotId: 9,
+        url: "https://a0.muscache.com/im/pictures/44d07c19-a2f5-41a0-bfaf-50f9877b586f.jpg?im_w=1200",
+        preview: true,
+
+      },
+      {
+        spotId: 9,
+        url: "https://a0.muscache.com/im/pictures/4f00aa6f-64e7-4fc7-abf5-2bebca147a9e.jpg?im_w=1200",
+        preview: false,
+
+      },
+      {
+        spotId: 9,
+        url: "https://a0.muscache.com/im/pictures/61f203e5-fb79-4220-bf98-2be7aeb5b7d4.jpg?im_w=1200",
+        preview: false,
+
+      },
+      {
+        spotId: 9,
+        url: "https://a0.muscache.com/im/pictures/969d4f95-0b4b-4ded-bfcc-f5130b7700a3.jpg?im_w=1200",
+        preview: false,
+
+      },
+      {
+        spotId: 9,
+        url: "https://a0.muscache.com/im/pictures/2f46e2e3-99b9-409f-b9cc-7c73b6f0c1b7.jpg?im_w=1200",
+        preview: false,
+
+      },
+
+
     ], {});
   },
 

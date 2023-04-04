@@ -29,6 +29,8 @@ export default function Trips() {
     return (isLoaded && (
 
         <>
+
+        <div className="trips-title">Trips</div>
             <div className="user-bookings">
 
                 <div className="past-trip-section">

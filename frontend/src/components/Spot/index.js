@@ -16,7 +16,7 @@ function Spot({ spot }) {
                     <div id="right-rating">★ {spot.avgRating}</div>
                 </div>
 
-                <div className="summary-item"><strong>${spot.price}</strong> night</div>
+                <div className="summary-item"><strong>${spot.price.toLocaleString()}</strong> night</div>
             </div>
 
         </div>

@@ -129,6 +129,20 @@ module.exports = {
 
       },
 
+      {
+        ownerId: 9,
+        address: '654 Main St',
+        city: "San Diego",
+        state: "CA",
+        country: "USA",
+        lat: 900.01,
+        lng: 900.1,
+        name: "Cape Cod-Style Home near Bird Rock",
+        description: "The entire house is very light, airy and spacious. There is a living room, a family room and plenty of outdoor furniture and fire pit to spread out and feel at home.",
+        price: 1099,
+
+      },
+
 
     ], {});
   },

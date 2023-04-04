@@ -17,7 +17,7 @@ export default function SpotSuccess({ show }){
       
         <>
           <p>Your reservation is booked successfully</p>
-            <NavLink exact to="/trips">check your trips</NavLink>
+            <NavLink exact to="/trips" className="see-trips">View Your Trips</NavLink>
         </>
     )
 }
