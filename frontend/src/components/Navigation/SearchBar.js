@@ -6,6 +6,7 @@ import { search_spots_thunk } from "../../store/search";
 import SearchDropDown from "../SearchResult";
 import { useEffect, useRef } from "react";
 import { reset } from "../../store/search";
+import searchSVG from "./magnifying-glass.svg"
 
 
 export default function SearchBar() {
@@ -45,7 +46,8 @@ export default function SearchBar() {
             >
 
                 <input
-                    placeholder="Search..."
+                    className="search-input"
+                    placeholder="Search name or location..."
                     value={keyword}
                     onChange={(e) => {
                         setKeyword(e.target.value)
@@ -55,7 +57,7 @@ export default function SearchBar() {
                 <button
                     type="submit"
                     className="search-button">
-                    search
+                    <img className="mag-glass" src={searchSVG}></img>
                 </button>
 
                 {/* <SearchDropDown

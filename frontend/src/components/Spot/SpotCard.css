@@ -1,5 +1,5 @@
 .spot-card {
-    width: 200px;
+    width: 270px;
     margin: 15px;
     display: flex;
     flex-direction: row;
@@ -7,8 +7,8 @@
 }
 
 .square {
-    width: 200px;
-    height: 200px;
+    width: 270px;
+    height: 270px;
     object-fit: cover;
     border-radius: 12px;
 }
@@ -25,6 +25,7 @@
     display: inline-block;
     list-style-type: none;
     margin-left: auto;
+    font-size: 16px;
 
 }
 
@@ -34,7 +35,8 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 150px;
+    max-width: 200px;
+    font-size:16px;
 
 
 
@@ -46,7 +48,7 @@
 .top-line {
     display: flex;
     justify-content: space-between;
-    width: 200px;
+    width: 270px;
     font-weight: 400;
     margin-top: 10px;
 }

@@ -16,3 +16,43 @@ ul {
 .airbnb-icon {
     border-radius: 100px;
 }
+
+.mag-glass {
+    width: 14px;
+    height: 14px;
+    display: flex;
+
+}
+
+
+.search-button {
+    background-color: rgb(255, 56, 92);
+    /* fill: white; */
+    border-radius: 50%;
+    border-color: white;
+    width: 36px;
+    height: 36px;
+}
+
+
+.search-bar-form {
+    width: 348px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px lightgray solid;
+    border-radius: 30px;
+    box-shadow: 3px 3px 3px rgba(198, 196, 196, 0.525);
+}
+
+
+.search-input {
+    width: 300px;
+    height: 48px;
+    border: none;
+    margin-left: 15px;
+}
+
+.search-input:focus{
+    outline: none;
+}

@@ -5,7 +5,7 @@ export default function NotFound() {
     return (
 
         <>
-            <hr className="not-found-line"></hr>
+            {/* <hr className="not-found-line"></hr> */}
             <div className="not-found-container">
 
                 <div className="not-found-left">
