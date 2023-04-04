@@ -20,7 +20,7 @@ export default function Booking({ spotId, singleSpot }) {
 
 
 
-    console.log("single spot", singleSpot)
+    // console.log("single spot", singleSpot)
     useEffect(() => {
         dispatch(getAllBookings(+spotId));
         setIsLoaded(true)
@@ -102,7 +102,7 @@ export default function Booking({ spotId, singleSpot }) {
                                         value={startDate}
                                         min={new Date().toISOString().split("T")[0]}
                                         onChange={(e) => {
-                                            console.log("on change start date", e.target.value)
+                                            // console.log("on change start date", e.target.value)
                                             setStartDate(e.target.value)
                                         }}
                                         required

@@ -9,8 +9,8 @@ function changeDateFormat(inputDate) {
         timeZoneName: 'short'
     });
 
-    console.log("input date from server", inputDate)
-    console.log("out put date", formattedDate)
+    // console.log("input date from server", inputDate)
+    // console.log("out put date", formattedDate)
 
     return formattedDate
 

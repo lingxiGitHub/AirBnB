@@ -20,7 +20,7 @@ export default function SearchBar() {
         return state.search
     }))
 
-    console.log("--->", searchResults)
+    // console.log("--->", searchResults)
 
 
     const handleSearch = async (e) => {

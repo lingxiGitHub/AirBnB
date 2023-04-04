@@ -32,7 +32,7 @@ export default function UpdateReviewComp({ spotId, grabReview }) {
             stars
         }
 
-        console.log("am i here?",updatedReview)
+        // console.log("am i here?",updatedReview)
 
 
         dispatch(updateReviewThunk(updatedReview, grabReview.id))

@@ -85,7 +85,7 @@ export const updateBooking = (updatedBooking) => ({
 
 export const updateBookingThunk = (booking, bookingId) => async dispatch => {
     const { startDate, endDate } = booking
-    console.log("here????")
+    // console.log("here????")
     const res = await csrfFetch(`/api/bookings/${+bookingId}`, {
         method: "PUT",
         headers: {
@@ -179,14 +179,14 @@ export default function bookingReducer(state = initialState, action) {
 
         case UPDATE_BOOKING: {
             const updatedBookingState = { ...state }
-            console.log("looook", updatedBookingState)
+            // console.log("looook", updatedBookingState)
             updatedBookingState.user[action.updatedBooking.id] = action.updatedBooking
             return updatedBookingState
         }
 
         case DELETE_BOOKING: {
             const deleteBookingState = { ...state }
-            console.log("heyyy", deleteBookingState)
+            // console.log("heyyy", deleteBookingState)
             delete deleteBookingState.user[action.id]
             return deleteBookingState;
         }

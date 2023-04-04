@@ -16,7 +16,7 @@ export const reset = () => ({
 
 export const search_spots_thunk = (keyword) => async (dispatch) => {
 
-    console.log("at the search thunk???", keyword)
+    // console.log("at the search thunk???", keyword)
     const response = await fetch(`/api/search/${keyword}`)
 
     if (response.ok) {
@@ -33,7 +33,7 @@ export default function searchReducer(state = initialState, action) {
         case SEARCH_SPOTS:
             const newState = {}
             action.spots.forEach(spot => {
-                console.log("lalala", newState)
+                // console.log("lalala", newState)
                 newState[spot.id] = spot
             })
 

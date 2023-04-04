@@ -9,13 +9,21 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 router.get("/:keyword", async (req, res, next) => {
     const { keyword } = req.params;
-    console.log("keyword?", keyword)
+    // console.log("keyword?", keyword)
 
     if (!keyword) {
         return res.status(400).send('Please provide a search keyword');
     }
 
     const searchedSpot = await Spot.findAll({
+        include: [
+            {
+                model: Review,
+            },
+            {
+                model: SpotImage
+            }
+        ],
         where: {
             [Op.or]: [
                 { name: { [Op.like]: `%${keyword}%` } },
@@ -23,6 +31,36 @@ router.get("/:keyword", async (req, res, next) => {
             ]
         }
     })
+
+    const Spots = [];
+    searchedSpot.forEach(spot => {
+        Spots.push(spot.toJSON());
+    })
+
+    // console.log("hahaha",Spots)
+
+    Spots.forEach((spot) => {
+        // console.log("!!!",spot)
+        spot.SpotImages.forEach(spotImage => {
+            // console.log("???",spotImage.url);
+            if (spotImage.preview && spotImage.url) {
+                spot.previewImage = spotImage.url;
+            }
+        })
+        let i = 0;
+        let count = 0;
+        spot.Reviews.forEach(review => {
+            i++;
+            // console.log(review);
+            count = count + review.stars;
+        })
+        spot.avgRating = (count / i).toFixed(2);
+        if (spot.avgRating === "NaN") {
+            spot.avgRating = "New"
+        }
+        delete spot.SpotImages;
+        delete spot.Reviews;
+    });
 
     if (searchedSpot.length === 0) {
         res.status(404)
@@ -33,7 +71,7 @@ router.get("/:keyword", async (req, res, next) => {
         })
     }
 
-    res.json(searchedSpot)
+    res.json(Spots)
 
 })
 

@@ -52,7 +52,7 @@ function CreateSpotModal() {
             .catch(
                 async (res) => {
                     const data = await res.json();
-                    console.log("data", data.errors)
+                    // console.log("data", data.errors)
                     if (data && data.errors) setErrors(data.errors);
                 }
             )

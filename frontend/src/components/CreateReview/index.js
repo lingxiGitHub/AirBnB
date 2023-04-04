@@ -40,7 +40,7 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
             .catch(
                 async (res) => {
                     const data = res ? await res.json() : {};
-                    console.log("data", data.errors)
+                    // console.log("data", data.errors)
                     if (data && data.errors) setErrors(data.errors);
                 }
             )
@@ -63,7 +63,7 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
                     >
 
                         <ul className="error-display">
-                            {console.log("star errors", errors)}
+                            {/* {console.log("star errors", errors)} */}
                             {errors.map((error, idx) => (
                                 <li key={idx}>{error}</li>
                             ))}

@@ -1,0 +1,10 @@
+.search-cap {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 50px;
+}
+
+.search-box {
+    display: flex;
+    margin-top: 30px;
+}

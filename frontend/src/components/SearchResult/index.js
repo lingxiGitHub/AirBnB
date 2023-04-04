@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams, NavLink } from "react-router-dom";
 import OpenModalMenuItem from "../Navigation";
 import { search_spots_thunk } from "../../store/search";
+import Spot from "../Spot";
+import { Link } from "react-router-dom";
 
 
 
@@ -49,9 +51,12 @@ export default function SearchResult() {
                             foundSpotArr.length > 0 && (
 
                                 foundSpotArr.map((spot) => {
-                                    // console.log(spot)
+                                    // console.log("--->",spot)
                                     return (
-                                        <NavLink to={`/spots/${spot.id}`}>{spot.name} at {spot.city} {spot.state}</NavLink>
+                                        // <NavLink to={`/spots/${spot.id}`}>{spot.name} at {spot.city} {spot.state}</NavLink>
+                                        <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
+                                        <Spot spot={spot}/>
+                                        </Link>
                                     )
                                 })
                             )

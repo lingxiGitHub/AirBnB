@@ -68,8 +68,8 @@ export const updateReview = (updatedReview)=>({
 })
 
 export const updateReviewThunk = (updatedReview,reviewId) =>async dispatch =>{
-    console.log("here???")
-    console.log("inside update review thunk", updatedReview)
+    // console.log("here???")
+    // console.log("inside update review thunk", updatedReview)
     const { review, stars } = updatedReview
     const res = await csrfFetch(`/api/reviews/${+reviewId}`, {
         method: "PUT",
@@ -140,7 +140,7 @@ export default function reviewReducer(state = initialState, action) {
             return newReviewState
         case UPDATE_REVIEW:
             const updateReviewState = {...state}
-            console.log("@@@@",updateReviewState)
+            // console.log("@@@@",updateReviewState)
             updateReviewState.spot[action.updatedReview.id] = action.updatedReview
 
         default:
