@@ -26,18 +26,19 @@ router.get("/:keyword", async (req, res, next) => {
         ],
         where: {
             [Op.or]: [
-                { name: { [Op.like]: `%${keyword}%` } },
-                { city: { [Op.like]: `%${keyword}%` } }
+                { name: { [Op.iLike]: `%${keyword}%` } },
+                { city: { [Op.iLike]: `%${keyword}%` } }
             ]
         }
     })
 
+    console.log("searchedspot backend 1",searchedSpot)
     const Spots = [];
     searchedSpot.forEach(spot => {
         Spots.push(spot.toJSON());
     })
 
-    // console.log("hahaha",Spots)
+   console.log("spots backend api 2",Spots)
 
     Spots.forEach((spot) => {
         // console.log("!!!",spot)
@@ -62,14 +63,14 @@ router.get("/:keyword", async (req, res, next) => {
         delete spot.Reviews;
     });
 
-    if (searchedSpot.length === 0) {
-        res.status(404)
-        return res.json({
-            message: "Spot couldn't be found",
-            statusCode: 404,
+    // if (searchedSpot.length === 0) {
+    //     res.status(404)
+    //     return res.json({
+    //         message: "Spot couldn't be found",
+    //         statusCode: 404,
 
-        })
-    }
+    //     })
+    // }
 
     res.json(Spots)
 
