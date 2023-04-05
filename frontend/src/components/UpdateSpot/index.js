@@ -56,70 +56,79 @@ export default function UpdateSpot({ showEdit, setShowEdit, singleSpot }) {
         if (currentUserId === spotOwnerId) {
             sessionLinks = (
                 <>
+                    <h1 className="update-h1">Update Your Spot</h1>
                     <form
                         className="update-spot-form"
                         onSubmit={handleUpdate}
                     >
-                        <label>
-                            <span>Address</span>
+                        <div className="single-input">
+                            <label>Address </label>
                             <input
+                                placeholder="Address"
                                 type="text"
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                             />
-                        </label>
-                        <label>
-                            <span>City</span>
+                        </div>
+
+                        <div className="single-input">
+                            <label>City</label>
                             <input
                                 type="text"
                                 value={city}
                                 onChange={(e) => setCity(e.target.value)}
                             />
-                        </label>
-                        <label>
-                            <span>State</span>
+                        </div>
+
+                        <div className="single-input">
+                            <label>State</label>
                             <input
                                 type="text"
                                 value={state}
                                 onChange={(e) => setState(e.target.value)}
                             />
-                        </label>
-                        <label>
-                            <span>Country</span>
+                        </div>
+
+                        <div className="single-input">
+                            <label>Country</label>
                             <input
                                 type="text"
                                 value={country}
                                 onChange={(e) => setCountry(e.target.value)}
                             />
-                        </label>
-                 
-                        <label>
-                            <span>Name</span>
+                        </div>
+
+                        <div className="single-input">
+
+                            <label>Name</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
-                        </label>
-                        <label>
-                            <span>Description</span>
+                        </div>
+
+                        <div className="single-input">
+                            <label>Description</label>
                             <input
                                 type="text"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
-                        </label>
-                        <label>
-                            <span>Price</span>
+                        </div>
+
+                        <div className="single-input last-input">
+                            <label>Price</label>
                             <input
                                 type="text"
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                             />
-                        </label>
+                        </div>
                         <button
                             type="submit"
-                        >Submit</button>
+                            className="update-spot-button"
+                        >Update</button>
                     </form>
                 </>
             )

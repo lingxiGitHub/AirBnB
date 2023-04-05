@@ -46,7 +46,7 @@ export default function Booking({ spotId, singleSpot }) {
         dispatch(addBookingThunk(newBooking, spotId))
             .then(() => {
                 setShowModal(true)
-            
+
             })
             .catch(
                 async (res) => {
@@ -63,20 +63,21 @@ export default function Booking({ spotId, singleSpot }) {
     return (isLoaded && (
 
         <div>
-            
-                <div className="booking-top-section">
-                    <div>
-                        <span className="price-bold">${singleSpot.price} </span>
-                        <span> night</span>
-                    </div>
-                    <div> ★{singleSpot.avgStarRating} • {singleSpot.numReviews} reviews</div>
-
-                </div>
-           
-
             {
                 currentUserId != ownerId && (
                     <>
+                        <div className="booking-top-section">
+                            <div>
+                                <span className="price-bold">${singleSpot.price} </span>
+                                <span> night</span>
+                            </div>
+                            <div> ★{singleSpot.avgStarRating} • {singleSpot.numReviews} reviews</div>
+
+                        </div>
+
+
+
+
                         <form
                             className="booking-form"
                             onSubmit={handleSubmit}

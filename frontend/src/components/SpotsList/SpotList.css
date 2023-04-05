@@ -1,10 +1,12 @@
 .spots-list {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     font-weight: 150;
     /* column-gap: 24px; */
     row-gap: 24px;
-
+    margin-top: 24px;
 }
 
 .spot-link {

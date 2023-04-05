@@ -47,7 +47,7 @@ export default function SearchBar() {
 
                 <input
                     className="search-input"
-                    placeholder="Search name or location..."
+                    placeholder="Search name or city..."
                     value={keyword}
                     onChange={(e) => {
                         setKeyword(e.target.value)

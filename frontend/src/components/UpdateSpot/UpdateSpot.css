@@ -1,12 +1,12 @@
 .update-spot-form label {
     display: block;
-    margin: 20px;
+    font-size: 14px;
+    color: rgb(118, 118, 118);
+    margin-left: 10px;
+    margin-top: 5px;
+
 }
 
-label span {
-    display: inline-block;
-    width: 80px;
-}
 
 .update-spot-form button {
     display: block;
@@ -15,7 +15,57 @@ label span {
 }
 
 .update-spot-form input {
-    border-radius: 5px;
-    width:200px;
+    /* border-radius: 5px; */
+    width: 582px;
+    height: 52px;
     text-overflow: ellipsis;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 10px;
+}
+
+.update-spot-form input:focus{
+    outline: none;
+}
+
+.update-h1 {
+    font-family: 32px;
+    font-weight: 600;
+    margin-top: 50px;
+}
+
+.update-spot-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 50px;
+}
+
+.single-input {
+    border-top: 1px solid rgb(118, 118, 118);
+    border-left: 1px solid rgb(118, 118, 118);
+    border-right: 1px solid rgb(118, 118, 118);
+
+}
+
+.last-input {
+    border-bottom: 1px solid rgb(118, 118, 118);
+    ;
+}
+
+.update-spot-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    color: white;
+    background-color: rgb(228, 29, 85);
+    border-color: white;
+    height: 48px;
+    font-size: 16px;
+    width: 100px;
+
 }

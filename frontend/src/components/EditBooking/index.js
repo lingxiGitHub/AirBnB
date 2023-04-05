@@ -33,12 +33,14 @@ export default function EditBooking({ booking }) {
     //     }
     // }, [startDate, endDate]);
 
+    const gmtStr = ` GMT${new Date("2030-01-02").toString().split("GMT")[1]}`;
+
     const handleUpdate = (e) => {
         e.preventDefault();
         setErrors([]);
         const updatedBooking = {
-            startDate,
-            endDate
+            startDate: startDate + gmtStr,
+            endDate: endDate + gmtStr
         }
 
         // console.log("--->", updatedBooking)
@@ -69,27 +71,35 @@ export default function EditBooking({ booking }) {
                 }
             </ul>
 
-            <label><span>Start Date</span>
-                <input
-                    type="date"
-                    value={startDate}
-                    min={new Date().toISOString().split("T")[0]}
-                    onChange={(e) => setStateDate(e.target.value)}
-                /></label>
+            <div className="date-pick">
 
-            <label><span>End Date</span>
-                <input
-                    type="date"
-                    value={endDate}
-                    min={new Date().toISOString().split("T")[0]}
-                    onChange={(e) => setEndDate(e.target.value)}
-                /></label>
+                <div className="edit-check-in-out check-in-border">
+                    <label>CHECK-IN</label>
+                    <input
+                        type="date"
+                        value={startDate}
+                        min={new Date().toISOString().split("T")[0]}
+                        onChange={(e) => setStateDate(e.target.value)}
+                    />
+                </div>
 
+
+                <div className="edit-check-in-out">
+                    <label>CHECK-OUT</label>
+                    <input
+                        type="date"
+                        value={endDate}
+                        min={new Date().toISOString().split("T")[0]}
+                        onChange={(e) => setEndDate(e.target.value)}
+                    />
+                </div>
+            </div>
             {/* {warning && <p style={{ color: "red" }}>End date must be later than start date</p>} */}
 
             <button
                 type="submit"
-            >Submit</button>
+                
+            >Update</button>
 
         </form>
     )

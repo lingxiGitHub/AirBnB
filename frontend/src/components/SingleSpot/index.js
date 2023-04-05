@@ -47,6 +47,16 @@ function SingleSpotComponent() {
 
     const sessionUser = useSelector(state => state.session.user);
 
+    let currentUserId;
+    if (sessionUser) {
+        currentUserId = sessionUser.id;
+    }
+    let ownerId;
+
+    if (singleSpot) {
+        ownerId = singleSpot.ownerId
+    }
+
 
 
 
@@ -67,39 +77,46 @@ function SingleSpotComponent() {
                             <span>{singleSpot.country}</span>
 
                         </div>
-                        <div className="update-delete-buttons">
 
-                            <OpenModalButton
-                                buttonText="Update Spot"
-                                modalComponent={<UpdateSpot
-                                    showEdit={showEdit}
-                                    setShowEdit={setShowEdit}
-                                    singleSpot={singleSpot}
-                                    sessionUser={sessionUser}
+                        {sessionUser && currentUserId == ownerId && (
+                            <div className="update-delete-buttons">
 
-                                />} />
+                                <OpenModalButton
+                                    buttonText="Update Spot"
+                                    modalComponent={<UpdateSpot
+                                        showEdit={showEdit}
+                                        setShowEdit={setShowEdit}
+                                        singleSpot={singleSpot}
+                                        sessionUser={sessionUser}
+
+                                    />} />
 
 
 
 
 
-                            <button
-                                onClick={() => setShowDeleteEdit(!showDeleteEdit)}
-                            >Delete Spot</button>
+                                <button
+                                    onClick={() => setShowDeleteEdit(!showDeleteEdit)}
+                                >Delete Spot</button>
 
-                            {showDeleteEdit && (
-                                <DeleteSpot
-                                    singleSpot={singleSpot}
-                                    sessionUser={sessionUser}
-                                    dispatch={dispatch}
-                                    history={history}
-                                    spotId={spotId}
-                                    setShowDeleteEdit={setShowDeleteEdit}
+                                {showDeleteEdit && (
+                                    <DeleteSpot
+                                        singleSpot={singleSpot}
+                                        sessionUser={sessionUser}
+                                        dispatch={dispatch}
+                                        history={history}
+                                        spotId={spotId}
+                                        setShowDeleteEdit={setShowDeleteEdit}
 
-                                />
-                            )}
+                                    />
+                                )}
 
-                        </div>
+                            </div>
+
+
+                        )}
+
+
 
                     </div>
 
@@ -157,10 +174,10 @@ function SingleSpotComponent() {
                                 <div className="flex-box-style-1">
 
 
-                                    <i class="fas fa-location-arrow"></i>
+                                    <i class="fas fa-door-open"></i>
                                     <div>
-                                        <b>Great Location</b>
-                                        <p>95% of recent guests gave the location a 5-star rating.</p>
+                                        <b>Self check-in</b>
+                                        <p>Check yourself in with the keypad.</p>
                                     </div>
                                 </div>
                                 <i class="fas fa-calendar-minus"></i>
@@ -177,10 +194,12 @@ function SingleSpotComponent() {
                             </div>
 
 
-                            <div className="right-part">
-                                <div className="three-items">
-                                 
-                                    {sessionUser && (
+
+
+                            {sessionUser && currentUserId != ownerId && (
+
+                                <div className="right-part">
+                                    <div className="three-items">
                                         <div className="booking-area">
 
                                             <Booking
@@ -188,13 +207,13 @@ function SingleSpotComponent() {
                                                 singleSpot={singleSpot}
                                             />
 
-
                                         </div>
-                                    )}
-
+                                    </div>
 
                                 </div>
-                            </div>
+                            )}
+
+
 
 
 

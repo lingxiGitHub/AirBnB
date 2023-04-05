@@ -39,10 +39,15 @@ button:hover {
 .log-in-right-corner-button {
     border-radius: 40px;
     border-color: rgb(221, 221, 221);
-    color: rgb(113, 113, 113);
+    color: rgb(34,34,34);
 }
 
 .log-in-right-corner-button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
     background-color: white;
+}
+
+.three-bar{
+    width: 16px;
+    height: 16px;
 }

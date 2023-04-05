@@ -1,27 +1,66 @@
-.create-spot-form label {
-    display: block;
-    margin: 20px;
-}
-
-.create-spot-form label span { 
-    width: 100px;
-    display: inline-block;
-   
+.create-spot-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
 }
+
 
 .create-spot-form button {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    color: white;
+    background-color: rgb(228, 29, 85);
+    border-color: white;
+    height: 48px;
+    font-size: 16px;
+    width: 100px;
 }
 
 .create-spot-form input {
-    border-radius: 5px;
-    width: 150px;
+    /* border-radius: 5px; */
+    width: 600px;
+    height: 52px;
     text-overflow: ellipsis;
+    margin: 0px 80px 0px 80px;
+    border: none;
+    border-top: 1px solid rgb(118, 118, 118);
+    border-left: 1px solid rgb(118, 118, 118);
+    border-right: 1px solid rgb(118, 118, 118);
+
 }
 
+.create-spot-form .last-input {
+    border: 1px solid rgb(118, 118, 118);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+.create-spot-form .first-input {
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+}
+
+
+
 .red-errors {
-    color: red
+    color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 5px;
+
+}
+
+.create-spot-h1 {
+    font-family: 32px;
+    font-weight: 600;
+    margin-top: 50px;
 }

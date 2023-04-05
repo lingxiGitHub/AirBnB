@@ -32,7 +32,8 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
 
 
-    const sessionUser = useSelector(state => state.session.user)
+    const sessionUser = useSelector(state => state.session.user);
+    const ownerId = useSelector(state => state.spots.singleSpot.ownerId)
 
     let sessionLinks
 
@@ -94,7 +95,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
         }
 
-        if (!allReviewsUserId.includes(+currentUserId)) {
+        if (!allReviewsUserId.includes(+currentUserId) && currentUserId != ownerId) {
             sessionLinks = (
                 <li>
                     <OpenModalButton
