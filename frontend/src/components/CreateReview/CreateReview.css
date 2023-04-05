@@ -15,7 +15,7 @@
 }
 
 .create-review-form input {
-    width: 250px;
+    width: 150px;
     border-radius: 5px;
     text-overflow: ellipsis;
 }
@@ -28,4 +28,17 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.create-review-box {
+    resize: none;
+    border-radius: 10px;
+    width: 320px;
+}
+
+
+.create-review-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

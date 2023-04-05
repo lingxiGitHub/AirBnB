@@ -1,0 +1,29 @@
+.update-review-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    row-gap: 25px;
+}
+
+
+.update-review-box{
+    border-radius: 5px;
+    resize: none;
+    /* overflow:scroll; */
+    word-wrap: break-word;
+}
+
+.rating-stars-box{
+    width: 100px;
+    margin-left: 15px;
+    border-radius: 8px;
+    /* display: flex;
+    justify-content: center; */
+    text-align: center;
+}
+
+
+.update-review-title{
+    margin-bottom: 40px;
+}

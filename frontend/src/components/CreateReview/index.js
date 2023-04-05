@@ -70,9 +70,12 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
                         </ul>
 
                         <label>
-                            <span>Review</span>
-                            <input
-                                type="text"
+                            {/* <span>Review</span> */}
+                            <textarea
+                                className="create-review-box"
+                                placeholder="Review..."
+                                rows={4}
+                                cols={40}
                                 value={review}
                                 onChange={(e) => setReview(e.target.value)}
                                 required
@@ -81,9 +84,10 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
                         </label>
 
                         <label>
-                            <span>Stars</span>
+                            {/* <span>Stars</span> */}
                             <input
                                 type="number"
+                                placeholder="Rating from 1 to 5"
                                 value={stars}
                                 min={1}
                                 max={5}

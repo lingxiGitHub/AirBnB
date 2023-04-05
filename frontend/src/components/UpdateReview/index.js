@@ -37,7 +37,7 @@ export default function UpdateReviewComp({ spotId, grabReview }) {
 
         dispatch(updateReviewThunk(updatedReview, grabReview.id))
             .then(closeModal)
-            .then(()=>dispatch(getSpotReviews(spotId)))
+            .then(() => dispatch(getSpotReviews(spotId)))
             .then(() => dispatch(getSingleSpot(spotId)))
             .catch(
                 async (res) => {
@@ -51,25 +51,30 @@ export default function UpdateReviewComp({ spotId, grabReview }) {
 
     return (
         <>
+            <h1 className="update-review-title">Update Review</h1>
             <form
                 className="update-review-form"
                 onSubmit={handleUpdate}
             >
 
-                <label>
-                    <span>Review</span>
-                    <input
-                        type="text"
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        required
 
-                    />
-                </label>
+                {/* <span>Review</span> */}
+                <textarea
+                    className="update-review-box"
+                    placeholder="Review..."
+                    rows={4}
+                    cols={40}
+                    value={review}
+                    onChange={(e) => setReview(e.target.value)}
+                    required
 
-                <label>
-                    <span>Stars</span>
+                />
+
+
+                <label>Rating Stars
                     <input
+                        className="rating-stars-box"
+                        placeholder="Rating from 1 to 5"
                         type="number"
                         value={stars}
                         onChange={(e) => setStars(e.target.value)}
@@ -79,7 +84,7 @@ export default function UpdateReviewComp({ spotId, grabReview }) {
 
                     />
                 </label>
-                <button type="submit">Submit</button>
+                <button type="submit">Update</button>
 
 
             </form>

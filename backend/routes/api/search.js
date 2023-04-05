@@ -32,6 +32,9 @@ router.get("/:keyword", async (req, res, next) => {
         }
     })
 
+    //********using op.ilike in production mode / render
+    //*********using op.like locally
+
     console.log("searchedspot backend 1",searchedSpot)
     const Spots = [];
     searchedSpot.forEach(spot => {
