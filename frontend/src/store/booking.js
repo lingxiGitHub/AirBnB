@@ -19,7 +19,7 @@ export const loadUserBookings = (userBooking) => ({
 
 export const getAllBookings = (spotId) => async dispatch => {
 
-    const response = await fetch(`/api/spots/${spotId}/bookings`)
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`)
 
     if (response.ok) {
         const bookingList = await response.json()
@@ -31,7 +31,7 @@ export const getAllBookings = (spotId) => async dispatch => {
 
 export const getUserBookings = () => async dispatch => {
 
-    const userResponse = await fetch(`/api/bookings/current`)
+    const userResponse = await csrfFetch(`/api/bookings/current`)
 
     if (userResponse.ok) {
         const userBooking = await userResponse.json()

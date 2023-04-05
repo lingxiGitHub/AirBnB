@@ -17,7 +17,7 @@ export const reset = () => ({
 export const search_spots_thunk = (keyword) => async (dispatch) => {
 
     // console.log("at the search thunk???", keyword)
-    const response = await fetch(`/api/search/${keyword}`)
+    const response = await csrfFetch(`/api/search/${keyword}`)
 
     if (response.ok) {
         const searchResult = await response.json()

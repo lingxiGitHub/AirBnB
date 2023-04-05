@@ -13,7 +13,7 @@ export const loadSpots = (list) => ({
 })
 
 export const getAllSpots = () => async dispatch => {
-    const response = await fetch(`/api/spots?page=1&size=20`)
+    const response = await csrfFetch(`/api/spots?page=1&size=20`)
     if (response.ok) {
         const listObj = await response.json()
         const list = listObj.Spots
@@ -29,7 +29,7 @@ export const loadSingleSpot = (detailObj) => ({
 
 export const getSingleSpot = (spotId) => async dispatch => {
     // console.log("spotId at getSingleSpot", spotId)
-    const response = await fetch(`/api/spots/${spotId}`)
+    const response = await csrfFetch(`/api/spots/${spotId}`)
     // console.log(response)
     if (response.ok) {
         const detailObj = await response.json()
