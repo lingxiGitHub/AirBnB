@@ -71,7 +71,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
 
         // console.log("grab", grabReview)
-        if (allReviewsUserId.includes(+currentUserId)) {
+        if (allReviewsUserId.includes(+currentUserId) && currentUserId != ownerId) {
 
             sessionLinks = (
                 <div className="review-buttons">
