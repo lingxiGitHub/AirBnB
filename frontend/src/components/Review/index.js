@@ -154,7 +154,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
                                         <p key={item.id}>Rating: {item.stars}</p>
                                         <p key={item.id}>{item.review}</p>
 
-                                        {item.userId == sessionUser.id && (
+                                        {sessionUser && item.userId == sessionUser.id && (
                                             updateLinks
                                         )}
 
