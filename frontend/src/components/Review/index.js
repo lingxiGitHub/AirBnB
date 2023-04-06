@@ -36,6 +36,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
     const ownerId = useSelector(state => state.spots.singleSpot.ownerId)
 
     let sessionLinks
+    let updateLinks
 
 
 
@@ -49,10 +50,10 @@ export default function DisplayReview({ singleSpot, spotId }) {
         let grabReview
         for (let review of allReviewArr) {
             // console.log("rrrr",review)
-            if (+review.spotId === +spotId){
-              allReviewsUserId.push(+review.userId)  
+            if (+review.spotId === +spotId) {
+                allReviewsUserId.push(+review.userId)
             }
-            
+
             if (+currentUserId === +review.userId) {
                 // console.log(review)
                 theReviewId = review.id
@@ -80,7 +81,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
         // console.log("grab", grabReview)
         if (allReviewsUserId.includes(+currentUserId) && currentUserId != ownerId) {
 
-            sessionLinks = (
+            updateLinks = (
                 <div className="review-buttons">
                     <OpenModalButton
                         buttonText="Update"
@@ -137,7 +138,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
                     <div className="reviews-container">
                         {allReviewArr && (allReviewArr.map(item => {
-
+                            console.log(item)
                             return (
                                 +spotId === +item.spotId && (
                                     <div className="review-card">
@@ -150,8 +151,12 @@ export default function DisplayReview({ singleSpot, spotId }) {
                                             </div>
 
                                         </div>
-
+                                        <p key={item.id}>Rating: {item.stars}</p>
                                         <p key={item.id}>{item.review}</p>
+
+                                        {item.userId == sessionUser.id && (
+                                            updateLinks
+                                        )}
 
                                     </div>
                                 )
