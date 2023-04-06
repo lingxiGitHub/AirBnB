@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     review: DataTypes.STRING,
     stars: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       // validate: {
       //   min: 1,
       //   max: 5
