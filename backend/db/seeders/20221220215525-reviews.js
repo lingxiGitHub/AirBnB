@@ -35,7 +35,7 @@ module.exports = {
         spotId: 1,
         userId: 8,
         review: "Our experience was terrific!! Amber was very responsive and helpful throughout our entire stay.",
-        stars: 5,
+        stars: 4.5,
 
       },
       {
