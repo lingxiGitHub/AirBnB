@@ -48,7 +48,11 @@ export default function DisplayReview({ singleSpot, spotId }) {
         let allReviewsUserId = []
         let grabReview
         for (let review of allReviewArr) {
-            allReviewsUserId.push(+review.userId)
+            // console.log("rrrr",review)
+            if (+review.spotId === +spotId){
+              allReviewsUserId.push(+review.userId)  
+            }
+            
             if (+currentUserId === +review.userId) {
                 // console.log(review)
                 theReviewId = review.id
@@ -58,6 +62,9 @@ export default function DisplayReview({ singleSpot, spotId }) {
             }
 
         }
+
+        // console.log("&&&&",allReviewsUserId)
+        // console.log("_____", currentUserId)
 
 
 

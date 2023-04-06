@@ -215,12 +215,6 @@ function SingleSpotComponent() {
 
 
 
-
-
-
-
-
-
                         </div>
                         <hr></hr>
 
