@@ -174,7 +174,7 @@ router.get('/', validateSpotGetAll, async (req, res, next) => {
             // console.log(review);
             count = count + review.stars;
         })
-        spot.avgRating = (count / i).toFixed(2);
+        spot.avgRating = +(count / i).toFixed(2);
         if (spot.avgRating === "NaN") {
             spot.avgRating = "New"
         }
@@ -295,10 +295,10 @@ router.get("/:spotId", async (req, res, next) => {
             i++;
             count = count + review.stars;
         })
-        spot.avgStarRating = (count / i).toFixed(2);
-        if (spot.avgStarRating === "NaN") {
-            spot.avgStarRating = "New"
-        }
+        spot.avgStarRating = +(count / i).toFixed(2);
+        // if (spot.avgStarRating === null) {
+        //     spot.avgStarRating = "New"
+        // }
         spot.numReviews = i;
         delete spot.Reviews;
     });
