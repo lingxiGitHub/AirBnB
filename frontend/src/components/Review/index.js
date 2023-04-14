@@ -138,7 +138,7 @@ export default function DisplayReview({ singleSpot, spotId }) {
 
                     <div className="reviews-container">
                         {allReviewArr && (allReviewArr.map(item => {
-                            console.log(item)
+                            // console.log(item)
                             return (
                                 +spotId === +item.spotId && (
                                     <div className="review-card">

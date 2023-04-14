@@ -85,9 +85,10 @@ export const updateReviewThunk = (updatedReview,reviewId) =>async dispatch =>{
         const updatedReview = await res.json()
          dispatch(updateReview(updatedReview))
    
-    }else{
-        console.log("update review thunk failed")
     }
+    // else{
+    //     console.log("update review thunk failed")
+    // }
 }
 
 //delete review

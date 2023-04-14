@@ -63,7 +63,7 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
                     >
 
                         <ul className="error-display">
-                            {/* {console.log("star errors", errors)} */}
+                    
                             {errors.map((error, idx) => (
                                 <li key={idx}>{error}</li>
                             ))}

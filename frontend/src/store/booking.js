@@ -24,9 +24,10 @@ export const getAllBookings = (spotId) => async dispatch => {
     if (response.ok) {
         const bookingList = await response.json()
         dispatch(loadBookings(bookingList))
-    } else {
-        console.log("get all booking store wrong")
-    }
+    } 
+    // else {
+    //     console.log("get all booking store wrong")
+    // }
 }
 
 export const getUserBookings = () => async dispatch => {
@@ -67,9 +68,11 @@ export const addBookingThunk = (newBooking, spotId) => async dispatch => {
         await dispatch(createBooking(createdBooking))
         // history.push(`/success`)
 
-    } else {
-        console.log("adding fail at store")
-    }
+    } 
+    
+    // else {
+    //     console.log("adding fail at store")
+    // }
 
     //  return response
 }
@@ -100,9 +103,10 @@ export const updateBookingThunk = (booking, bookingId) => async dispatch => {
         const updatedBooking = await res.json()
         await dispatch(updateBooking(updatedBooking))
         dispatch(getUserBookings())
-    } else {
-        console.log("update thunk failed")
     }
+    // else {
+    //     console.log("update thunk failed")
+    // }
 
 }
 
