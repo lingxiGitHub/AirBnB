@@ -98,7 +98,52 @@ module.exports = {
         endDate: new Date("2022-03-03"),
 
       },
-      
+
+      {
+        spotId: 10,
+        userId: 9,
+        startDate: new Date("2022-03-02"),
+        endDate: new Date("2022-03-03"),
+
+      },
+      {
+        spotId: 11,
+        userId: 8,
+        startDate: new Date("2022-10-02"),
+        endDate: new Date("2022-10-03"),
+
+      },
+      {
+        spotId: 12,
+        userId: 7,
+        startDate: new Date("2022-10-02"),
+        endDate: new Date("2022-10-03"),
+
+      },
+
+      {
+        spotId: 13,
+        userId: 6,
+        startDate: new Date("2022-10-02"),
+        endDate: new Date("2022-10-03"),
+
+      },
+
+      {
+        spotId: 14,
+        userId: 5,
+        startDate: new Date("2022-10-02"),
+        endDate: new Date("2022-10-03"),
+
+      },
+
+      {
+        spotId: 15,
+        userId: 4,
+        startDate: new Date("2022-10-02"),
+        endDate: new Date("2022-10-03"),
+
+      },
 
     ], {});
   },

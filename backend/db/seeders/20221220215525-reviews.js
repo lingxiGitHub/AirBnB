@@ -153,6 +153,95 @@ module.exports = {
         stars: 4.9,
 
       },
+
+      {
+        spotId: 10,
+        userId: 1,
+        review: "Everything was great.",
+        stars: 5.0,
+
+      },
+      {
+        spotId: 10,
+        userId: 2,
+        review: "Great place, loved it!",
+        stars: 4.9,
+
+      },
+      {
+        spotId: 11,
+        userId: 1,
+        review: "We had a really lovely weekend away here. We were looked after really well.",
+        stars: 5.0,
+
+      },
+      {
+        spotId: 11,
+        userId: 2,
+        review: "Beautiful little find on Air BnB! ",
+        stars: 4.9,
+
+      },
+
+      {
+        spotId: 12,
+        userId: 3,
+        review: "This place has incredible ocean views all over the house. It was exactly as advertised.",
+        stars: 5.0,
+
+      },
+      {
+        spotId: 12,
+        userId: 4,
+        review: "Amazing views, host and just overall. The location was great.",
+        stars: 4.9,
+
+      },
+
+      {
+        spotId: 13,
+        userId: 3,
+        review: "Great place! Communication was easy and joe was very responsive.",
+        stars: 4.7,
+
+      },
+      {
+        spotId: 13,
+        userId: 4,
+        review: "Had a really lovely stay in the peacock room! It was close to the wineries I was tasting at during the day and the recommendation for dinner was perfect.",
+        stars: 4.8,
+
+      },
+
+      {
+        spotId: 14,
+        userId: 3,
+        review: "We took 2 nights here at guard tower. My son was so excited to be here since the Guard Tower looks like a building in Star Wars.",
+        stars: 4.7,
+
+      },
+      {
+        spotId: 14,
+        userId: 4,
+        review: "Unique experience with picturesque surroundings.",
+        stars: 4.8,
+
+      },
+
+      {
+        spotId: 15,
+        userId: 5,
+        review: "The host was extremely friendly and the housing was just amazing. ",
+        stars: 4.9,
+
+      },
+      {
+        spotId: 15,
+        userId: 6,
+        review: "My family had a wonderful relaxing get away at the House in the clouds.",
+        stars: 4.8,
+
+      },
      
 
     ], {});

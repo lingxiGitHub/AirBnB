@@ -142,6 +142,88 @@ module.exports = {
         price: 1099,
 
       },
+      {
+        ownerId: 10,
+        address: '123 Desert Road',
+        city: "Joshua Tree",
+        state: "CA",
+        country: "USA",
+        lat: 900.01,
+        lng: 900.1,
+        name: "Zebra Shadow, Joshua Tree",
+        description: "Zebra Shadow  is an idyllic setting for your desert experience.  Indoor & outdoor living, breathtaking views from each room, and objects curated to reflect the natural landscape.",
+        price: 219,
+
+      },
+
+      {
+        ownerId: 11,
+        address: '456 Pine Street',
+        city: "Seattle",
+        state: "WA",
+        country: "USA",
+        lat: 900.01,
+        lng: 900.1,
+        name: "The Granary, Rustic Modern Barn Conversion",
+        description: "The house is Grade II listed building, dated around 1600. It has full of character, with beautiful garden. ",
+        price: 118,
+
+      },
+
+      {
+        ownerId: 1,
+        address: '789 Oceanview Drive',
+        city: "Moss Beach",
+        state: "CA",
+        country: "USA",
+        lat: 900.01,
+        lng: 900.1,
+        name: "Oceanfront Coastal Home w Breathtaking Views",
+        description: "Come discover this nature-filled private coastal getaway, peaceful retreat, or an ocean front home base from which to explore the coast.",
+        price: 461,
+
+      },
+      {
+        ownerId: 3,
+        address: '321 Vineyard Lane',
+        city: "Napa",
+        state: "CA",
+        country: "USA",
+        lat: 900.01,
+        lng: 900.1,
+        name: "Private Bedroom (the Peacock) on Secluded Vineyard",
+        description: "Contemporary farmhouse chic - the Peacock Room is an airy and bright getaway. Enjoy your own private bedroom with a private entryway and parking as well as a stunning bathroom. Self- check in.",
+        price: 205,
+
+      },
+
+      {
+        ownerId: 4,
+        address: '456 Desert Bloom Avenue',
+        city: "Joshua Tree",
+        state: "CA",
+        country: "USA",
+        lat: 900.01,
+        lng: 900.1,
+        name: "Guard Tower Suite #1 with Pool",
+        description: "The ULTIMATE GLAMPING experience!  Featured on HGTV: The Castle House Estate brings Tiny Home living to another level, located in the heart of Joshua Tree and minutes from the National Park.",
+        price: 245,
+
+      },
+
+      {
+        ownerId: 5,
+        address: '789 Desert Bloom Avenue',
+        city: "El Dorado Hills",
+        state: "CA",
+        country: "USA",
+        lat: 900.01,
+        lng: 900.1,
+        name: "House In The Clouds!",
+        description: "Welcome to the “House in the Clouds”. This 2,060sf Sicilian Villa home set on 10 acres is beautiful and private. This house has an incredible view of Folsom Lake & the American River.",
+        price: 333,
+
+      },
 
 
     ], {});
