@@ -27,13 +27,13 @@ i {
 }
 
 .profile-dropdown li:hover {
-    background-color: lightgray;
+    background-color: lightgrey;
     cursor: pointer;
 
 }
 
 button:hover {
-    background-color: lightgray;
+    background-color: rgb(247,247,247);
 }
 
 .log-in-right-corner-button {

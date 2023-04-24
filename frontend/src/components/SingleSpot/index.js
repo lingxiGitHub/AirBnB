@@ -57,6 +57,8 @@ function SingleSpotComponent() {
         ownerId = singleSpot.ownerId
     }
 
+    const heartSvg = (<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible;"><path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path></svg>)
+
 
 
 
@@ -78,44 +80,66 @@ function SingleSpotComponent() {
 
                         </div>
 
-                        {sessionUser && currentUserId == ownerId && (
-                            <div className="update-delete-buttons">
+                        <div
+                            className="update-delete-buttons">
+                            {sessionUser && currentUserId == ownerId && (
+                                <div
+                                    className="update-delete-buttons"
+                                >
 
-                                <OpenModalButton
-                                    buttonText="Update Spot"
-                                    modalComponent={<UpdateSpot
-                                        showEdit={showEdit}
-                                        setShowEdit={setShowEdit}
-                                        singleSpot={singleSpot}
-                                        sessionUser={sessionUser}
+                                    <OpenModalButton
+                                        buttonText={
+                                            <div className="flex-box-style-1">
+                                                <i class="far fa-edit"></i>
+                                                <span className="update-text">Update</span>
+                                            </div>
+                                        }
+                                        className="single-crud"
+                                        modalComponent={<UpdateSpot
+                                            showEdit={showEdit}
+                                            setShowEdit={setShowEdit}
+                                            singleSpot={singleSpot}
+                                            sessionUser={sessionUser}
 
-                                    />} />
-
-
-
-
-
-                                <button
-                                    onClick={() => setShowDeleteEdit(!showDeleteEdit)}
-                                >Delete Spot</button>
-
-                                {showDeleteEdit && (
-                                    <DeleteSpot
-                                        singleSpot={singleSpot}
-                                        sessionUser={sessionUser}
-                                        dispatch={dispatch}
-                                        history={history}
-                                        spotId={spotId}
-                                        setShowDeleteEdit={setShowDeleteEdit}
-
-                                    />
-                                )}
-
-                            </div>
+                                        />} />
 
 
-                        )}
+                                    <button
+                                        onClick={() => setShowDeleteEdit(!showDeleteEdit)}
+                                        className="single-crud"
+                                    >
+                                        <div className="flex-box-style-1">
+                                            <i class="far fa-trash-alt"></i>
+                                            <span className="delete-text">Delete</span>
+                                        </div>
 
+                                    </button>
+
+                                    {showDeleteEdit && (
+                                        <DeleteSpot
+                                            singleSpot={singleSpot}
+                                            sessionUser={sessionUser}
+                                            dispatch={dispatch}
+                                            history={history}
+                                            spotId={spotId}
+                                            setShowDeleteEdit={setShowDeleteEdit}
+
+                                        />
+                                    )}
+
+                                </div>
+
+
+                            )}
+
+                            <button className="single-crud">
+                                <i class="far fa-heart"></i>
+                                <span className="save">Save</span>
+                            </button>
+
+
+
+                        </div>
 
 
                     </div>
