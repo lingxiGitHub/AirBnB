@@ -23,7 +23,7 @@ function App() {
 
 
   return (
-    <>
+    <div className="app">
 
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
@@ -51,7 +51,7 @@ function App() {
         </Switch>
 
       )}
-    </>
+    </div>
   );
 }
 

@@ -63,6 +63,11 @@ module.exports = (sequelize, DataTypes) => {
         as:"Owner",
         hooks: true
       })
+
+      // favorites join table
+      User.hasMany(models.Spot, {
+        foreignKey: "userId",
+      })
     }
   };
 

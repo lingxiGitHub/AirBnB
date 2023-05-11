@@ -73,6 +73,8 @@ function ProfileButton({ user }) {
                             }}
                         />
 
+                        <li>Wishlists</li>
+
                         <OpenModalMenuItem
                             itemText="Create Spot"
                             modalComponent={<CreateSpotModal />}
