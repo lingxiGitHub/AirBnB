@@ -34,6 +34,7 @@
     resize: none;
     border-radius: 10px;
     width: 320px;
+    padding: 10px;
 }
 
 
@@ -41,4 +42,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.rating-box {
+    height: 25px;
+    border-color: rgb(118, 118, 118);
 }

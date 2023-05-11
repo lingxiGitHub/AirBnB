@@ -12,6 +12,7 @@ import SearchResult from "./components/SearchResult";
 import NotFound from "./components/NotFound";
 
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,7 +20,7 @@ function App() {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  
+
 
   return (
     <>
@@ -46,7 +47,9 @@ function App() {
           <Route path="*">
             <NotFound />
           </Route>
+
         </Switch>
+
       )}
     </>
   );

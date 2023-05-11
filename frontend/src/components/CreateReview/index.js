@@ -63,7 +63,7 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
                     >
 
                         <ul className="error-display">
-                    
+
                             {errors.map((error, idx) => (
                                 <li key={idx}>{error}</li>
                             ))}
@@ -86,6 +86,7 @@ export default function CreateReview({ spotId, showEdit, setShowEdit, singleSpot
                         <label>
                             {/* <span>Stars</span> */}
                             <input
+                                className="rating-box"
                                 type="number"
                                 placeholder="Rating from 1 to 5"
                                 value={stars}

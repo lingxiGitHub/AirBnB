@@ -295,6 +295,8 @@ function SingleSpotComponent() {
                     </div>
                 </div>
             )}
+
+       
         </>
     )
 }
