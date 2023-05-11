@@ -30,7 +30,16 @@ export default function Trips() {
 
         <>
 
-        <div className="trips-title">Trips</div>
+            <div className="trips-title">Trips</div>
+
+
+
+            <img
+                className="trip-img"
+                src="https://a0.muscache.com/im/pictures/d727f355-3f10-44b5-9750-d1efca2438fc.jpg?im_w=1200"></img>
+
+
+
             <div className="user-bookings">
 
                 <div className="past-trip-section">
@@ -39,7 +48,7 @@ export default function Trips() {
 
                         return (
 
-                            <div>
+                            <div className="trip-flex">
 
                                 {new Date(booking.endDate) < today && (
 

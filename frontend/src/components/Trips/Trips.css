@@ -21,3 +21,15 @@
     font-weight: 600;
     margin-top: 50px;
 }
+
+.trip-img{
+    height: 286px;
+    width: 1000px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.trip-flex{
+    display: flex;
+    flex-direction: column;
+}
