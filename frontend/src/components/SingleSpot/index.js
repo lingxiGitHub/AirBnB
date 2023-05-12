@@ -132,10 +132,15 @@ function SingleSpotComponent() {
 
                             )}
 
-                            <button className="single-crud">
-                                <i class="far fa-heart"></i>
-                                <span className="save">Save</span>
-                            </button>
+                            {sessionUser && currentUserId !== ownerId && (
+
+                                <button className="single-crud">
+                                    <i class="far fa-heart"></i>
+                                    <span className="save">Save</span>
+                                </button>
+                            )}
+
+
 
 
 
@@ -296,7 +301,7 @@ function SingleSpotComponent() {
                 </div>
             )}
 
-       
+
         </>
     )
 }

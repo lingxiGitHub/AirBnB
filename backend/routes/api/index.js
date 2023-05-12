@@ -6,10 +6,11 @@ const spotsRouter = require("./spots.js")
 const reviewRouter = require("./reviews.js");
 const bookingRouter = require("./bookings.js")
 const searchRouter = require("./search.js")
+const favoriteRouter = require("./favorite.js")
 
 const { restoreUser, requireAuth } = require("../../utils/auth.js");
 
-const { Spot, Review, ReviewImage, User, SpotImage, Booking, sequelize } = require('../../db/models');
+const { Spot, Review, ReviewImage, User, SpotImage, Booking, sequelize,Favorite } = require('../../db/models');
 
 // Connect restoreUser middleware to the API router
 // If current user session is valid, set req.user to the user in the database
@@ -32,6 +33,8 @@ router.use("/reviews", reviewRouter)// adding reviews
 router.use("/bookings", bookingRouter)// adding bookings
 
 router.use("/search",searchRouter)//search
+
+router.use("/save",favoriteRouter) // favorite
 
 router.post('/test', (req, res) => {
     res.json({ requestBody: req.body });
