@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       // favorite join table
-      Spot.hasMany(models.User, {
-        foreignKey: "spotId",
-      })
+      // Spot.hasMany(models.User, {
+      //   foreignKey: "spotId",
+      // })
 
 
       Spot.hasMany(models.Review, {
@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    userId:DataTypes.INTEGER,
+    // userId:DataTypes.INTEGER,
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,

@@ -22,9 +22,6 @@ module.exports = {
           key: "id"
         }
       },
-      // userId: {
-      //   type: Sequelize.INTEGER
-      // },
       address: {
         type: Sequelize.STRING
       },

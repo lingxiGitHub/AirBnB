@@ -65,9 +65,9 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       // favorites join table
-      User.hasMany(models.Spot, {
-        foreignKey: "userId",
-      })
+      // User.hasMany(models.Spot, {
+      //   foreignKey: "userId",
+      // })
     }
   };
 
