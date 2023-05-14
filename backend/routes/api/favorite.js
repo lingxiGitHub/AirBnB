@@ -87,6 +87,23 @@ router.delete("/:spotId", requireAuth, async(req, res)=>{
     let currentUserId = req.user.id;
     currentUserId = parseInt(currentUserId);
 
+    const theFavorite = await Favorite.findOne({
+        where:{
+            spotId,
+            userId: currentUserId
+        }
+    })
+
+    if (theFavorite){
+        await theFavorite.destroy()
+        res.status(200);
+        res.json({
+            statusCode: 200,
+            message: "Successfully deleted"
+        })
+
+    }
+
     
 
 
