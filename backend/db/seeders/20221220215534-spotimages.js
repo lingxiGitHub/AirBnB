@@ -113,31 +113,31 @@ module.exports = {
       },
       {
         spotId: 4,
-        url: "https://a0.muscache.com/im/pictures/miso/Hosting-616473242380750899/original/92dbd162-b07b-4818-b386-9b66edd05717.jpeg?im_w=1200",
+        url: "https://images.unsplash.com/photo-1571113606406-f3ca1c36e7e7?w=1200",
         preview: true,
 
       },
       {
         spotId: 4,
-        url: "https://a0.muscache.com/im/pictures/miso/Hosting-616473242380750899/original/6d0b0014-b580-4e35-a96f-a6df126b862b.jpeg?im_w=1440",
+        url: "https://images.unsplash.com/photo-1686586351889-3dd1d9562913?w=1200",
         preview: false,
 
       },
       {
         spotId: 4,
-        url: "https://a0.muscache.com/im/pictures/miso/Hosting-616473242380750899/original/fda19f29-7342-4473-936a-9f41376b0a15.jpeg?im_w=1440",
+        url: "https://images.unsplash.com/photo-1694781558887-d84d9ba7603f?w=1200",
         preview: false,
 
       },
       {
         spotId: 4,
-        url: "https://a0.muscache.com/im/pictures/miso/Hosting-616473242380750899/original/53e0da9e-4dda-41ce-8119-1aea663d346d.jpeg?im_w=1440",
+        url: "https://images.unsplash.com/photo-1733950489644-ae52e46ec0c5?w=1200",
         preview: false,
 
       },
       {
         spotId: 4,
-        url: "https://a0.muscache.com/im/pictures/miso/Hosting-616473242380750899/original/0564a86f-511e-4e48-aec7-33822f5e5a93.jpeg?im_w=1440",
+        url: "https://images.unsplash.com/photo-1722352453146-2526151c8a2c?w=1200",
         preview: false,
 
       },
@@ -145,31 +145,31 @@ module.exports = {
 
       {
         spotId: 5,
-        url: "https://a0.muscache.com/im/pictures/5d9d1543-8210-4f36-bf1c-848ffc9982d9.jpg?im_w=1200",
+        url: "https://images.unsplash.com/photo-1737898415581-7dea57a1905b?w=1200",
         preview: true,
 
       },
       {
         spotId: 5,
-        url: "https://a0.muscache.com/im/pictures/819688ff-11ea-4c25-91c0-585c0d886a9c.jpg?im_w=1200",
+        url: "https://images.unsplash.com/photo-1757862351841-c6f7ac0b0201?w=1200",
         preview: false,
 
       },
       {
         spotId: 5,
-        url: "https://a0.muscache.com/im/pictures/fe4d4cc3-79ca-4ba8-8864-e6e25295700f.jpg?im_w=1200",
+        url: "https://images.unsplash.com/photo-1639173925921-5d5fd027713c?w=1200",
         preview: false,
 
       },
       {
         spotId: 5,
-        url: "https://a0.muscache.com/im/pictures/257e512c-aad3-4245-9175-68f0071d44ff.jpg?im_w=1200",
+        url: "https://images.unsplash.com/photo-1754788358645-d6e6cca12e25?w=1200",
         preview: false,
 
       },
       {
         spotId: 5,
-        url: "https://a0.muscache.com/im/pictures/38618410-b07a-43e8-afff-0ebae906295b.jpg?im_w=1200",
+        url: "https://images.unsplash.com/photo-1742490382029-98357c08f3cd?w=1200",
         preview: false,
 
       },
