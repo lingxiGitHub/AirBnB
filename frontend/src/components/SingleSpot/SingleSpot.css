@@ -1,154 +1,360 @@
-.airbnb-icon {
-    border-radius: 10px;
+.spot-page {
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 
-
-.address-line {
-    flex-wrap: wrap;
-    flex-direction: row;
-}
-
-.address-line span {
-    font-size: 14px;
-    margin: 5px
-}
-
-.preview-image {
-    aspect-ratio: 1/1;
-    margin: 2px;
-    width: 50%;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.other-image {
+/* ---------- Title ---------- */
+.spot-title-bar {
     display: flex;
-    width: 50%;
-    flex-wrap: wrap;
-}
-
-.indi-img {
-    margin: 2px;
-    width: 48%;
-    aspect-ratio: 1 / 1;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-.photos {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    /* margin-top: 10px; */
-
-}
-
-.left-right-container {
-    display: flex;
-    /* position: relative; */
-}
-
-.left-part {
-    flex-basis: 70%;
-}
-
-.right-part {
-    flex-basis: 30%;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
-    border: 1px solid rgb(221, 221, 221);
-    padding: 24px;
-    position: sticky;
-    top: 20px;
-    margin: 40px 0px 40px 40px;
-    justify-content: space-around;
-    width: 372px;
-}
-
-
-.three-items {
-    display: flex;
-    flex-direction: column;
+    align-items: flex-end;
     justify-content: space-between;
-    align-items: baseline;
-    font-size: 14px;
-}
-
-.three-items span {
-    white-space: nowrap;
-
-}
-
-.price-bold {
-    color: rgb(34, 34, 34) !important;
-    font-size: 22px;
-}
-
-.host-photo {
-
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-.section-below-photo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.flex-box-style-1 {
-    display: flex;
-}
-
-
-.under-name {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-.booking-top-section {
+    gap: 16px;
     margin-bottom: 24px;
 }
 
+.spot-title {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 30px;
+}
 
-.single-crud {
+.spot-actions {
     display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+/* ---------- Photo mosaic ---------- */
+.photo-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    height: clamp(300px, 40vw, 520px);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.photo-grid-skeleton {
+    height: clamp(300px, 40vw, 520px);
+    border-radius: var(--radius);
+}
+
+.photo-cell {
+    padding: 0;
     border: none;
-
+    background: var(--bg-soft);
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.save {
-    text-decoration: underline;
-    margin-left: 5px;
+.photo-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.2s ease;
 }
 
-.update-text {
-    text-decoration: underline;
-    margin-left: 5px;
+.photo-cell:hover img {
+    filter: brightness(0.85);
 }
 
-.delete-text {
-    text-decoration: underline;
-    margin-left: 5px;
+.photo-0 {
+    grid-row: 1 / 3;
 }
 
-.update-delete-buttons {
+/* Collapse the mosaic gracefully when a listing has fewer than 5 photos */
+.photo-count-1,
+.photo-count-0 {
+    grid-template-columns: 1fr;
+}
+
+.photo-count-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.photo-count-2 .photo-1 {
+    grid-row: 1 / 3;
+}
+
+.photo-count-3 {
+    grid-template-columns: 2fr 1fr;
+}
+
+.photo-count-4 {
+    grid-template-columns: 2fr 1fr 1fr;
+}
+
+.photo-count-4 .photo-3 {
+    grid-column: 2 / 4;
+}
+
+.photo-empty {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: var(--border-strong);
+    grid-row: 1 / 3;
 }
 
+.show-all-photos {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 15px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--text);
+    background: #fff;
+    font-weight: 600;
+}
 
-/* .empty-buff {
-    height: 100px;
-    background-color: rgb(247, 247, 247);
-    width: 100vw;
-    padding: none;
-    margin: none;
+.show-all-photos:hover {
+    background: var(--bg-soft);
+}
 
-} */
+.gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.gallery img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+.gallery img:first-child {
+    grid-column: 1 / 3;
+}
+
+/* ---------- Body columns ---------- */
+.spot-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 372px;
+    column-gap: 8%;
+    padding-bottom: 48px;
+}
+
+.spot-aside {
+    padding-top: 32px;
+}
+
+.spot-section {
+    padding: 32px 0;
+}
+
+.spot-section-lg {
+    padding: 48px 0;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.body-text {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.description {
+    white-space: pre-line;
+}
+
+.spot-overview h2 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.spot-specs {
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+.spot-rating-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.spot-rating-link .dot {
+    margin: 0 2px;
+}
+
+.host-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 0;
+}
+
+.host-row-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.avatar-md {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.avatar-xl {
+    width: 104px;
+    height: 104px;
+    font-size: 44px;
+}
+
+.highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.highlight {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.highlight-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.highlight-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.aircover {
+    height: 26px;
+    width: auto;
+    margin-bottom: 16px;
+}
+
+.amenities {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 16px;
+}
+
+.amenity {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 16px;
+}
+
+.amenity-icon {
+    font-size: 24px;
+}
+
+/* ---------- Host ---------- */
+.host-card-wrap {
+    display: grid;
+    grid-template-columns: 380px minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+}
+
+.host-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 32px 24px;
+    border-radius: 24px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.host-card-name {
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.host-card-sub {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.host-about h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* ---------- Things to know ---------- */
+.things-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.things-grid h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.things-grid p {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 1127px) {
+    .spot-body {
+        grid-template-columns: minmax(0, 1fr) 320px;
+        column-gap: 48px;
+    }
+
+    .host-card-wrap {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .host-card {
+        max-width: 380px;
+    }
+}
+
+@media (max-width: 860px) {
+    .spot-body {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .spot-title-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .things-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        height: 300px;
+    }
+
+    .photo-cell:not(.photo-0) {
+        display: none;
+    }
+}

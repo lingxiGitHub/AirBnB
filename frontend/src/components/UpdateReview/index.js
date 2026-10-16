@@ -1,96 +1,55 @@
-import "./UpdateReview.css";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateSpotThunk } from "../../store/spots"
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import ModalShell from "../../context/ModalShell";
+import StarInput from "../StarInput";
 import { getSpotReviews, updateReviewThunk } from "../../store/reviews";
 import { getSingleSpot } from "../../store/spots";
+import "../CreateReview/CreateReview.css";
 
 export default function UpdateReviewComp({ spotId, grabReview }) {
-
-    // console.log("--->inside update review comp",spotId)
-    // console.log("--->inside update review comp", grabReview)
-
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const [review, setReview] = useState(grabReview.review);
     const [stars, setStars] = useState(grabReview.stars);
     const [errors, setErrors] = useState([]);
 
-    useEffect(() => {
-        const validationErrors = []
-        if (stars && stars < 1 || stars > 5) { validationErrors.push("Star must be between 1 and 5") }
-        setErrors(validationErrors)
-
-    }, [stars])
-
     const handleUpdate = (e) => {
         e.preventDefault();
+        setErrors([]);
 
-        const updatedReview = {
-            review,
-            stars
-        }
-
-        // console.log("am i here?",updatedReview)
-
-
-        dispatch(updateReviewThunk(updatedReview, grabReview.id))
+        dispatch(updateReviewThunk({ review, stars }, grabReview.id))
             .then(closeModal)
             .then(() => dispatch(getSpotReviews(spotId)))
             .then(() => dispatch(getSingleSpot(spotId)))
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            );
-    }
-
-
+            .catch(async (res) => {
+                const data = res && res.json ? await res.json() : {};
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
+    };
 
     return (
-        <>
-            <h1 className="update-review-title">Update Review</h1>
-            <form
-                className="update-review-form"
-                onSubmit={handleUpdate}
-            >
-
-
-                {/* <span>Review</span> */}
-                <textarea
-                    className="update-review-box"
-                    placeholder="Review..."
-                    rows={4}
-                    cols={40}
-                    value={review}
-                    onChange={(e) => setReview(e.target.value)}
-                    required
-
-                />
-
-
-                <label>Rating Stars
-                    <input
-                        className="rating-stars-box"
-                        placeholder="Rating from 1 to 5"
-                        type="number"
-                        value={stars}
-                        onChange={(e) => setStars(e.target.value)}
-                        min={1}
-                        max={5}
-                        required
-
-                    />
-                </label>
-                <button type="submit">Update</button>
-
-
+        <ModalShell title="Edit your review">
+            <form className="review-form" onSubmit={handleUpdate}>
+                {errors.length > 0 && (
+                    <ul className="form-errors">{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+                )}
+                <div className="review-form-label">Overall rating</div>
+                <StarInput value={stars} onChange={setStars} />
+                <div className="review-form-label">Your review</div>
+                <div className="field-group">
+                    <label className="field">
+                        <textarea
+                            className="review-textarea"
+                            rows={5}
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <button className="btn btn-primary btn-block review-submit" type="submit">Save changes</button>
             </form>
-
-
-        </>
-    )
-
+        </ModalShell>
+    );
 }

@@ -1,0 +1,45 @@
+.heart-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+}
+
+.heart-overlay:hover {
+    transform: scale(1.1);
+}
+
+.heart-overlay .heart-svg {
+    width: 24px;
+    height: 24px;
+    fill: rgba(0, 0, 0, 0.5);
+    stroke: #fff;
+    stroke-width: 2;
+    overflow: visible;
+}
+
+.heart-svg.saved {
+    fill: var(--brand);
+}
+
+.heart-inline .heart-svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    overflow: visible;
+}
+
+.heart-inline .heart-svg.saved {
+    fill: var(--brand);
+    stroke: var(--brand);
+}

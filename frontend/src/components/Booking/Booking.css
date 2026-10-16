@@ -1,65 +1,128 @@
-.check-in-out {
-    display: flex;
-    border-radius: 10px;
-    border: 1px solid lightgray;
+.booking-card {
+    position: sticky;
+    top: 120px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    background: #fff;
 }
 
-.check-in-div {
-    border-right: 1px solid lightgray;
-    height: 50px;
-    padding: 12px;
+.booking-top {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    /* font-size: 14px;
-    font-weight: 400; */
-
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
 }
 
-.check-in-div input {
-    border: none;
-    outline: none;
-}
-
-.check-out-div {
-    height: 50px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-}
-
-.check-out-div input {
-    border: none;
-    outline: none;
-}
-
-
-
-.booking-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-
-.reserve-button {
-
-    color: white;
-    background-color: rgb(228, 29, 85);
-    border-color: white;
-    height: 48px;
+.booking-price {
     font-size: 16px;
-    /* font-weight: 600; */
-    margin: 16px 0px 0px 0px;
-
 }
 
+.booking-price strong {
+    font-size: 22px;
+    font-weight: 600;
+}
 
-.booking-top-section{
+.booking-rating {
     display: flex;
     align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.booking-rating .muted {
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+.date-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+}
+
+.date-field {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+}
+
+.date-field:first-child {
+    border-right: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.date-field:focus-within {
+    box-shadow: inset 0 0 0 2px var(--text);
+}
+
+.date-label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.date-field input {
+    border: none;
+    outline: none;
+    padding: 0;
+    font-size: 14px;
+    background: transparent;
+    min-width: 0;
+}
+
+.booking-errors {
+    margin: 12px 0 0;
+}
+
+.reserve-button {
+    margin-top: 16px;
+    padding: 14px;
+}
+
+.booking-hint {
+    text-align: center;
+    margin: 12px 0 0;
+    font-size: 14px;
+}
+
+.booking-line {
+    display: flex;
     justify-content: space-between;
-    margin: 10px;
+    font-size: 16px;
+    margin: 24px 0 24px;
+}
+
+.booking-total {
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.booking-note {
+    margin-top: 16px;
+    color: var(--text-muted);
+}
+
+.booking-success {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.booking-success h3 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.booking-success-icon {
+    font-size: 32px;
+    color: #008A05;
 }

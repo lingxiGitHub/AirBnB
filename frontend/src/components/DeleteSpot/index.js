@@ -1,57 +1,38 @@
-import { deleteSpotThunk } from "../../store/spots"
-import { getAllSpots } from "../../store/spots";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { deleteSpotThunk, getAllSpots } from "../../store/spots";
+import { useModal } from "../../context/Modal";
+import ModalShell from "../../context/ModalShell";
 
+export default function DeleteSpot({ singleSpot }) {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { closeModal } = useModal();
 
-export default function DeleteSpot({ singleSpot, sessionUser, dispatch, spotId, history, setShowDeleteEdit }) {
-
-    let sessionLinks;
-
-
-
-    const handleDelete = (e) => {
-        e.preventDefault();
-        dispatch(deleteSpotThunk(+spotId))
+    const handleDelete = () => {
+        dispatch(deleteSpotThunk(+singleSpot.id))
             .then(() => dispatch(getAllSpots()))
-            // .then(() => closeModal())
-            .then(() => history.push("/"))
-        setShowDeleteEdit(false)
-    }
+            .then(() => {
+                closeModal();
+                history.push("/");
+            });
+    };
 
-    if (sessionUser) {
-
-        const currentUserId = sessionUser.id
-        const spotOwnerId = singleSpot.ownerId
-
-        if (currentUserId === spotOwnerId) {
-            sessionLinks = (
-
-                <div>
-                    <button
-                        onClick={handleDelete}
-                    >Confirm Delete</button>
-                </div>
-            )
-
-
-        } else if (currentUserId !== spotOwnerId) {
-            sessionLinks = (
-                <p>You are not the owner</p>
-            )
-        }
-
-    }
     return (
-        <>
-
-            {sessionUser && (
-                sessionLinks
-
-            )}
-
-            {!sessionUser && (
-                <div>Please log in to delete the spot</div>
-            )}
-        </>
-    )
-
+        <ModalShell
+            title="Delete listing"
+            width="420px"
+            footer={
+                <>
+                    <button className="btn-link" onClick={closeModal}>Cancel</button>
+                    <button className="btn btn-dark" onClick={handleDelete}>Yes, delete</button>
+                </>
+            }
+        >
+            <p className="body-text">
+                Permanently delete <strong>{singleSpot.name}</strong>? Its photos, reviews and bookings will
+                be removed too. This can't be undone.
+            </p>
+        </ModalShell>
+    );
 }

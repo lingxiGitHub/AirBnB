@@ -1,309 +1,261 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleSpot } from "../../store/spots"
 import { useParams } from 'react-router-dom';
+import { FaStar } from "react-icons/fa";
+import {
+    FiAward, FiKey, FiCalendar, FiShare, FiEdit2, FiTrash2, FiGrid,
+    FiWifi, FiCoffee, FiMonitor, FiImage, FiTriangle, FiHome
+} from "react-icons/fi";
+import { getSingleSpot } from "../../store/spots";
+import { useModal } from "../../context/Modal";
+import ModalShell from "../../context/ModalShell";
 import UpdateSpot from "../UpdateSpot";
 import DisplayReview from "../Review";
-import { useHistory } from "react-router-dom";
 import DeleteSpot from "../DeleteSpot";
-import "./SingleSpot.css"
-import OpenModalButton from "../OpenModalButton";
 import Booking from "../Booking";
+import HeartButton from "../HeartButton";
+import { formatRating, pluralize } from "../../utils/format";
+import "./SingleSpot.css";
+
+const HIGHLIGHTS = [
+    { icon: FiAward, title: host => `${host} is a Superhost`, text: "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests." },
+    { icon: FiKey, title: () => "Self check-in", text: "Check yourself in with the keypad." },
+    { icon: FiCalendar, title: () => "Free cancellation for 48 hours", text: "Get a full refund if you change your mind." },
+];
+
+const AMENITIES = [
+    { icon: FiTriangle, label: "Mountain view" },
+    { icon: FiImage, label: "Valley view" },
+    { icon: FiCoffee, label: "Kitchen" },
+    { icon: FiWifi, label: "Wifi" },
+    { icon: FiMonitor, label: "Dedicated workspace" },
+];
+
+function PhotoGallery({ images, name }) {
+    return (
+        <ModalShell title="Photo tour" width="960px">
+            <div className="gallery">
+                {images.map(img => (
+                    <img key={img.id} src={img.url} alt={name} loading="lazy" />
+                ))}
+            </div>
+        </ModalShell>
+    );
+}
 
 function SingleSpotComponent() {
-
-    const history = useHistory();
-
-    const { spotId } = useParams()
-    // console.log("Single Spot id", spotId)
-
-
-
-    const singleSpot = useSelector((state) => {
-        // console.log("singleSpotState", state)
-        return state.spots.singleSpot
-    })
-
-    // console.log("singleSpot at component", singleSpot)
-
-
-    const dispatch = useDispatch()
-
-    // const currentUserId = useSelector(state => state.session.user.id);
-    // const ownerId = useSelector(state => state.spots.singleSpot.ownerId)
-
-    useEffect(() => {
-        dispatch(getSingleSpot(+spotId)).then(() => setIsLoaded(true));
-
-        // setIsLoaded(true)
-    }, [dispatch, spotId])
-
+    const { spotId } = useParams();
+    const dispatch = useDispatch();
+    const { setModalContent } = useModal();
     const [isLoaded, setIsLoaded] = useState(false);
+    const [copied, setCopied] = useState(false);
 
-    const [showEdit, setShowEdit] = useState(false);
-    const [showDeleteEdit, setShowDeleteEdit] = useState(false)
-    const [showCreateReviewEdit, setShowCreateReviewEdit] = useState(false)
-
+    const singleSpot = useSelector(state => state.spots.singleSpot);
     const sessionUser = useSelector(state => state.session.user);
 
-    let currentUserId;
-    if (sessionUser) {
-        currentUserId = sessionUser.id;
+    useEffect(() => {
+        setIsLoaded(false);
+        dispatch(getSingleSpot(+spotId)).then(() => setIsLoaded(true));
+    }, [dispatch, spotId]);
+
+    if (!isLoaded || !singleSpot || +singleSpot.id !== +spotId) {
+        return (
+            <main className="page-narrow spot-page">
+                <div className="skeleton" style={{ height: 32, width: "50%", marginBottom: 24 }} />
+                <div className="skeleton photo-grid-skeleton" />
+            </main>
+        );
     }
-    let ownerId;
 
-    if (singleSpot) {
-        ownerId = singleSpot.ownerId
-    }
+    const isOwner = sessionUser && +sessionUser.id === +singleSpot.ownerId;
+    const hostName = singleSpot.Owner.firstName;
+    const images = [...singleSpot.SpotImages].sort((a, b) => b.preview - a.preview);
+    const mosaic = images.slice(0, 5);
+    const rating = formatRating(singleSpot.avgStarRating);
 
-    const heartSvg = (<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 2; overflow: visible;"><path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path></svg>)
+    const share = () => {
+        navigator.clipboard?.writeText(window.location.href);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
 
-
-
-
+    const openGallery = () => setModalContent(<PhotoGallery images={images} name={singleSpot.name} />);
 
     return (
-        <>
-            {isLoaded && (
-                <div>
-                    <h1>{singleSpot.name}</h1>
-                    <div className="under-name">
+        <main className="page-narrow spot-page">
+            {/* ---------- Title ---------- */}
+            <div className="spot-title-bar">
+                <h1 className="spot-title">{singleSpot.name}</h1>
+                <div className="spot-actions">
+                    <button className="btn-ghost" onClick={share}>
+                        <FiShare /> {copied ? "Link copied" : "Share"}
+                    </button>
+                    {isOwner ? (
+                        <>
+                            <button
+                                className="btn-ghost"
+                                onClick={() => setModalContent(<UpdateSpot singleSpot={singleSpot} />)}
+                            >
+                                <FiEdit2 /> Edit
+                            </button>
+                            <button
+                                className="btn-ghost"
+                                onClick={() => setModalContent(<DeleteSpot singleSpot={singleSpot} />)}
+                            >
+                                <FiTrash2 /> Delete
+                            </button>
+                        </>
+                    ) : (
+                        <HeartButton spotId={singleSpot.id} variant="inline" />
+                    )}
+                </div>
+            </div>
 
-                        <div className="address-line">
-                            <span> ★{singleSpot.avgStarRating}</span>
-                            <span>{singleSpot.numReviews} reviews</span>
-                            <span>{singleSpot.address}</span>
-                            <span>{singleSpot.city}</span>
-                            <span>{singleSpot.state}</span>
-                            <span>{singleSpot.country}</span>
+            {/* ---------- Photos ---------- */}
+            <section className={`photo-grid photo-count-${mosaic.length}`}>
+                {mosaic.map((img, i) => (
+                    <button key={img.id} className={`photo-cell photo-${i}`} onClick={openGallery}>
+                        <img src={img.url} alt={singleSpot.name} />
+                    </button>
+                ))}
+                {mosaic.length === 0 && <div className="photo-cell photo-empty"><FiHome /></div>}
+                {images.length > 1 && (
+                    <button className="show-all-photos" onClick={openGallery}>
+                        <FiGrid /> Show all photos
+                    </button>
+                )}
+            </section>
 
+            {/* ---------- Body ---------- */}
+            <div className="spot-body">
+                <div className="spot-main">
+                    <section className="spot-section spot-overview">
+                        <h2>Entire home in {singleSpot.city}, {singleSpot.state}</h2>
+                        <p className="spot-specs">4 guests · 2 bedrooms · 2 beds · 1 bath</p>
+                        <a href="#reviews" className="spot-rating-link">
+                            <FaStar className="star-icon" /> {rating}
+                            <span className="dot">·</span>
+                            <u>{pluralize(singleSpot.numReviews, "review")}</u>
+                        </a>
+                    </section>
+
+                    <hr className="divider" />
+
+                    <section className="spot-section host-row">
+                        <span className="avatar avatar-md">{hostName[0]}</span>
+                        <div>
+                            <div className="host-row-title">Hosted by {hostName}</div>
+                            <div className="muted">Superhost · {singleSpot.city}, {singleSpot.country}</div>
                         </div>
+                    </section>
 
-                        <div
-                            className="update-delete-buttons">
-                            {sessionUser && currentUserId == ownerId && (
-                                <div
-                                    className="update-delete-buttons"
-                                >
+                    <hr className="divider" />
 
-                                    <OpenModalButton
-                                        buttonText={
-                                            <div className="flex-box-style-1">
-                                                <i class="far fa-edit"></i>
-                                                <span className="update-text">Update</span>
-                                            </div>
-                                        }
-                                        className="single-crud"
-                                        modalComponent={<UpdateSpot
-                                            showEdit={showEdit}
-                                            setShowEdit={setShowEdit}
-                                            singleSpot={singleSpot}
-                                            sessionUser={sessionUser}
-
-                                        />} />
-
-
-                                    <button
-                                        onClick={() => setShowDeleteEdit(!showDeleteEdit)}
-                                        className="single-crud"
-                                    >
-                                        <div className="flex-box-style-1">
-                                            <i class="far fa-trash-alt"></i>
-                                            <span className="delete-text">Delete</span>
-                                        </div>
-
-                                    </button>
-
-                                    {showDeleteEdit && (
-                                        <DeleteSpot
-                                            singleSpot={singleSpot}
-                                            sessionUser={sessionUser}
-                                            dispatch={dispatch}
-                                            history={history}
-                                            spotId={spotId}
-                                            setShowDeleteEdit={setShowDeleteEdit}
-
-                                        />
-                                    )}
-
+                    <section className="spot-section highlights">
+                        {HIGHLIGHTS.map(({ icon: Icon, title, text }) => (
+                            <div className="highlight" key={text}>
+                                <Icon className="highlight-icon" />
+                                <div>
+                                    <div className="highlight-title">{title(hostName)}</div>
+                                    <div className="muted">{text}</div>
                                 </div>
-
-
-                            )}
-
-                            {sessionUser && currentUserId !== ownerId && (
-
-                                <button className="single-crud">
-                                    <i class="far fa-heart"></i>
-                                    <span className="save">Save</span>
-                                </button>
-                            )}
-
-
-
-
-
-                        </div>
-
-
-                    </div>
-
-
-                    <div className="photos">
-
-
-
-
-
-                        <img className="preview-image" src={singleSpot.SpotImages.find(item => item.preview === true).url} width="300" />
-
-                        {singleSpot.SpotImages.length > 1 && (
-
-                            <div className="other-image">
-
-                                {singleSpot.SpotImages.map(img => {
-                                    if (img.preview === false) {
-                                        return (
-                                            <img className="indi-img" key={img.id} src={img.url} alt="pic" width="200" />
-                                        )
-
-                                    }
-
-                                })}
                             </div>
+                        ))}
+                    </section>
 
-                        )}
+                    <hr className="divider" />
 
+                    <section className="spot-section">
+                        <img
+                            className="aircover"
+                            src="https://a0.muscache.com/im/pictures/f4a1e0fb-bd06-4f11-91e3-8d3979d3431a.jpg"
+                            alt="AirCover"
+                        />
+                        <p className="body-text">
+                            Every booking includes free protection from Host cancellations, listing
+                            inaccuracies, and other issues like trouble checking in.
+                        </p>
+                    </section>
 
+                    <hr className="divider" />
 
-                    </div>
+                    <section className="spot-section">
+                        <h2 className="section-title">About this place</h2>
+                        <p className="body-text description">{singleSpot.description}</p>
+                    </section>
 
+                    <hr className="divider" />
 
-
-                    <div className="hardcode">
-                        <div className="left-right-container">
-                            <div className="left-part">
-                                <div className="section-below-photo">
-                                    <div>
-                                        <h2>Entire home hosted by {singleSpot.Owner.firstName}</h2>
-                                        <p>4 guests •2 bedrooms •2 beds •1 bath</p>
-                                    </div>
-                                    <img className="host-photo" src="https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-700-202768327.jpg" />
+                    <section className="spot-section">
+                        <h2 className="section-title">What this place offers</h2>
+                        <div className="amenities">
+                            {AMENITIES.map(({ icon: Icon, label }) => (
+                                <div className="amenity" key={label}>
+                                    <Icon className="amenity-icon" /> {label}
                                 </div>
-                                <hr></hr>
-                                <div className="flex-box-style-1">
-                                    <i class="fas fa-medal"></i>
-                                    <div>
-                                        <b>{singleSpot.Owner.firstName} is Superhost</b>
-                                        <p>Superhosts are experienced, highly rated hosts who are commited to providing great stays for guests.</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex-box-style-1">
-
-
-                                    <i class="fas fa-door-open"></i>
-                                    <div>
-                                        <b>Self check-in</b>
-                                        <p>Check yourself in with the keypad.</p>
-                                    </div>
-                                </div>
-                                <i class="fas fa-calendar-minus"></i>
-                                <b>Free cancellation.</b>
-
-                                <hr></hr>
-
-                                <img src="https://a0.muscache.com/im/pictures/f4a1e0fb-bd06-4f11-91e3-8d3979d3431a.jpg" width="50" />
-                                <p> Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
-
-                                <hr></hr>
-                                <p>{singleSpot.description}</p>
-
-                            </div>
-
-
-
-
-                            {sessionUser && currentUserId != ownerId && (
-
-                                <div className="right-part">
-                                    <div className="three-items">
-                                        <div className="booking-area">
-
-                                            <Booking
-                                                spotId={spotId}
-                                                singleSpot={singleSpot}
-                                            />
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            )}
-
-
-
+                            ))}
                         </div>
-                        <hr></hr>
+                    </section>
+                </div>
 
+                <aside className="spot-aside">
+                    <Booking spotId={spotId} singleSpot={singleSpot} isOwner={isOwner} />
+                </aside>
+            </div>
 
-                        <h3>What this place offers</h3>
-                        <p>Mountain view</p>
-                        <p>Valley view</p>
-                        <p>Kitchen</p>
-                        <p>Wifi</p>
-                        <p>Dedicated workspace</p>
-                        <hr></hr>
+            <hr className="divider" />
+
+            <DisplayReview singleSpot={singleSpot} spotId={spotId} />
+
+            <hr className="divider" />
+
+            {/* ---------- Host ---------- */}
+            <section className="spot-section-lg">
+                <h2 className="section-title">Meet your host</h2>
+                <div className="host-card-wrap">
+                    <div className="host-card">
+                        <span className="avatar avatar-xl">{hostName[0]}</span>
+                        <div className="host-card-name">{hostName}</div>
+                        <div className="host-card-sub"><FiAward /> Superhost</div>
                     </div>
-
-                    <DisplayReview
-                        singleSpot={singleSpot}
-                        spotId={spotId}
-                    />
-
-                    <div className="host-info">
-                        <h2>Hosted by {singleSpot.Owner.firstName}</h2>
-
+                    <div className="host-about">
                         <h3>During your stay</h3>
-                        <span>We want to honor your privacy and the solitude the treehouse provides. However, we are always available by text, email, or phone and can be there quickly. ( Number provided before check-in)
-                        </span>
-                    </div>
-                    <hr></hr>
-
-                    <div className="things-to-know">
-                        <h3>Things to know</h3>
-
-                        <div className="house-rules">
-                            <h4>House rules</h4>
-                            <span>
-                                Check-in: 4:00 PM - 12:00 AM<br />
-                                Checkout before 11:00 AM<br />
-                                4 guests maximum</span>
-                        </div>
-
-                        <div className="safety-property">
-                            <h4>Safety & property</h4>
-                            <span>
-                                Security camera/recording device<br />
-                                Pool/hot tub without a gate or lock<br />
-                                Climbing or play structure</span>
-                        </div>
-
-                        <div className="cancellation-policy">
-                            <h4>Cancellation policy</h4>
-                            <span>
-                                Free cancellation before Jan 24.<br />
-                                Review the Host’s full cancellation policy which applies even if you cancel for illness or disruptions caused by COVID-19.<br />
-                            </span>
-                        </div>
+                        <p className="body-text">
+                            We want to honor your privacy and the solitude this home provides. However, we are
+                            always available by text, email, or phone and can be there quickly. (Number provided
+                            before check-in.)
+                        </p>
                     </div>
                 </div>
-            )}
+            </section>
 
+            <hr className="divider" />
 
-        </>
-    )
+            {/* ---------- Things to know ---------- */}
+            <section className="spot-section-lg">
+                <h2 className="section-title">Things to know</h2>
+                <div className="things-grid">
+                    <div>
+                        <h3>House rules</h3>
+                        <p>Check-in after 4:00 PM</p>
+                        <p>Checkout before 11:00 AM</p>
+                        <p>4 guests maximum</p>
+                    </div>
+                    <div>
+                        <h3>Safety & property</h3>
+                        <p>Security camera/recording device</p>
+                        <p>Carbon monoxide alarm</p>
+                        <p>Smoke alarm</p>
+                    </div>
+                    <div>
+                        <h3>Cancellation policy</h3>
+                        <p>Free cancellation for 48 hours after booking.</p>
+                        <p>Review the Host's full cancellation policy, which applies even if you cancel for illness.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
 }
 
 export default SingleSpotComponent;

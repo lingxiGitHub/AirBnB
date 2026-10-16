@@ -1,33 +1,41 @@
-.log-in-form label {
-    display: block;
-    margin: 20px;
+.auth-submit {
+    margin-top: 16px;
 }
 
-.log-in-form label span {
-    display: inline-block;
-    width: 150px;
+.auth-or {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0;
+    font-size: 12px;
 }
 
-.log-in-form button {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 300px;
+.auth-or::before,
+.auth-or::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid var(--border);
 }
 
-.demo-button {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 300px;
-   
+.auth-alt {
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 13px 23px;
 }
 
-.log-in-form input {
-    border-radius: 5px;
+.auth-alt-icon {
+    position: absolute;
+    left: 23px;
+    font-size: 18px;
 }
 
-.red-errors {
-    color: red;
+.auth-switch {
+    margin-top: 24px;
+    text-align: center;
+    color: var(--text-muted);
 }
 
+.auth-switch .btn-link {
+    font-size: 14px;
+}

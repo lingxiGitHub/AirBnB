@@ -1,41 +1,43 @@
+import { Link } from "react-router-dom";
 import "./TripCard.css";
 
-function changeDateFormat(inputDate) {
-    const date = new Date(inputDate);
-    const formattedDate = date.toLocaleString('en-US', {
+function formatDate(inputDate, withYear = true) {
+    return new Date(inputDate).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
-        year: 'numeric',
-        // timeZoneName: 'short'
+        ...(withYear && { year: 'numeric' })
     });
-
-    // console.log("input date from server", inputDate)
-    // console.log("out put date", formattedDate)
-
-    return formattedDate
-
 }
 
-export default function TripCard({ booking }) {
+export default function TripCard({ booking, large, children }) {
+    const spot = booking.Spot;
+    const dates = `${formatDate(booking.startDate, false)} – ${formatDate(booking.endDate)}`;
 
+    if (large) {
+        return (
+            <div className="trip-card-large">
+                <Link to={`/spots/${booking.spotId}`} className="trip-card-large-link">
+                    <img src={spot.previewImage} alt={spot.name} />
+                    <div className="trip-card-large-body">
+                        <div className="trip-city">{spot.city}</div>
+                        <div className="muted">{spot.name}</div>
+                        <div className="trip-dates">{dates}</div>
+                        <div className="muted">Hosted by {spot.Owner.firstName}</div>
+                    </div>
+                </Link>
+                {children}
+            </div>
+        );
+    }
 
     return (
-        <>
-
-            <div className="one-card">
-
-                <img className="indi-booking-img" src={booking.Spot.previewImage} alt=""></img>
-                <div className="indi-booking-right">
-                    <div className="trip-spot-city">{booking.Spot.city}</div>
-                    <div className="indi-grey-word">Hosted by {booking.Spot.Owner.firstName} {booking.Spot.Owner.lastName}</div>
-
-                    <div className="indi-grey-word">{changeDateFormat(booking.startDate)} - {changeDateFormat(booking.endDate)}</div>
-
-
-                </div>
-
+        <Link to={`/spots/${booking.spotId}`} className="trip-card">
+            <img className="trip-card-img" src={spot.previewImage} alt={spot.name} />
+            <div className="trip-card-body">
+                <div className="trip-city">{spot.city}</div>
+                <div className="muted">Hosted by {spot.Owner.firstName}</div>
+                <div className="muted">{dates}</div>
             </div>
-        </>
-
-    )
+        </Link>
+    );
 }

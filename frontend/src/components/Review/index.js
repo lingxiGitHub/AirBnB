@@ -1,180 +1,111 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSpotReviews } from "../../store/reviews"
-import CreateReview from "../CreateReview"
-import { deleteReviewThunk } from "../../store/reviews";
+import { FaStar } from "react-icons/fa";
+import { getSpotReviews, deleteReviewThunk } from "../../store/reviews";
 import { getSingleSpot } from "../../store/spots";
-import OpenModalButton from "../OpenModalButton";
-import "./Review.css"
+import { useModal } from "../../context/Modal";
+import CreateReview from "../CreateReview";
 import UpdateReviewComp from "../UpdateReview";
+import { formatRating, pluralize } from "../../utils/format";
+import "./Review.css";
+
+const dateOptions = { year: 'numeric', month: 'long' };
+
+function Stars({ value }) {
+    const rounded = Math.round(Number(value));
+    return (
+        <span className="review-stars" aria-label={`${value} stars`}>
+            {[1, 2, 3, 4, 5].map(n => (
+                <FaStar key={n} className={n <= rounded ? "on" : ""} />
+            ))}
+        </span>
+    );
+}
 
 export default function DisplayReview({ singleSpot, spotId }) {
-
-
-    const allReviewObj = useSelector((state) => {
-        return state.reviews.spot
-    })
-
-
-
-    const allReviewArr = allReviewObj ? Object.values(allReviewObj) : []
-
-
-
+    const dispatch = useDispatch();
+    const { setModalContent } = useModal();
     const [isLoaded, setIsLoaded] = useState(false);
-    const dispatch = useDispatch()
+
+    const allReviewObj = useSelector(state => state.reviews.spot);
+    const sessionUser = useSelector(state => state.session.user);
 
     useEffect(() => {
-        dispatch(getSpotReviews(+spotId)).then(() => setIsLoaded(true))
-    }, [dispatch])
+        dispatch(getSpotReviews(+spotId)).then(() => setIsLoaded(true));
+    }, [dispatch, spotId]);
 
-    const [showEdit, setShowEdit] = useState(false);
+    if (!isLoaded) return null;
 
+    const reviews = (allReviewObj ? Object.values(allReviewObj) : [])
+        .filter(review => +review.spotId === +spotId)
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
+    const isOwner = sessionUser && +sessionUser.id === +singleSpot.ownerId;
+    const myReview = sessionUser && reviews.find(review => +review.userId === +sessionUser.id);
+    const canReview = sessionUser && !isOwner && !myReview;
 
-    const sessionUser = useSelector(state => state.session.user);
-    const ownerId = useSelector(state => state.spots.singleSpot.ownerId)
-
-    let sessionLinks
-    let updateLinks
-
-
-
-    if (sessionUser) {
-
-        const currentUserId = sessionUser.id
-        // console.log("arr's user id",)
-
-        let theReviewId
-        let allReviewsUserId = []
-        let grabReview
-        for (let review of allReviewArr) {
-            // console.log("rrrr",review)
-            if (+review.spotId === +spotId) {
-                allReviewsUserId.push(+review.userId)
-            }
-
-            if (+currentUserId === +review.userId) {
-                // console.log(review)
-                theReviewId = review.id
-                grabReview = review
-                // console.log("grab", grabReview)
-
-            }
-
-        }
-
-        // console.log("&&&&",allReviewsUserId)
-        // console.log("_____", currentUserId)
-
-
-
-
-
-        const handleDelete = () => {
-            dispatch(deleteReviewThunk(+theReviewId))
-                .then(() => dispatch(getSpotReviews(+spotId)))
-                .then(() => dispatch(getSingleSpot(+spotId)))
-        }
-
-
-        // console.log("grab", grabReview)
-        if (allReviewsUserId.includes(+currentUserId) && currentUserId != ownerId) {
-
-            updateLinks = (
-                <div className="review-buttons">
-                    <OpenModalButton
-                        buttonText="Update"
-                        modalComponent={<UpdateReviewComp
-                            spotId={spotId}
-                            grabReview={grabReview}
-
-                        />} />
-
-                    <li>
-                        <button
-                            onClick={handleDelete}
-                        >Delete</button>
-                    </li>
-
-                </div>
-
-            )
-
-        }
-
-        if (!allReviewsUserId.includes(+currentUserId) && currentUserId != ownerId) {
-            sessionLinks = (
-                <li>
-                    <OpenModalButton
-                        buttonText="Create Review"
-                        modalComponent={<CreateReview
-                            spotId={spotId}
-                            showEdit={showEdit}
-                            setShowEdit={setShowEdit}
-                            singleSpot={singleSpot}
-                        />}
-                    />
-
-                </li>
-            )
-
-        }
-
-
-    }
-
-    const options = { year: 'numeric', month: 'long' };
+    const handleDelete = () => {
+        dispatch(deleteReviewThunk(+myReview.id))
+            .then(() => dispatch(getSpotReviews(+spotId)))
+            .then(() => dispatch(getSingleSpot(+spotId)));
+    };
 
     return (
-        isLoaded && (
-            <>
+        <section className="reviews-section" id="reviews">
+            <div className="reviews-header">
+                <h2 className="reviews-title">
+                    <FaStar className="reviews-title-star" />
+                    {formatRating(singleSpot.avgStarRating)}
+                    <span className="dot">·</span>
+                    {pluralize(singleSpot.numReviews, "review")}
+                </h2>
+                {canReview && (
+                    <button
+                        className="btn btn-outline"
+                        onClick={() => setModalContent(<CreateReview spotId={spotId} singleSpot={singleSpot} />)}
+                    >
+                        Write a review
+                    </button>
+                )}
+            </div>
 
-
-                <div className="reviews">
-
-                    <p>★ {singleSpot.avgStarRating}</p>
-                    <p>{singleSpot.numReviews} reviews</p>
-
-                    <div className="reviews-container">
-                        {allReviewArr && (allReviewArr.map(item => {
-                            // console.log(item)
-                            return (
-                                +spotId === +item.spotId && (
-                                    <div className="review-card">
-                                        <div className="review-header">
-                                            <img className="review-img" src="https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-700-202768327.jpg" />
-                                            <div className="review-header-text">
-                                                <div><b>{item.User.firstName}</b></div>
-                                                <div className="grey-word">{new Date(item.createdAt).toLocaleDateString("en-US", options)}</div>
-
-                                            </div>
-
-                                        </div>
-                                        <p key={item.id}>Rating: {item.stars}</p>
-                                        <p key={item.id}>{item.review}</p>
-
-                                        {sessionUser && item.userId == sessionUser.id && (
-                                            updateLinks
-                                        )}
-
+            {reviews.length === 0 ? (
+                <p className="muted reviews-empty">
+                    No reviews yet. {canReview ? "Stayed here? Be the first to share your experience." : ""}
+                </p>
+            ) : (
+                <div className="reviews-grid">
+                    {reviews.map(item => (
+                        <article className="review-card" key={item.id}>
+                            <div className="review-header">
+                                <span className="avatar avatar-md">{item.User.firstName[0]}</span>
+                                <div>
+                                    <div className="review-author">{item.User.firstName}</div>
+                                    <div className="muted review-date">
+                                        {new Date(item.createdAt).toLocaleDateString("en-US", dateOptions)}
                                     </div>
-                                )
+                                </div>
+                            </div>
+                            <Stars value={item.stars} />
+                            <p className="review-text">{item.review}</p>
 
-                            )
-                        }))}
-
-                    </div>
-
-
-
-
-                    {sessionUser && (sessionLinks)}
-
-
+                            {myReview && myReview.id === item.id && (
+                                <div className="review-actions">
+                                    <button
+                                        className="btn-link review-action"
+                                        onClick={() => setModalContent(<UpdateReviewComp spotId={spotId} grabReview={item} />)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button className="btn-link review-action" onClick={handleDelete}>
+                                        Delete
+                                    </button>
+                                </div>
+                            )}
+                        </article>
+                    ))}
                 </div>
-            </>
-        )
-
-    )
+            )}
+        </section>
+    );
 }

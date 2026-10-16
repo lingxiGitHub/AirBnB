@@ -1,73 +1,45 @@
 import "./SearchResult.css";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams, NavLink } from "react-router-dom";
-import OpenModalMenuItem from "../Navigation";
+import { useParams, Link } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 import { search_spots_thunk } from "../../store/search";
-import Spot from "../Spot";
-import { Link } from "react-router-dom";
-
-
+import { SpotGrid, SpotGridSkeleton } from "../SpotsList";
+import { pluralize } from "../../utils/format";
 
 export default function SearchResult() {
-
-    const history = useHistory();
     const dispatch = useDispatch();
     const { keyword } = useParams();
-    const [showMenu, setShowMenu] = useState(false);
-    const closeMenu = () => setShowMenu(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        dispatch(search_spots_thunk(keyword))
-    }, [dispatch, keyword])
+        setIsLoaded(false);
+        dispatch(search_spots_thunk(keyword)).catch(() => null).then(() => setIsLoaded(true));
+    }, [dispatch, keyword]);
 
-    const foundSpot = useSelector(state => state.search)
-    const foundSpotArr = Object.values(foundSpot)
-    // console.log("!!!!", foundSpotArr)
+    const foundSpots = Object.values(useSelector(state => state.search));
 
     return (
-        <>
-
-
-            {foundSpotArr && (
-
+        <main className="page search-page">
+            {!isLoaded ? (
+                <SpotGridSkeleton count={8} />
+            ) : foundSpots.length > 0 ? (
                 <>
-                    <div>
-                        {foundSpotArr?.length > 0 ?
-
-                            (
-                                <div className='search-cap'>
-                                    {foundSpotArr?.length} search results for {keyword}
-                                </div>
-                            ) : (
-                                <div className='search-cap'>
-                                    We couldn't find any results for {keyword}"
-                                </div>)
-                        }
-                    </div>
-
-                    <div className="search-box">
-                        {
-                            foundSpotArr.length > 0 && (
-
-                                foundSpotArr.map((spot) => {
-                                    // console.log("--->",spot)
-                                    return (
-                                        // <NavLink to={`/spots/${spot.id}`}>{spot.name} at {spot.city} {spot.state}</NavLink>
-                                        <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
-                                        <Spot spot={spot}/>
-                                        </Link>
-                                    )
-                                })
-                            )
-
-
-                        }
-
-                    </div>
+                    <h1 className="search-heading">
+                        {pluralize(foundSpots.length, "stay")} matching “{keyword}”
+                    </h1>
+                    <SpotGrid spots={foundSpots} />
                 </>
-            )
-            }
-        </>
-    )
+            ) : (
+                <div className="empty-state">
+                    <FiSearch className="empty-icon" />
+                    <h1>No exact matches</h1>
+                    <p className="muted">
+                        We couldn't find any stays for “{keyword}”. Try searching for a different city or listing name.
+                    </p>
+                    <Link to="/" className="btn btn-outline">Explore all stays</Link>
+                </div>
+            )}
+        </main>
+    );
 }

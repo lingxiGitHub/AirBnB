@@ -1,0 +1,21 @@
+.star-input {
+    display: flex;
+    gap: 4px;
+}
+
+.star-input-star {
+    border: none;
+    background: none;
+    padding: 2px;
+    font-size: 28px;
+    color: var(--border);
+    transition: transform 0.1s ease, color 0.1s ease;
+}
+
+.star-input-star.on {
+    color: var(--text);
+}
+
+.star-input-star:hover {
+    transform: scale(1.15);
+}

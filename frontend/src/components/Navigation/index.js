@@ -1,42 +1,41 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { FaAirbnb } from 'react-icons/fa';
 import ProfileButton from './ProfileButton';
-import OpenModalButton from '../OpenModalButton';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
-import './Navigation.css';
-import CreateSpotModal from '../CreateSpot';
 import SearchBar from './SearchBar';
+import OpenModalButton from '../OpenModalButton';
+import CreateSpotModal from '../CreateSpot';
+import LoginFormModal from '../LoginFormModal';
+import './Navigation.css';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
 
-    
-
     return (
+        <header className="site-header">
+            <nav className="page nav-bar">
+                <Link to="/" className="brand" aria-label="Home">
+                    <FaAirbnb className="brand-mark" />
+                    <span className="brand-word">airclone</span>
+                </Link>
 
+                <SearchBar />
 
-   
-
-        <ul className='nav-bar'>
-            <li>
-       
-                <NavLink exact to="/"><img className="airbnb-icon" width="60" src="https://img.icons8.com/bubbles/256/airbnb.png" /></NavLink>
-            </li>
-
-            <SearchBar />
-            {isLoaded && (
-                <>
-                    <li>
-                        <ProfileButton user={sessionUser} />
-                    </li>
-
-                 
-                   
-                </>
-            )}
-        </ul>
+                <div className="nav-right">
+                    {isLoaded && (
+                        <>
+                            <OpenModalButton
+                                className="host-link"
+                                buttonText="Airbnb your home"
+                                modalComponent={sessionUser ? <CreateSpotModal /> : <LoginFormModal />}
+                            />
+                            <ProfileButton user={sessionUser} />
+                        </>
+                    )}
+                </div>
+            </nav>
+        </header>
     );
 }
 

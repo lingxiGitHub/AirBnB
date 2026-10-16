@@ -15,6 +15,10 @@ router.get("/:keyword", async (req, res, next) => {
         return res.status(400).send('Please provide a search keyword');
     }
 
+    // Postgres needs iLike for case-insensitive matching; SQLite (local dev) only supports like,
+    // which is already case-insensitive there
+    const like = process.env.NODE_ENV === "production" ? Op.iLike : Op.like;
+
     const searchedSpot = await Spot.findAll({
         include: [
             {
@@ -26,14 +30,12 @@ router.get("/:keyword", async (req, res, next) => {
         ],
         where: {
             [Op.or]: [
-                { name: { [Op.iLike]: `%${keyword}%` } },
-                { city: { [Op.iLike]: `%${keyword}%` } }
+                { name: { [like]: `%${keyword}%` } },
+                { city: { [like]: `%${keyword}%` } }
             ]
         }
     })
 
-    //********using op.ilike in production mode / render
-    //*********using op.like locally
 
     // console.log("searchedspot backend 1",searchedSpot)
     const Spots = [];

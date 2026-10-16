@@ -1,48 +1,51 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom"
-import Spot from "../Spot"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSpots } from "../../store/spots"
-import { useState } from "react"
-import "./SpotList.css"
+import Spot from "../Spot";
+import { getAllSpots } from "../../store/spots";
+import "./SpotList.css";
 
-import "./SpotList.css"
-
-function SpotsList() {
-
-
-    const allSpotsObj = useSelector((state) => {
-        // console.log("allSpotState", state)
-        return state.spots.allSpots
-    })
-
-    const allSpots = allSpotsObj ? Object.values(allSpotsObj) : [];
-
-    const [isLoaded, setIsLoaded] = useState(false);
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getAllSpots()).then(() => setIsLoaded(true));
-    }, [dispatch])
-
-
-
+export function SpotGrid({ spots }) {
     return (
-        isLoaded && (
-
-            <div className="spots-list">
-
-                {allSpots.map(spot => {
-                    return (
-                        <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
-                            <Spot spot={spot} />
-
-                        </Link>)
-                })}
-            </div>
-        )
-
+        <div className="spots-grid">
+            {spots.map(spot => (
+                <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
+                    <Spot spot={spot} />
+                </Link>
+            ))}
+        </div>
     );
 }
 
+export function SpotGridSkeleton({ count = 12 }) {
+    return (
+        <div className="spots-grid">
+            {Array.from({ length: count }, (_, i) => (
+                <div key={i} className="skeleton-card">
+                    <div className="skeleton skeleton-photo" />
+                    <div className="skeleton skeleton-line" />
+                    <div className="skeleton skeleton-line short" />
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function SpotsList() {
+    const dispatch = useDispatch();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const allSpotsObj = useSelector(state => state.spots.allSpots);
+    const allSpots = allSpotsObj ? Object.values(allSpotsObj) : [];
+
+    useEffect(() => {
+        dispatch(getAllSpots()).then(() => setIsLoaded(true));
+    }, [dispatch]);
+
+    return (
+        <main className="page spots-page">
+            {isLoaded ? <SpotGrid spots={allSpots} /> : <SpotGridSkeleton />}
+        </main>
+    );
+}
 
 export default SpotsList;

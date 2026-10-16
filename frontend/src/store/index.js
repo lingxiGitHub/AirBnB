@@ -8,13 +8,15 @@ import spotsReducer from "./spots"
 import reviewReducer from "./reviews";
 import bookingReducer from"./booking"
 import searchReducer from "./search"
+import favoritesReducer from "./favorites"
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   spots: spotsReducer,
   reviews: reviewReducer,
   bookings: bookingReducer,
-  search: searchReducer
+  search: searchReducer,
+  favorites: favoritesReducer
 
 });
 // ...

@@ -1,108 +1,81 @@
-import "./EditBooking.css"
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateBookingThunk } from "../../store/booking"
+import "./EditBooking.css";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateBookingThunk } from "../../store/booking";
 import { useModal } from "../../context/Modal";
+import ModalShell from "../../context/ModalShell";
 
+// Bookings are stored as local midnight, so read them back in local time
 function convertDateStr(inputStr) {
-    let dateObj = new Date(inputStr);
-    let isoStr = dateObj.toISOString();
-    let year = isoStr.slice(0, 4);
-    let month = isoStr.slice(5, 7);
-    let day = isoStr.slice(8, 10);
-    let outputStr = `${year}-${month}-${day}`;
-    return outputStr
+    const d = new Date(inputStr);
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
+const gmtStr = ` GMT${new Date("2030-01-02").toString().split("GMT")[1]}`;
+
 export default function EditBooking({ booking }) {
-
-    // console.log("--->", booking.startDate)
-    const dispatch = useDispatch()
-
-    const [startDate, setStateDate] = useState(convertDateStr(booking.startDate));
-    const [endDate, setEndDate] = useState(convertDateStr(booking.endDate));
-    const [warning, setWarning] = useState(false);
-    const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch();
     const { closeModal } = useModal();
-
-    // useEffect(() => {
-    //     if (endDate < startDate) {
-    //         setWarning(true);
-    //     } else {
-    //         setWarning(false);
-    //     }
-    // }, [startDate, endDate]);
-
-    const gmtStr = ` GMT${new Date("2030-01-02").toString().split("GMT")[1]}`;
+    const [startDate, setStartDate] = useState(convertDateStr(booking.startDate));
+    const [endDate, setEndDate] = useState(convertDateStr(booking.endDate));
+    const [errors, setErrors] = useState([]);
+    const today = new Date().toISOString().split("T")[0];
 
     const handleUpdate = (e) => {
         e.preventDefault();
         setErrors([]);
-        const updatedBooking = {
-            startDate: startDate + gmtStr,
-            endDate: endDate + gmtStr
-        }
 
-        // console.log("--->", updatedBooking)
-
-        dispatch(updateBookingThunk(updatedBooking, +booking.id))
+        dispatch(updateBookingThunk({ startDate: startDate + gmtStr, endDate: endDate + gmtStr }, +booking.id))
             .then(closeModal)
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            );
-    }
+            .catch(async (res) => {
+                const data = res && res.json ? await res.json() : {};
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
+    };
 
     return (
-
-        <form
-            className="update-booking-form"
-            onSubmit={handleUpdate}
-        >
-
-            <ul className="red-errors">
-                {
-                    // console.log(errors)
-                    Object.values(errors).map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))
-                }
-            </ul>
-
-            <div className="date-pick">
-
-                <div className="edit-check-in-out check-in-border">
-                    <label>CHECK-IN</label>
-                    <input
-                        type="date"
-                        value={startDate}
-                        min={new Date().toISOString().split("T")[0]}
-                        onChange={(e) => setStateDate(e.target.value)}
-                    />
+        <ModalShell title="Change dates" width="480px">
+            <form onSubmit={handleUpdate}>
+                <div className="edit-booking-spot">
+                    <img src={booking.Spot.previewImage} alt="" />
+                    <div>
+                        <div className="edit-booking-name">{booking.Spot.name}</div>
+                        <div className="muted">{booking.Spot.city}, {booking.Spot.state}</div>
+                    </div>
                 </div>
 
+                {errors.length > 0 && (
+                    <ul className="form-errors">{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+                )}
 
-                <div className="edit-check-in-out">
-                    <label>CHECK-OUT</label>
-                    <input
-                        type="date"
-                        value={endDate}
-                        min={new Date().toISOString().split("T")[0]}
-                        onChange={(e) => setEndDate(e.target.value)}
-                    />
+                <div className="field-group">
+                    <div className="field-row">
+                        <label className="field">
+                            <span className="field-label">Check-in</span>
+                            <input
+                                type="date"
+                                value={startDate}
+                                min={today}
+                                onChange={(e) => setStartDate(e.target.value)}
+                                required
+                            />
+                        </label>
+                        <label className="field">
+                            <span className="field-label">Checkout</span>
+                            <input
+                                type="date"
+                                value={endDate}
+                                min={startDate || today}
+                                onChange={(e) => setEndDate(e.target.value)}
+                                required
+                            />
+                        </label>
+                    </div>
                 </div>
-            </div>
-            {/* {warning && <p style={{ color: "red" }}>End date must be later than start date</p>} */}
 
-            <button
-                type="submit"
-                
-            >Update</button>
-
-        </form>
-    )
-
-
+                <button className="btn btn-primary btn-block edit-booking-submit" type="submit">Save dates</button>
+            </form>
+        </ModalShell>
+    );
 }

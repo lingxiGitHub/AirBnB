@@ -1,72 +1,42 @@
 import "./Navigation.css";
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from "react-router-dom";
-import { search_spots_thunk } from "../../store/search";
-import SearchDropDown from "../SearchResult";
-import { useEffect, useRef } from "react";
-import { reset } from "../../store/search";
-import searchSVG from "./magnifying-glass.svg"
-
+import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
+import { search_spots_thunk, reset } from "../../store/search";
 
 export default function SearchBar() {
-
-    const dispatch = useDispatch()
-    const history = useHistory()
-    const { params } = useParams()
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [keyword, setKeyword] = useState("");
-
-    const searchResults = Object.values(useSelector((state) => {
-        return state.search
-    }))
-
-    // console.log("--->", searchResults)
-
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        if (keyword.trim().length === 0) {
-            return;
-        }
+        const term = keyword.trim();
+        if (term.length === 0) return;
 
-        await dispatch(reset())
-        await dispatch(search_spots_thunk(keyword));
-
-
-        history.push(`/search/${keyword}`);
+        await dispatch(reset());
+        await dispatch(search_spots_thunk(term));
+        history.push(`/search/${encodeURIComponent(term)}`);
         setKeyword("");
-
     };
 
     return (
-        <>
-            <form
-                onSubmit={handleSearch}
-                className="search-bar-form"
-            >
-
+        <form onSubmit={handleSearch} className="search-pill" role="search">
+            <label className="search-field">
+                <span className="search-label">Where</span>
                 <input
                     className="search-input"
-                    placeholder="Search name or city..."
+                    placeholder="Search by city or listing name"
                     value={keyword}
-                    onChange={(e) => {
-                        setKeyword(e.target.value)
-                    }}
+                    onChange={(e) => setKeyword(e.target.value)}
                     maxLength="100"
                 />
-                <button
-                    type="submit"
-                    className="search-button">
-                    <img className="mag-glass" src={searchSVG}></img>
-                </button>
-
-                {/* <SearchDropDown
-                    searchResults={searchResults}
-                /> */}
-
-
-            </form>
-
-        </>
-    )
+            </label>
+            <button type="submit" className="search-button" aria-label="Search">
+                <FiSearch strokeWidth={3} />
+                <span className="search-button-text">Search</span>
+            </button>
+        </form>
+    );
 }

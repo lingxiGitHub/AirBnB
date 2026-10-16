@@ -1,35 +1,95 @@
-.indi-booking-img {
-    width: 72px;
-    height: 72px;
-    object-fit: cover;
-    border-radius: 8px;
+.trips-page {
+    padding-top: 40px;
+    padding-bottom: 48px;
 }
 
 .trips-title {
-    color: rgb(34, 34, 34);
     font-size: 32px;
     font-weight: 600;
-    margin: 50px 50px 50px 0px;
-
+    margin-bottom: 32px;
 }
 
+.trips-section {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+}
 
+.trips-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
 
-.user-bookings h2 {
-    color: rgb(34, 34, 34);
+.trips-section h2 {
     font-size: 22px;
     font-weight: 600;
-    margin-top: 50px;
+    margin-bottom: 24px;
 }
 
-.trip-img{
-    height: 286px;
-    width: 1000px;
-    object-fit: cover;
-    border-radius: 16px;
+.trips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
 }
 
-.trip-flex{
+.trips-grid-large {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.no-trips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 32px;
+}
+
+.no-trips-text {
+    padding: 48px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+}
+
+.no-trips-text h2 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.no-trips-text p {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.no-trips-img {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    object-fit: cover;
+}
+
+.trip-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.trip-action {
+    font-size: 14px;
+    padding: 9px 16px;
+}
+
+.trip-action-link {
+    font-size: 14px;
+}
+
+@media (max-width: 950px) {
+    .trips-grid,
+    .trips-grid-large,
+    .no-trips {
+        grid-template-columns: 1fr;
+    }
 }

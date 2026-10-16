@@ -1,10 +1,39 @@
-.search-cap {
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 50px;
+.search-page {
+    padding-top: 32px;
+    padding-bottom: 48px;
 }
 
-.search-box {
+.search-heading {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.empty-state {
+    max-width: 480px;
+    margin: 80px auto;
     display: flex;
-    margin-top: 30px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+}
+
+.empty-state h1 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.empty-state p {
+    font-size: 16px;
+}
+
+.empty-icon {
+    font-size: 40px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 8px 0 32px;
 }

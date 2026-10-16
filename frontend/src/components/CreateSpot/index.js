@@ -1,163 +1,60 @@
-import "./CreateSpot.css"
-import { useState } from "react"
-import { addSpot } from "../../store/spots"
+import "./CreateSpot.css";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { addSpot } from "../../store/spots";
 import { useModal } from "../../context/Modal";
-import { useEffect } from "react";
+import ModalShell from "../../context/ModalShell";
+import SpotFormFields from "./SpotFormFields";
 
 function CreateSpotModal() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [errors, setErrors] = useState([]);
-    const [address, setAddress] = useState("")
-    const [city, setCity] = useState("")
-    const [state, setState] = useState("")
-    const [country, setCountry] = useState("")
-    const [lat, setLat] = useState("37.77")
-    const [lng, setlng] = useState("122.41")
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [price, setPrice] = useState("")
-    const [url, setUrl] = useState("")
     const { closeModal } = useModal();
-
-
-    useEffect(() => {
-        const validationErrors = []
-        if (price && price < 0) { validationErrors.push("Price must be positive") }
-        setErrors(validationErrors)
-
-    }, [price])
-
+    const [errors, setErrors] = useState([]);
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [country, setCountry] = useState("");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState("");
+    const [url, setUrl] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors([]);
 
         const newSpot = {
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
-            price,
-            url,
+            address, city, state, country,
+            lat: "37.77", lng: "122.41",
+            name, description, price, url,
             preview: true
-        }
+        };
+
         return dispatch(addSpot(newSpot))
-            .then(createdSpotId => { history.push(`/spots/${createdSpotId}`); closeModal() })
-            .catch(
-                async (res) => {
-                    const data = await res.json();
-                    // console.log("data", data.errors)
-                    if (data && data.errors) setErrors(data.errors);
-                }
-            )
-
-    }
-
+            .then(createdSpotId => { history.push(`/spots/${createdSpotId}`); closeModal(); })
+            .catch(async (res) => {
+                const data = res && res.json ? await res.json() : {};
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
+    };
 
     return (
-        <>
-            <h1 className="create-spot-h1">Create Spot</h1>
-            <form className="create-spot-form" onSubmit={handleSubmit}>
-                <ul className="red-errors">
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
-
-
-                <input
-                    className="first-input"
-                    type="text"
-                    placeholder="Street"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-
+        <ModalShell title="Airbnb your home" width="640px">
+            <form id="create-spot-form" className="spot-form" onSubmit={handleSubmit}>
+                {errors.length > 0 && (
+                    <ul className="form-errors">{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>
+                )}
+                <SpotFormFields
+                    values={{ address, city, state, country, name, description, price, url }}
+                    set={{ address: setAddress, city: setCity, state: setState, country: setCountry, name: setName, description: setDescription, price: setPrice, url: setUrl }}
+                    includePhoto
                 />
-
-
-                <input
-                    type="text"
-                    placeholder="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-
-                />
-
-
-                <input
-                    type="text"
-                    placeholder="State"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    required
-
-                />
-
-
-                <input
-                    type="text"
-                    placeholder="Country"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    required
-
-                />
-
-
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-
-                />
-
-
-                <input
-                    type="text"
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-
-                />
-
-
-                <input
-                    type="number"
-                    placeholder="Price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required
-
-                />
-
-
-
-                <input
-                    className="last-input"
-                    type="text"
-                    placeholder="Photo Url"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    required
-
-                />
-
-                <button type="submit">Create</button>
-
+                <button className="btn btn-primary btn-block spot-form-submit" type="submit">Publish listing</button>
             </form>
-        </>
-    )
+        </ModalShell>
+    );
 }
 
 export default CreateSpotModal;

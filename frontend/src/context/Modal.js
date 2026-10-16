@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
 
@@ -40,6 +40,19 @@ export function ModalProvider({ children }) {
 
 export function Modal() {
     const { modalRef, modalContent, closeModal } = useContext(ModalContext);
+
+    // Lock page scroll and allow Escape to dismiss while a modal is open
+    useEffect(() => {
+        if (!modalContent) return;
+        const onKey = (e) => e.key === 'Escape' && closeModal();
+        document.body.style.overflow = 'hidden';
+        document.addEventListener('keydown', onKey);
+        return () => {
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', onKey);
+        };
+    }, [modalContent, closeModal]);
+
     // If there is no div referenced by the modalRef or modalContent is not a
     // truthy value, render nothing:
     if (!modalRef || !modalRef.current || !modalContent) return null;

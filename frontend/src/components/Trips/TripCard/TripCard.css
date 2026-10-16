@@ -1,26 +1,62 @@
-.one-card {
+.trip-card {
     display: flex;
-    column-gap: 15px;
-    margin: 20px 20px 20px 0px;
-    
+    align-items: center;
+    gap: 16px;
+    padding: 8px;
+    border-radius: var(--radius);
+    text-decoration: none;
 }
 
+.trip-card:hover {
+    background: var(--bg-soft);
+}
 
-.trip-spot-city{
+.trip-card-img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+}
+
+.trip-card-body {
+    min-width: 0;
+}
+
+.trip-city {
     font-size: 16px;
     font-weight: 600;
 }
 
-
-.indi-booking-right{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+.trip-card-large {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    padding-bottom: 20px;
 }
 
+.trip-card-large-link {
+    text-decoration: none;
+}
 
-.indi-grey-word {
-    color: rgb(113, 113, 113);
-    font-size: 14px;
-    font-weight: 400;
+.trip-card-large img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.trip-card-large-body {
+    padding: 20px 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.trip-card-large .trip-actions {
+    padding: 0 20px;
+}
+
+.trip-dates {
+    margin-top: 8px;
+    font-weight: 600;
 }
